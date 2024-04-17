@@ -19,49 +19,39 @@
     <!--- Aqui va el Nav (el menu). --->
     <!--- Aqui va el Main. --->
     <main>
-        <div class="container p-4 bg-light border rounded-3">
 
+        <div class="p-4"></div>
 
-
-        <div class="container p-4 col-10 col-sm-10 col-md-8 col-xl-8 m-auto mt-6">
-            <div class="col-xl-4">
-                <div class="p-4 card text-center mt-5 mx-auto" style="background-color: #245C9D;">
-                    <h1 class="text-white">Iniciar Sesión</h1>
-                    <div class="row">
-    
-                        <div class="p-1 mt-5">
-                            <h3 class="text-white text-start">Ingrese su correo:</h3>
-                            <label for="correo" class="form-label"> </label>
-                            <input placeholder="Correo:" type="email" id="correo" name="correo" class="form-control"
-                                required>
+        <div class="container bg-light border rounded-5 col-xl-8">
+            <div class="row">
+                <div class="col-xl-6 border rounded-5" id="formulario">
+                    <img src="/Api/Imagenes/Logo/Logo_Panaderia.png" alt="Logo" height="400px" width="400px">
+                </div>
+                <div class="col-xl-6">
+                    <h1 id="titulo">Inicio de Sesión</h1>
+                    <form>
+                        <div class="mb-3">
+                            <input placeholder="Usuario:" class="form-control border rounded-5" id="exampleInputEmail1"
+                                aria-describedby="emailHelp">
                         </div>
-                        <div class="text-white p-1 mt-5">
-                            <h3 class="text-white text-start">Ingrese su contraseña:</h3>
-                            <label for="clave" class="form-label"></label>
-                            <input placeholder="Contraseña:" type="password" id="clave" name="clave" class="form-control"
-                                required>
-                            <div class="d-flex justify-content-end p-1">
-                                <p><a href="/Vistas/Publico/recuperacion_contra_correo.html" class="link-light ">¿Olvidaste
-                                        tu contraseña?</a></p>
-                            </div>
-                            <div class="container p-1 mt-5">
-                                <div class="row justify-content-end">
-                                    <div class="col-auto">
-                                        <a href="/Vistas/Publico/index.html" type="submit" class="btn btn-light mt-4"
-                                            style="color: #245C9D;">Iniciar Sesion</a>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="mb-3">
+                            <input placeholder="Contraseña:" type="password" class="form-control border rounded-5"
+                                id="exampleInputPassword1">
                         </div>
-                    </div>
-            </div>
-            <div class="col-xl-4">
-                <div class="p-4 card text-center mt-5 mx-auto" style="background-color: #245C9D;">
+                        <a href="/Vistas/Admin/inicio.html" type="submit" class="btn border rounded-4 " id="ingresar">Ingresar</a>
+                    </form>
                 </div>
             </div>
+        </div>
 
+        <div class="p-4"></div>
 
-            </div>
+        <div style="position: relative;">
+            <input type="text" placeholder="HOLA" style="padding-left: 20px;">
+            <img src="/Recursos/Imagenes/usuario_login.png" height="10px" width="10px"
+                style="position: absolute; left: 0; top: 0;">
+        </div>
+
     </main>
 
     <!--- Aqui va el Footer. --->
