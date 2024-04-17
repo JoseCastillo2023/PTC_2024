@@ -2,7 +2,7 @@ body{
     background-color: #E4E4E4;
 }
 
-img{
+#logo{
     position: center;    
 }
 
@@ -24,4 +24,8 @@ img{
 
 #exampleInputPassword1{
     background-color: #CD9E81;
+}
+
+#botoncito{
+    color: white;
 }

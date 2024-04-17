@@ -1,0 +1,8 @@
+#staticBackdrop{
+    background-color: #B8754C;
+}
+
+main {
+    margin-top: 64px; /* Adjust this value based on the height of your navigation menu */
+    padding: 20px; /* Add some padding for better readability */
+}
