@@ -6,7 +6,10 @@ distribuidores específicos, como harina, levadura, etc.
 Solo los pasteles y otros productos de repostería se consideran pedidos especiales y no están disponibles en una panadería. Lo mismo ocurre con los panes más elaborados, como 
 las donas con relleno o de sabores específicos, que solo se hacen por encargo. 
 
-Integrantes del equipo: 
+Integrantes del equipo:
+
 Edgar Enrique Sarco García (Coordinador)
+
 José Miguel Ángel Castillo (SubCoordinador)
+
 Fernando Antonio Molina Paniagua (Secretario)
