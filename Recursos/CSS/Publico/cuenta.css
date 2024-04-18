@@ -1,0 +1,31 @@
+body{
+    background-color: gold;
+}
+
+#logo{
+    position: center;    
+}
+
+#titulo{
+    text-decoration-color: #7A4C30;
+}
+
+#ingresar{
+    background-color: #8B5737;
+}
+
+#formulario {
+    background-color: #B8754C;
+}
+
+#exampleInputEmail1{
+    background-color: #CD9E81;
+}
+
+#exampleInputPassword1{
+    background-color: #CD9E81;
+}
+
+#botoncito{
+    color: white;
+}
