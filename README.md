@@ -1,8 +1,7 @@
-# PTC_2024
-Equipo de 3 personas: 
+# PanÉmporium
+Descripción del proyecto: Nuestro proyecto técnico cientifico es la realizació de una página web y una aplicación móvil para la Pandadería Hernández 
+
+Integrantes del equipo: 
 Edgar Enrique Sarco García (Coordinador)
 José Miguel Ángel Castillo (SubCoordinador)
-Fernando Antonio Molina Paniagua (Secretario, Tesorero y Vocal)
-
-Ptd: Nos dividimos asi pero como somos 3 solo llegaria a ser secretario Fernando.
-Ptd-2: (Franco nos abandono)
+Fernando Antonio Molina Paniagua (Secretario)
