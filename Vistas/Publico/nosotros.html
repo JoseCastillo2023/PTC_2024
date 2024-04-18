@@ -11,6 +11,7 @@
     <!-- Estilos CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="/Recursos/CSS/Publico/index.css">
+    <link rel="stylesheet" href="/Recursos/CSS/Publico/nosotros.css">
     <link rel="stylesheet" href="/Recursos/CSS/Bootstrap/bootstrap.css">
 </head>
 
@@ -37,9 +38,6 @@
                             <a href="/Vistas/Publico/contacto.html" class="nav-link">Contacto</a>
                         </li>
                         <li class="nav-item p-3 py-md-1">
-                            <a href="/Vistas/Publico/pedidos.html" class="nav-link">Pedidos</a>
-                        </li>
-                        <li class="nav-item p-3 py-md-1">
                             <a href="/Vistas/Publico/productos.html" class="nav-link">Productos</a>
                         </li>
                         <li class="nav-item p-3 py-md-1">
@@ -49,10 +47,14 @@
                 </div>
             </section>
             <div class="col-md d-md-none col-sm d-sm-none"></div> <!-- Espacio en blanco para separar las imágenes -->
-            <div class="col-md-auto  col-sm-auto d-none d-sm-flex justify-content-end"> <!-- Se muestra en pantallas grandes -->
-                <a href="/Vistas/Publico/favoritos.html"><img class="p-2" src="/Recursos/Imagenes/favoritos.png" height="70" width="70"></a>
-                <a href="/Vistas/Publico/carrito.html"><img class="p-2" src="/Recursos/Imagenes/carrito.png" height="70" width="70"></a>
-                <a href="/Vistas/Publico/cuenta.html"><img class="p-2" src="/Recursos/Imagenes/cuenta.png" height="70" width="70"></a>
+            <div class="col-md-auto  col-sm-auto d-none d-sm-flex justify-content-end">
+                <!-- Se muestra en pantallas grandes -->
+                <a href="/Vistas/Publico/favoritos.html"><img class="p-2" src="/Recursos/Imagenes/favoritos.png"
+                        height="60" width="60"></a>
+                <a href="/Vistas/Publico/carrito.html"><img class="p-2" src="/Recursos/Imagenes/carrito.png" height="60"
+                        width="60"></a>
+                <a href="/Vistas/Publico/cuenta.html"><img class="p-2" src="/Recursos/Imagenes/cuenta.png" height="60"
+                        width="60"></a>
             </div>
 
             <!-- Botón del menú a la derecha en pantallas pequeñas -->
@@ -66,20 +68,65 @@
 
     <!--- Aqui va el Main. --->
     <main>
-        <h1> Nuestra empresa</h1>
-        <h3> Bienvenidos a nuestra tienda</h3>
-        <p> En la Panadería Hernández nos apasiona brindar comodidad y calidad a nuestros clientes, ofreciendo una amplia selección de postres, pasteles y otros productos de reposteria de alta calidad.</p>
-
-        <h3>Misión</h3>
-        <p> En la Panadería Hernández nos apasiona proporcionar a nuestros clientes una experiencia excepcional al ofrecerles postres de alta calidad para todas las personas. Nuestra misión es brindar comodidad, estilo y confianza a cada cliente, asegurando que nuestros productos cumplan con los estándares mas exigentes.</p>
-
-        <h3>Visión</h3>
-        <p> Nuestra visión es convertinos en la tienda de referencia en el mercado, reconocido por nuestra amplia gama de productos de calidad y por la excelencia en el servicio al cliente. Aspiramos a ser una marca confiable y respetada por nuestros clientes.</p>
-
-        <h3>Valores</h3>
-        <p>Calidad: Nos comprometemos a ofrecer productos fabricados con ingredientes frescos y de alta calidad para garantizar la satisfacción </p>
-
+        <div class="container">
+            <div class="p-5"></div>
+            <h1 class="text-center"> Nuestra empresa</h1>
+            <div class="p-2"></div>
+            <h3> Bienvenidos a nuestra tienda</h3>
+            <div class="p-2"></div>
+            <p> En la Panadería Hernández nos apasiona brindar comodidad y calidad a nuestros clientes, ofreciendo una
+                amplia selección de postres, pasteles y otros productos de reposteria de alta calidad.</p>
+                <div class="p-3"></div>
+            <h3>Misión</h3>
+            <div class="p-2"></div>
+            <p> En la Panadería Hernández nos apasiona proporcionar a nuestros clientes una experiencia excepcional al
+                ofrecerles postres de alta calidad para todas las personas. Nuestra misión es brindar comodidad, estilo
+                y
+                confianza a cada cliente, asegurando que nuestros productos cumplan con los estándares mas exigentes.
+            </p>
+            <div class="p-3"></div>
+            <h3>Visión</h3>
+            <div class="p-2"></div>
+            <p> Nuestra visión es convertinos en la tienda de referencia en el mercado, reconocido por nuestra amplia
+                gama
+                de productos de calidad y por la excelencia en el servicio al cliente. Aspiramos a ser una marca
+                confiable y
+                respetada por nuestros clientes.</p>
+            <div class="p-3"></div>
+            <h3>Valores</h3>
+            <div class="p-2"></div>
+            <p>Calidad: Nos comprometemos a ofrecer productos fabricados con ingredientes frescos y de alta calidad para
+                garantizar la satisfacción.</p>
+                <div class="p-2"></div>
+            <p>Responsabilidad: Nos preocupamos por el impacto que generamos en nuestras comunidades, por lo que nos
+                comprometemos a adoptar prácticas sostenibles y eticas en todas nuestras operaciones.</p>
+        </div>
     </main>
+
+    <div class="container-fluid" id="footer">
+        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+            <div class="col-md-4 d-flex align-items-center">
+                <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
+                    <svg class="bi" width="30" height="24">
+                        <use xlink:href="#bootstrap" />
+                    </svg>
+                </a>
+                <img src="/Recursos/Imagenes/letter_r.png" height="50" width="50">
+                <h1 class="text-white">2024 Panadería Hernández</h1>
+            </div>
+
+            <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+                <li class="ms-3"><a class="text-body-secondary" href="https://www.facebook.com/"><img
+                            src="/Recursos/Imagenes/facebook.png" height="50" width="50"></a>
+                </li>
+                <li class="ms-3"><a class="text-body-secondary" href="#">
+                        <<img src="/Recursos/Imagenes/instagram.png" height="50" width="50">
+                    </a></li>
+                <li class="ms-3"><a class="text-body-secondary" href="#"><img src="/Recursos/Imagenes/twitter.png"
+                            height="50" width="50"></a></li>
+            </ul>
+        </footer>
+    </div>
 
     <!--- Aqui va el Footer. --->
 
