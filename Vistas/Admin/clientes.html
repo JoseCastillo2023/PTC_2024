@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Titulo de la pagina -->
+    <title>Clientes | Panadería Hernández</title>
+    <!-- Icono de la pagina -->
+    <link rel="icon" href="/Api/Imagenes/Logo/Logo_Panaderia.png" type="image/x-icon">
+    <!-- Estilos CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="/Recursos/CSS/Admin/inicio.css">
+    <link rel="stylesheet" href="/Recursos/CSS/Admin/menu.css">
+    <link rel="stylesheet" href="/Recursos/CSS/Bootstrap/bootstrap.css">
+</head>
+
+<body>
+    <!--- Aqui va el Header. --->
+    <!--- Aqui va el Nav (el menu). --->
+    <div class="wrapper">
+        <aside id="sidebar">
+            <ul class="sidebar-nav">
+                <li class="sidebar-item">
+                    <a href="/Vistas/Admin/administradores.html" class="sidebar-link">
+                        <img src="/Recursos/Imagenes/administradores.png" alt="" height="25px">
+                        <span>Administradores</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="/Vistas/Admin/categorias.html" class="sidebar-link">
+                        <img src="/Recursos/Imagenes/categorias.png" alt="" height="25px">
+                        <span>Categorías</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="/Vistas/Admin/clientes.html" class="sidebar-link">
+                        <img src="/Recursos/Imagenes/clientes.png" alt="" height="25px">
+                        <span>Clientes</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="/Vistas/Admin/comentarios.html" class="sidebar-link">
+                        <img src="/Recursos/Imagenes/comentarios.png" alt="" height="25px">
+                        <span>Comentarios</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="/Vistas/Admin/productos.html" class="sidebar-link">
+                        <img src="/Recursos/Imagenes/productos.png" alt="" height="25px">
+                        <span>Productos</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link" data-bs-toggle="modal" data-bs-target="#miModalTienda">
+                        <img src="/Recursos/Imagenes/tienda.png" alt="" height="25px">
+                        <span>Sitio Publico</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="/Vistas/Admin/mi_cuenta.html" class="sidebar-link">
+                        <img src="/Recursos/Imagenes/usuario_login.png" alt="" height="25px">
+                        <span>Mi cuenta</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link" data-bs-toggle="modal" data-bs-target="#miModalSesion">
+                        <img src="/Recursos/Imagenes/salida.png" alt="" height="25px">
+                        <span>Salida</span>
+                    </a>
+                </li>
+            </ul>
+        </aside>
+        <!--- Aqui va el Main. --->
+        <div class="main p-3">
+            <div class="text-center">
+                <h1>
+                    Productos
+                </h1>
+                <div class="scrollable-content mt-5">
+                    <div class="container mt-5 text-center">
+
+                        <h5>Nuestro catalogo</h5>
+                        <div class="col-md-12">
+                            <div class="input-group mb-3 barra_busqueda_estudiantes mt-5">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="bi bi-search"></i></span>
+                                </div>
+
+                                <input type="text" class="form-control" placeholder="Buscar"
+                                    id="boton_buscar_estudiantes">
+                            </div>
+                        </div>
+                        <div class="container mt-5">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Imagen del producto</th>
+                                        <th>Nombre producto</th>
+                                        <th>Descripción del producto</th>
+                                        <th>Categoria</th>
+                                        <th>Precio</th>
+                                        <th>Administrador</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><img src="/Recursos/Imagenes/pastel_chocolate.jpg"
+                                                alt="" width="50px" height="50px"></td>
+                                        <td>Pastel de chocolate</td>
+                                        <td>Pastel con relleno cremoso sabor a chocolate</td>
+                                        <td>Pastel</td>
+                                        <td>$ 9.50</td>
+                                        <td>Juan Nitales</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td><img src="/Recursos/Imagenes/pichardines_salvador.jpg"
+                                            alt="" width="50px" height="50px"></td>
+                                        <td>Pichardines</td>
+                                        <td>Margaritas a las cuales se les da forma de flor y justo en el centro se les coloca un puntito de jalea (mermelada) de fresa o piña</td>
+                                        <td>Pan dulce</td>
+                                        <td>$ 2.50</td>
+                                        <td>Juan Nitales</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td><img src="/Recursos/Imagenes/donas_azucar.jpg"
+                                            alt="" width="50px" height="50px"></td>
+                                        <td>Donas dulces</td>
+                                        <td>Donas basadas en forma circular con una capa de azucar molida</td>
+                                        <td>Donas</td>
+                                        <td>$ 1.00</td>
+                                        <td>Enrique Sarco</td>
+                                    </tr>
+                                    <tr>
+                                        <td><img src="/Recursos/Imagenes/pastel_queso.jpg"
+                                            alt="" width="50px" height="50px"></td>
+                                        <td>Tarta de queso</td>
+                                        <td>Tarta en forma circular rellena de cheso y una jalea de fresa</td>
+                                        <td>Tarta</td>
+                                        <td>$ 6.00</td>
+                                        <td>Enrique Sarco</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modals -->
+    <div class="modal fade" id="miModalTienda" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ir al sitio publico</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ¿Quieres salir del sitio privado?
+                </div>
+                <div class="modal-footer">
+                    <a href="/Vistas/Admin/inicio.html"><button type="button" class="btn btn-danger"
+                            data-bs-dismiss="modal">Cancelar</button></a>
+                    <a href="/Vistas/Publico/index.html"><button type="button" class="btn btn-success">Ir al sitio
+                            publico</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="miModalSesion" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Cerrar Sesión</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ¿Quieres salir de la cuenta?
+                </div>
+                <div class="modal-footer">
+                    <a href="/Vistas/Admin/inicio.html"><button type="button" class="btn btn-danger"
+                            data-bs-dismiss="modal">Cancelar</button></a>
+                    <a href="/Vistas/Admin/index.html"><button type="button" class="btn btn-success">Salir de mi
+                            cuenta</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--- Scripts. --->
+    <script type="text/javascript" src="/Recursos/JavaScript/Bootstrap/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
