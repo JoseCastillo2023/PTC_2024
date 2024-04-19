@@ -11,88 +11,101 @@
     <!-- Estilos CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="/Recursos/CSS/Admin/inicio.css">
+    <link rel="stylesheet" href="/Recursos/CSS/Admin/menu.css">
     <link rel="stylesheet" href="/Recursos/CSS/Bootstrap/bootstrap.css">
 </head>
 
 <body>
     <!--- Aqui va el Header. --->
     <!--- Aqui va el Nav (el menu). --->
-    <nav>
-        <div class="wrapper">
-            <div class="offcanvas offcanvas-start show" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop"
-                aria-labelledby="staticBackdropLabel" style="width: 250px;">
-                <div class="offcanvas-header">
-                    <div class="row">
-                        <h5 class="offcanvas-title" id="staticBackdropLabel"> Panaderia Hernández</h5>
-                    </div>
-                </div>
-                <div class="offcanvas-body">
-                    <div class="row">
-                        <img src="/Api/Imagenes/Logo/Logo_Panaderia.png">
-                    </div>
-                    <div class="row">
-                        <a href="/Vistas/Admin/administradores.html">
-                            <h5>Administradores</h5>
-                        </a>
-                    </div>
-                    <div class="row">
-                        <a href="/Vistas/Admin/categorias.html">
-                            <h5>Categorias</h5>
-                        </a>
-                    </div>
-                    <div class="row">
-                        <a href="/Vistas/Admin/clientes.html">
-                            <h5>Clientes</h5>
-                        </a>
-                    </div>
-                    <div class="row">
-                        <a href="/Vistas/Admin/comentarios.html">
-                            <h5>Comentarios</h5>
-                        </a>
-                    </div>
-                    <div class="row">
-                        <a href="/Vistas/Admin/productos.html">
-                            <h5>Productos</h5>
-                        </a>
-                    </div>
-                    <div class="row">
-                        <a href="/Vistas/Publico/index.html">
-                            <h5>Tienda</h5>
-                        </a>
-                    </div>
-                    <div class="row">
-                        <a href="/Vistas/Admin/index.html">
-                            <h5>Salida</h5>
-                        </a>
-                    </div>
+    <div class="wrapper">
+        <aside id="sidebar">
+            <ul class="sidebar-nav">
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link">
+                        <img src="/Recursos/Imagenes/administradores.png" alt="" height="25px">
+                        <span>Administradores</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link">
+                        <img src="/Recursos/Imagenes/categorias.png" alt="" height="25px">
+                        <span>Categorías</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link">
+                        <img src="/Recursos/Imagenes/clientes.png" alt="" height="25px">
+                        <span>Administradores</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link">
+                        <img src="/Recursos/Imagenes/comentarios.png" alt="" height="25px">
+                        <span>Administradores</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link">
+                        <img src="/Recursos/Imagenes/productos.png" alt="" height="25px">
+                        <span>Administradores</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link">
+                        <img src="/Recursos/Imagenes/tienda.png" alt="" height="25px">
+                        <span>Administradores</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link">
+                        <img src="/Recursos/Imagenes/usuario_login.png" alt="" height="25px">
+                        <span>Mi cuenta</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link" data-bs-toggle="modal" data-bs-target="#miModal">
+                        <img src="/Recursos/Imagenes/salida.png" alt="" height="25px">
+                        <span>Salida</span>
+                    </a>
+                </li>
+            </ul>
+            <!-- Enlace que abrirá el modal -->
+            <a href="#" data-bs-toggle="modal" data-bs-target="#miModal">Abrir Modal</a>
+            
+            
+        </aside>
+        <div class="main p-3">
+            <div class="text-center">
+                <h1>Categoria Alumnos</h1>
+                <div class="scrollable-content">
+                    
                 </div>
             </div>
         </div>
-    </nav>
+    </div>
     <!--- Aqui va el Main. --->
-    <main>
-        <div class="container col-xl-12">
-            <div class="row">
-                <div class="container col-xl-2">
-                    <h1> Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore cupiditate a aspernatur optio
-                        sequi
-                        recusandae asperiores at voluptatibus perspiciatis, nihil commodi, eos nostrum, voluptate ex?
-                        Nobis
-                        reprehenderit itaque ex ut!</h1>
+    <div class="modal fade" id="miModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Cerrar Sesión</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="container col-xl-10">
-                    <h1> Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore cupiditate a aspernatur optio
-                        sequi
-                        recusandae asperiores at voluptatibus perspiciatis, nihil commodi, eos nostrum, voluptate ex?
-                        Nobis
-                        reprehenderit itaque ex ut!</h1>
+                <div class="modal-body">
+                    ¿Quieres salir de la cuenta?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-success">Salir de mi cuenta</button>
                 </div>
             </div>
         </div>
+    </div>
 
-    </main>
+    <!--- Scripts. --->
+    <script type="text/javascript" src="/Recursos/JavaScript/Bootstrap/bootstrap.bundle.min.js"></script>
 
-    <!--- Aqui va el Footer. --->
 </body>
 
 </html>
