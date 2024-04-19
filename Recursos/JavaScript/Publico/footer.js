@@ -1,6 +1,6 @@
 function Footer() {
     const Footer = `    
-    <footer class="bg-dark text-white text-center py-4 fixed-bottom">
+    <footer class="bg-dark text-white text-center py-4 sticky-bottom">
     <div class="container">
       <div class="row">
         <div class="col-lg-6 col-md-12 mb-4 mb-lg-0 d-flex align-items-center">
