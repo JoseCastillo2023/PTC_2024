@@ -1,0 +1,11 @@
+/* Estilo para opción Activo */
+option.activo {
+    background-color: lightgreen;
+    color: green;
+}
+
+/* Estilo para opción Inactivo */
+option.inactivo {
+    background-color: coral;
+    color: red;
+}   

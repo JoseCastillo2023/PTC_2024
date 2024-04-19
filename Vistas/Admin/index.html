@@ -18,37 +18,38 @@
     <!--- Aqui va el Header. --->
     <!--- Aqui va el Nav (el menu). --->
     <!--- Aqui va el Main. --->
-    <main class="container-fluid d-flex align-items-center justify-content-center"></
+    <div class="py-4"></div>
+    <main class=" py-5 container-fluid d-flex align-items-center justify-content-center"></
 
-        <div class="p-4"></div>
+        <div class="px-5"></div>
 
         <div class="container bg-light border rounded-5 col-xl-8 col-md-8 col-sm-8">
             <div class="row">
-                <div class="col-xl-6 border rounded-5" id="formulario">
+                <div class="col-xl-6 border rounded-5 text-center" id="formulario">
                     <img src="/Api/Imagenes/Logo/Logo_Panaderia.png" alt="Logo" height="400px" width="400px" id="logo">
                 </div>
                 <div class="col-xl-6">
-                    <h1 class="p-5" id="titulo">Inicio de Sesión</h1>
+                    <h1 class="p-5 text-center" id="titulo">Inicio de Sesión</h1>
                     <form>
+
                         <div class="mb-3">
-                            <div style="position: relative;">
-                                <input placeholder="Usuario:" class="form-control border rounded-5"
-                                    id="exampleInputEmail1" aria-describedby="emailHelp"
-                                    style="padding-left: 30px;"><img src="/Recursos/Imagenes/usuario_login.png"
-                                    height="22px" width="22px" style="position: absolute; left: 0; top: 0;">
+                            <div class="input-group border rounded-5" id="exampleInputEmail1">
+                                <span class="input-group-text border-0 border rounded-5" id="exampleInputEmail1"><i class="bi bi-person-circle"></i></span>
+                                <input placeholder="Usuario:" type="text" class="border rounded-5 border-0 form-control border rounded-5" id="exampleInputPassword1">
                             </div>
                         </div>
+                        <div class="py-3"></div>
                         <div class="mb-3">
-                            <div style="position: relative;">
-                                <input placeholder="Contraseña:" type="password" class="form-control border rounded-5"
-                                    id="exampleInputPassword1" style="padding-left: 30px;"><img
-                                    src="/Recursos/Imagenes/candado_login.png" height="22px" width="22px"
-                                    style="position: absolute; left: 0; top: 0;">
+                            <div class="input-group border rounded-5" id="exampleInputPassword1">
+                                <span class="input-group-text border-0 border rounded-5" id="exampleInputPassword1"><i class="bi bi-lock-fill"></i></span>
+                                <input placeholder="Contraseña:" type="password" class="border rounded-5 border-0 form-control border rounded-5" id="exampleInputPassword1">
                             </div>
                         </div>
-                        <a href="/Vistas/Admin/inicio.html" type="submit" class="btn border rounded-4 "
-                            id="ingresar"><h4 id="botoncito">Ingresar</h4></a>
+                        <div class="py-3"></div>
+                        <div class="text-center"><a href="/Vistas/Admin/inicio.html" type="submit" class="btn border rounded-4"
+                            id="ingresar"><h4 id="botoncito">Ingresar</h4></a></div>
                     </form>
+                    <div class="py-3"></div>
                 </div>
             </div>
         </div>
