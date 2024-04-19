@@ -178,9 +178,7 @@
             <div class="modal-content">
 
                 <div class="modal-header border-0">
-                    <h1 class="modal-title fs-3 w-100 text-center" id="exampleModalLabel">Agregar un
-                        administrador
-                    </h1>
+                    <h1 class="modal-title fs-3 w-100 text-center" id="exampleModalLabel">Agregar un administrador</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
@@ -188,10 +186,12 @@
                     <div class="container text-center">
                         <div class="row" style="margin-top: 30px;">
                             <div class="col">
+
                                 <label for=""></label>
                                 <input type="text" class="form-control mt-1" placeholder="Nombre:"
                                     id="nombre_cate_producto">
                             </div>
+
                         </div>
                         <div class="row" style="margin-top: 20px;">
                             <div class="col">
@@ -200,6 +200,7 @@
                                 <input type="text" class="form-control mt-1" placeholder="Apellido:"
                                     id="nombre_cate_producto">
                             </div>
+
                         </div>
                         <div class="row" style="margin-top: 20px;">
                             <div class="col">
@@ -208,6 +209,7 @@
                                 <input type="text" class="form-control mt-1" placeholder="Correo:"
                                     id="nombre_cate_producto">
                             </div>
+
                         </div>
                         <div class="row" style="margin-top: 20px;">
                             <div class="col">
@@ -216,14 +218,16 @@
                                 <input type="text" class="form-control mt-1" placeholder="Usuario:"
                                     id="nombre_cate_producto">
                             </div>
+
                         </div>
                         <div class="row" style="margin-top: 20px;">
                             <div class="col">
 
                                 <label for=""></label>
-                                <input type="text" class="form-control mt-1" placeholder="Contraseña:"
+                                <input type="password" class="form-control mt-1" placeholder="Contraseña:"
                                     id="nombre_cate_producto">
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -241,9 +245,7 @@
             <div class="modal-content">
 
                 <div class="modal-header border-0">
-                    <h1 class="modal-title fs-3 w-100 text-center" id="exampleModalLabel">Editar un
-                        administrador
-                    </h1>
+                    <h1 class="modal-title fs-3 w-100 text-center" id="exampleModalLabel">Editar un administrador</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
@@ -251,10 +253,12 @@
                     <div class="container text-center">
                         <div class="row" style="margin-top: 30px;">
                             <div class="col">
+
                                 <label for=""></label>
                                 <input type="text" class="form-control mt-1" placeholder="Nombre:"
                                     id="nombre_cate_producto">
                             </div>
+
                         </div>
                         <div class="row" style="margin-top: 20px;">
                             <div class="col">
@@ -263,6 +267,7 @@
                                 <input type="text" class="form-control mt-1" placeholder="Apellido:"
                                     id="nombre_cate_producto">
                             </div>
+
                         </div>
                         <div class="row" style="margin-top: 20px;">
                             <div class="col">
@@ -271,6 +276,7 @@
                                 <input type="text" class="form-control mt-1" placeholder="Correo:"
                                     id="nombre_cate_producto">
                             </div>
+
                         </div>
                         <div class="row" style="margin-top: 20px;">
                             <div class="col">
@@ -279,16 +285,17 @@
                                 <input type="text" class="form-control mt-1" placeholder="Usuario:"
                                     id="nombre_cate_producto">
                             </div>
+
                         </div>
                         <div class="row" style="margin-top: 20px;">
                             <div class="col">
-
                                 <label for=""></label>
-                                <input type="text" class="form-control mt-1" placeholder="Contraseña:"
+                                <input type="password" class="form-control mt-1" placeholder="Contraseña:"
                                     id="nombre_cate_producto">
                             </div>
                         </div>
                     </div>
+                </div>
 
                 <div class="modal-footer border-0">
                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Confirmar</button>
@@ -298,23 +305,25 @@
     </div>
 
     <!-- Modal Eliminar -->
-    <div class="modal fade" id="eliminarModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div class="modal fade" id="eliminarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <div class="modal-header border-0">
+                    <h1 class="modal-title fs-3 w-100 text-center" id="exampleModalLabel">Eliminar un administrador</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    ¿Quieres eliminar este dato?
+                </div>
+
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Eliminar</button>
+                </div>
             </div>
-            <div class="modal-body">
-              ...
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Understood</button>
-            </div>
-          </div>
         </div>
-      </div>
+    </div>
 
     <!--- Scripts. --->
     <script type="text/javascript" src="/Recursos/JavaScript/Bootstrap/bootstrap.bundle.min.js"></script>

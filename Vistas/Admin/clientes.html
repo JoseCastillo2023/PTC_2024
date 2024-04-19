@@ -74,81 +74,95 @@
         <!--- Aqui va el Main. --->
         <div class="main p-3">
             <div class="text-center">
-                <h1>
-                    Productos
-                </h1>
+                <h1>Clientes</h1>
                 <div class="scrollable-content mt-5">
                     <div class="container mt-5 text-center">
-
-                        <h5>Nuestro catalogo</h5>
-                        <div class="col-md-12">
-                            <div class="input-group mb-3 barra_busqueda_estudiantes mt-5">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="bi bi-search"></i></span>
+                        <h5>Nuestra comunidad</h5>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="input-group mb-3 barra_busqueda_estudiantes mt-3 mb-3">
+                                    <!-- Agregado margen superior e inferior -->
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="bi bi-search mb-3 mt-3"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control " placeholder="Buscar"
+                                        id="boton_buscar_estudiantes">
+                                    <button type="button" class="btn btn-white btn-outline-secondary"
+                                        data-bs-toggle="modal" data-bs-target="#editarModal"><img
+                                            src="/Recursos/Imagenes/editar.png" alt="buttonpng" height="30"
+                                            width="30" /></button>
+                                    <button type="button" class="btn btn-white btn-outline-secondary"
+                                        data-bs-toggle="modal" data-bs-target="#eliminarModal"><img
+                                            src="/Recursos/Imagenes/eliminar.png" alt="buttonpng" height="30"
+                                            width="30" /></button>
                                 </div>
-
-                                <input type="text" class="form-control" placeholder="Buscar"
-                                    id="boton_buscar_estudiantes">
                             </div>
-                        </div>
-                        <div class="container mt-5">
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Imagen del producto</th>
-                                        <th>Nombre producto</th>
-                                        <th>Descripción del producto</th>
-                                        <th>Categoria</th>
-                                        <th>Precio</th>
-                                        <th>Administrador</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><img src="/Recursos/Imagenes/pastel_chocolate.jpg"
-                                                alt="" width="50px" height="50px"></td>
-                                        <td>Pastel de chocolate</td>
-                                        <td>Pastel con relleno cremoso sabor a chocolate</td>
-                                        <td>Pastel</td>
-                                        <td>$ 9.50</td>
-                                        <td>Juan Nitales</td>
-                                    </tr>
-
-                                    <tr>
-                                        <td><img src="/Recursos/Imagenes/pichardines_salvador.jpg"
-                                            alt="" width="50px" height="50px"></td>
-                                        <td>Pichardines</td>
-                                        <td>Margaritas a las cuales se les da forma de flor y justo en el centro se les coloca un puntito de jalea (mermelada) de fresa o piña</td>
-                                        <td>Pan dulce</td>
-                                        <td>$ 2.50</td>
-                                        <td>Juan Nitales</td>
-                                    </tr>
-
-                                    <tr>
-                                        <td><img src="/Recursos/Imagenes/donas_azucar.jpg"
-                                            alt="" width="50px" height="50px"></td>
-                                        <td>Donas dulces</td>
-                                        <td>Donas basadas en forma circular con una capa de azucar molida</td>
-                                        <td>Donas</td>
-                                        <td>$ 1.00</td>
-                                        <td>Enrique Sarco</td>
-                                    </tr>
-                                    <tr>
-                                        <td><img src="/Recursos/Imagenes/pastel_queso.jpg"
-                                            alt="" width="50px" height="50px"></td>
-                                        <td>Tarta de queso</td>
-                                        <td>Tarta en forma circular rellena de cheso y una jalea de fresa</td>
-                                        <td>Tarta</td>
-                                        <td>$ 6.00</td>
-                                        <td>Enrique Sarco</td>
-                                    </tr>
-                                </tbody>
-                            </table>
                         </div>
                     </div>
                 </div>
+                <div class="container mt-5">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Nombre del cliente</th>
+                                <th>Apellido del cliente</th>
+                                <th>Dui del cliente</th>
+                                <th>Correo del cliente</th>
+                                <th>Teléfono del cliente</th>
+                                <th>Dirección del cliente</th>
+                                <th>Contraseña del cliente</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Pastel de chocolate</td>
+                                <td>Pastel con relleno cremoso sabor a chocolate</td>
+                                <td>Pastel</td>
+                                <td>$ 9.50</td>
+                                <td>Juan Nitales</td>
+                                <td>Pastel</td>
+                                <td>$ 9.50</td>
+                                <td class="text-danger">Juan Nitales</td>
+                            </tr>
+                            <tr>
+                                <td>Pichardines</td>
+                                <td>Margaritas a las cuales se les da forma de flor y justo en el centro se les coloca
+                                    un puntito de jalea (mermelada) de fresa o piña</td>
+                                <td>Pan dulce</td>
+                                <td>$ 2.50</td>
+                                <td>Juan Nitales</td>
+                                <td>Pastel</td>
+                                <td>$ 9.50</td>
+                                <td class="text-success">Juan Nitales</td>
+                            </tr>
+                            <tr>
+                                <td>Donas dulces</td>
+                                <td>Donas basadas en forma circular con una capa de azúcar molida</td>
+                                <td>Donas</td>
+                                <td>$ 1.00</td>
+                                <td>Enrique Sarco</td>
+                                <td>Pastel</td>
+                                <td>$ 9.50</td>
+                                <td class="text-danger">Juan Nitales</td>
+                            </tr>
+                            <tr>
+                                <td>Tarta de queso</td>
+                                <td>Tarta en forma circular rellena de queso y una jalea de fresa</td>
+                                <td>Tarta</td>
+                                <td>$ 6.00</td>
+                                <td>Enrique Sarco</td>
+                                <td>Pastel</td>
+                                <td>$ 9.50</td>
+                                <td class="text-success">Juan Nitales</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
+
+
     </div>
     <!-- Modals -->
     <div class="modal fade" id="miModalTienda" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -192,6 +206,76 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal Actualizar -->
+    <div class="modal fade" id="editarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <div class="modal-header border-0">
+                    <h1 class="modal-title fs-3 w-100 text-center" id="exampleModalLabel">Editar un cliente
+                    </h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="container text-center">
+                        <div class="row" style="margin-top: 30px;">
+                            <div class="col">
+                                <form>
+                                    <label class="p-3" for="estado">Jose Felipe:</label>
+                                    <select name="estado">
+                                        <option class="activo">Activo</option>
+                                        <option class="inactivo">Inactivo</option>
+                                    </select>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Confirmar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Eliminar -->
+    <div class="modal fade" id="eliminarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <div class="modal-header border-0">
+                    <h1 class="modal-title fs-3 w-100 text-center" id="exampleModalLabel">Eliminar un cliente
+                    </h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    ¿Quieres eliminar este dato?
+                </div>
+
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        /* Estilo para opción Activo */
+        option.activo {
+            background-color: lightgreen;
+            color: green;
+        }
+        
+        /* Estilo para opción Inactivo */
+        option.inactivo {
+            background-color: coral;
+            color: red;
+        }
+    </style>
 
     <!--- Scripts. --->
     <script type="text/javascript" src="/Recursos/JavaScript/Bootstrap/bootstrap.bundle.min.js"></script>
