@@ -21,35 +21,51 @@
 
     <!--- Aqui va el Main. --->
     <main>
-        <h1 class="text-center p-2">Nuestro Menú</h1>
-        <div class="container-fluid">
-            <div class="container align-items-center" id="menu_comida">
-                <div class="row">
-                    <div class="col-4 p-1" id="cont_pasteles">
-                        <img src="/Recursos/Imagenes/pasteles.png" height="100" width="100">
-                    </div>
-                    <div class="col-4 p-1" id="cont_menu">
-                        <img src="/Recursos/Imagenes/menu.png" height="300" width="100">
-                    </div>
-                    <div class="col-4 p-1" id="cont_donas">
-                        <img src="/Recursos/Imagenes/donas.png" height="100" width="100">
-                    </div>
-                </div>  
-                <div class="row">
-                    <div class="col-6 p-1" id="cont_bebidas">
-                        <img src="/Recursos/Imagenes/bebidas.png" height="100" width="100">
-                    </div>
-                    <div class="col-6 p-1" id="cont_panes">
-                        <img src="/Recursos/Imagenes/panes.png" height="100" width="100">
+        <div class="container text-center mt-5">
+            <div class="row">
+                <div class="col">
+                    <div class="card card-clickable" style="width: 15rem;">
+                        <img src="/Recursos/Imagenes/Tartaleta.jpg" class="card-img-top" alt="Tartaletas" style="height: 150px;">
+                        <div class="card-body">
+                            <h5 class="card-title">Tartaletas</h5>
+                            <p class="card-text">$1.50</p>
+                        </div>
+                        <div class="card-footer">
+                            <p class="text-success">Tartaleta con crema y frutas</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <div style="position: relative; text-align: center;">
-            <img src="/Recursos/Imagenes/menu.png" alt="Descripción de la imagen" style="width: 100%;">
-            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); padding: 10px;">
-                <p style="font-size: 18px; color: rgb(255, 255, 255);">Texto encima de la imagen</p>
+                <div class="col">
+                    <div class="card card-clickable" style="width: 15rem;">
+                        <img src="/Recursos/Imagenes/Brownie.png" class="card-img-top" alt="Brownie" style="height: 150px;">
+                        <div class="card-body">
+                            
+                            <h5 class="card-title">Brownie</h5>
+                            <p class="card-text">$2</p>
+                        </div>
+                        <div class="card-footer">
+                            <p class="text-success">Brownie de chocolate suave, esponjoso con azúcar glass</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card border-black p-2">
+                        <h3>Resumen de Pedido</h3>
+                        <p>2 Artículos</p>
+                        <p>Precio original: $4.50</p>
+                        <p>Sale: $3.50</p>
+                        <p>Subtotal: $3.50</p>
+                        <p>Descuento: $1</p>
+                        <p>Envío: $5</p>
+                        <h4>Monto Total: $8.50</h4>
+                        <div class="p-3"></div>
+                        <a href="/Vistas/Publico/compra.html">
+                            <button type="button" class="btn btn-dark btn-lg">
+                                Confirmar Comprar →<span class="fas fa-arrow-right"></span>
+                            </button>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </main>

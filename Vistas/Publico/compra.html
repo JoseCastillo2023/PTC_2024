@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Titulo de la pagina -->
+    <title> Contactanos | Panadería Hernández</title>
+    <!-- Icono de la pagina -->
+    <link rel="icon" href="/Api/Imagenes/Logo/Logo_Panaderia.png" type="image/x-icon">
+    <!-- Estilos CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="/Recursos/CSS/Publico/index.css">
+    <link rel="stylesheet" href="/Recursos/CSS/Bootstrap/bootstrap.css">
+</head>
+
+<body>
+    <!--- Aqui va el Header. --->
+    <!--- Aqui va el Nav (el menu). --->
+    <div id="menu_contenedor"></div>
+
+    <!--- Aqui va el Main. --->
+    <main>
+        <div class="p-2"></div>
+    
+        <h1 class="container">Comprar Articulos</h1>
+    
+        <div class="container">
+            <div class="card ">
+                <div class="card-header bg-black text-white">
+                    Método de Pago
+                </div>
+                <div class="card-body bg-B8754C light">
+                    <form>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="nombre">Nombre en la Tarjeta</label>
+                                <input type="text" class="form-control" id="nombre" placeholder="Nombre en la Tarjeta">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="numero-tarjeta">Número de Tarjeta</label>
+                                <input type="text" class="form-control" id="numero-tarjeta" placeholder="Número de Tarjeta">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="fecha">Fecha de Expiración</label>
+                                <input type="text" class="form-control" id="fecha" placeholder="MM/YY">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="cvv">CVV</label>
+                                <input type="text" class="form-control" id="cvv" placeholder="CVV">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    
+        <div class="p-4"></div>
+    
+        <div class="container">
+            <div class="row justify-content-end">
+                <div class="col-auto">
+                    <a href="/Vistas/Publico/carrito.html">
+                        <button type="button" class="btn btn-dark btn-lg">
+                            Confirmar Comprar →<span class="fas fa-arrow-right"></span>
+                        </button>
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <i class="bi bi-credit-card-fill fs-2 text-primary"></i>
+                <i class="bi bi-credit-card-2-front-fill fs-2 text-success"></i>
+                <i class="bi bi-credit-card-2-back-fill fs-2 text-danger"></i>
+                <i class="bi bi-paypal fs-2 text-info"></i>
+                <i class="bi bi-apple fs-2 text-warning"></i>
+                <i class="bi bi-cash-stack fs-2 text-secondary"></i>
+                <i class="bi bi-credit-card-2-fill fs-2 text-dark"></i>
+                <i class="bi bi-credit-card-2-back fs-2 text-primary"></i>
+              </div>
+        </div>
+    
+        <div class="p-4"></div>
+    </main>
+
+    <!--- Aqui va el Footer. --->
+    <div id="footer_contenedor"></div>
+
+    <!--- Scripts. --->
+    <script type="text/javascript" src="/Recursos/JavaScript/Bootstrap/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="/Recursos/JavaScript/Publico/menu.js"></script>
+    <script type="text/javascript" src="/Recursos/JavaScript/Publico/footer.js"></script>
+    <script type="text/javascript" src="/Controladores/Publico/cargador_menu.js"></script>
+    <script type="text/javascript" src="/Controladores/Publico/cargador_footer.js"></script>
+</body>
+
+</html>
