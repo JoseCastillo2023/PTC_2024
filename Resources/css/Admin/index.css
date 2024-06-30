@@ -1,0 +1,53 @@
+body{
+    background-color: #E4E4E4;
+}
+
+#logo{
+    position: center;    
+}
+
+#titulo{
+    text-decoration-color: #7A4C30;
+}
+
+#ingresar{
+    background-color: #8B5737;
+}
+
+#formulario {
+    background-color: #B8754C;
+}
+
+#exampleInputNombre1{
+    background-color: #CD9E81;
+}
+
+#exampleInputApellido1{
+    background-color: #CD9E81;
+}
+
+#exampleInputCorreo1{
+    background-color: #CD9E81;
+}
+
+#exampleInputUsuario1{
+    background-color: #CD9E81;
+}
+#exampleInputClave1{
+    background-color: #CD9E81;
+}
+
+#exampleInputCClave1{
+    background-color: #CD9E81;
+}
+#exampleInputUsuario2{
+    background-color: #CD9E81;
+}
+
+#exampleInputClave2{
+    background-color: #CD9E81;
+}
+
+#botoncito{
+    color: white;
+}
