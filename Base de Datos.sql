@@ -54,7 +54,7 @@ imagen_producto varchar(100) not NULL
 
 CREATE TABLE tb_administradores(
 id_administrador int not null primary KEY AUTO_INCREMENT,
-nombre_admistrador  varchar(50) not null,
+nombre_administrador varchar(50) NOT NULL,
 apellido_administrador varchar(50) not null,
 correo_administrador varchar(100) not null,
 alias_administrador VARCHAR(25) UNIQUE not null,
