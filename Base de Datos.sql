@@ -7,20 +7,6 @@ CREATE DATABASE PanaderiaHPTC;
 USE PanaderiaHPTC;
 
 -- Tablas
-CREATE TABLE cliente (
-  id_cliente int(10) UNSIGNED NOT NULL,
-  nombre_cliente varchar(50) NOT NULL,
-  apellido_cliente varchar(50) NOT NULL,
-  dui_cliente varchar(10) NOT NULL,
-  correo_cliente varchar(100) NOT NULL,
-  telefono_cliente varchar(9) NOT NULL,
-  direccion_cliente varchar(250) NOT NULL,
-  nacimiento_cliente date NOT NULL,
-  clave_cliente varchar(100) NOT NULL,
-  estado_cliente tinyint(1) NOT NULL DEFAULT 1,
-  fecha_registro date NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
 CREATE TABLE tb_clientes (
     id_cliente INT PRIMARY KEY AUTO_INCREMENT,
     nombre_cliente VARCHAR(50) NOT NULL,
