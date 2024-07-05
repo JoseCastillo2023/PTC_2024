@@ -18,7 +18,7 @@ if (isset($_GET['action'])) {
         switch ($_GET['action']) {
             case 'searchRows':
                 if (
-                    !$cliente->setSearch($_POST['valor'])
+                    !$cliente->searchRows($_POST['valor'])
                 ) {
                     $result['error'] = $cliente->getDataError();
                 } elseif ($result['dataset'] = $cliente->searchRows()) {
@@ -34,7 +34,6 @@ if (isset($_GET['action'])) {
                     !$cliente->setNombre($_POST['nombreCliente']) or
                     !$cliente->setApellido($_POST['apellidoCliente']) or
                     !$cliente->setCorreo($_POST['correoCliente']) or
-                    !$cliente->setAlias($_POST['aliasCliente']) or
                     !$cliente->setClave($_POST['claveCliente']) or
                     !$cliente->setEstado(isset($_POST['estadoCliente']) ? 1 : 0)
                 ) {
@@ -54,20 +53,6 @@ if (isset($_GET['action'])) {
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
                 } else {
                     $result['error'] = 'No existen clientees registrados';
-                }
-                break;
-            case 'readExist':
-                if ($cliente->readExist($_POST['usuario'])) {
-                    $result['status'] = 1;
-                } else {
-                    $result['status'] = 2;
-                }
-                break;
-            case 'readExistMail':
-                if ($cliente->readExistMail($_POST['correo'])) {
-                    $result['status'] = 1;
-                } else {
-                    $result['status'] = 2;
                 }
                 break;
             case 'readOne':
@@ -122,20 +107,12 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Ocurrió un problema al cerrar la sesión';
                 }
                 break;
-            case 'readProfile':
-                if ($result['dataset'] = $cliente->readProfile()) {
-                    $result['status'] = 1;
-                } else {
-                    $result['error'] = 'Ocurrió un problema al leer el perfil';
-                }
-                break;
             case 'editProfile':
                 $_POST = Validator::validateForm($_POST);
                 if (
                     !$cliente->setNombre($_POST['nombrecliente']) or
                     !$cliente->setApellido($_POST['apellidocliente']) or
-                    !$cliente->setCorreo($_POST['correocliente']) or
-                    !$cliente->setAlias($_POST['aliascliente'])
+                    !$cliente->setCorreo($_POST['correocliente'])
                 ) {
                     $result['error'] = $cliente->getDataError();
                 } elseif ($cliente->editProfile()) {
@@ -148,7 +125,7 @@ if (isset($_GET['action'])) {
                 break;
             case 'changePassword':
                 $_POST = Validator::validateForm($_POST);
-                if (!$cliente->checkPassword($_POST['claveActual'])) {
+                if (!$cliente->setClave($_POST['claveActual'])) {
                     $result['error'] = 'Contraseña actual incorrecta';
                 } elseif ($_POST['claveNueva'] != $_POST['confirmarClave']) {
                     $result['error'] = 'Confirmación de contraseña diferente';
@@ -181,7 +158,6 @@ if (isset($_GET['action'])) {
                     !$cliente->setNombre($_POST['nombre']) or
                     !$cliente->setApellido($_POST['apellido']) or
                     !$cliente->setCorreo($_POST['correo']) or
-                    !$cliente->setAlias($_POST['usuario']) or
                     !$cliente->setClave($_POST['clave'])
                 ) {
                     $result['error'] = $cliente->getDataError();

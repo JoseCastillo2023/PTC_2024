@@ -103,7 +103,6 @@ ALTER TABLE tb_ordenes
 ADD CONSTRAINT fk_orden_cliente FOREIGN KEY (id_cliente) REFERENCES tb_clientes(id_cliente);
 
 
-
 SELECT * FROM tb_clientes; SELECT * FROM tb_detalles_ordenes; SELECT * FROM tb_ordenes; SELECT * FROM tb_productos; SELECT * FROM tb_categorias; SELECT * FROM tb_administradores;
 SELECT * FROM tb_valoraciones;
 

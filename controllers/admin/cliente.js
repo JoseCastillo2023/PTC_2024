@@ -83,7 +83,7 @@ const fillTable = async () => {
                 <tr>
                     <td>${row.apellido_cliente}</td>
                     <td>${row.nombre_cliente}</td>
-                    <td>${row.alias_cliente}</td>
+                    <td>${row.correo_cliente}</td>
                     <td><i class="${icon}"></i></td>
                     <td>
                         <button type="button" class="btn btn-info" onclick="openUpdate(${row.id_cliente})">
@@ -145,21 +145,6 @@ const openCreate = () => {
         checkExistence(CORREO_CLIENTE, 'correo', 'readExistMail', MENSAJEMAIL);
     });
     
-    /*ALIAS_CLIENTE.addEventListener('input', async function ()  {
-        const FORM = new FormData();
-        FORM.append('usuario', ALIAS_CLIENTE.value);
-        // Petición para obtener los datos del registro solicitado.
-        const DATA = await fetchData(CLIENTE_API, 'readExist', FORM);
-        // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
-        if (DATA.status === 1) {
-            MENSAJEDIV.textContent = 'Ya existe el usuario';
-            MENSAJEDIV.style.display = 'block'; 
-            IDGUARDAR.disabled = true;
-        } else {
-            MENSAJEDIV.textContent = "";
-            IDGUARDAR.disabled = false;
-        }
-    });*/
 }
 //Función asíncrona para preparar el formulario al momento de actualizar un registro.
 const openUpdate = async (id) => {
@@ -184,7 +169,6 @@ const openUpdate = async (id) => {
         NOMBRE_CLIENTE.value = ROW.nombre_cliente;
         APELLIDO_CLIENTE.value = ROW.apellido_cliente;
         CORREO_CLIENTE.value = ROW.correo_cliente;
-        ALIAS_CLIENTE.value = ROW.alias_cliente;
         ESTADO_CLIENTE.checked=ROW.estado_cliente;
 
         CORREO_CLIENTE.addEventListener('input', async function () {

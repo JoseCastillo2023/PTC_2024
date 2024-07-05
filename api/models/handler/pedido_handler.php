@@ -259,7 +259,7 @@ class PedidoHandler
     {
         $sql = 'INSERT INTO tb_ordenes(id_cliente, forma_pago_pedido, fecha_pedido, estado_pedido)
                 VALUES(?, ?, ?, ?)';
-        $params = [$this->id_cliente, $this->forma_pago_pedido, $this->fecha_pedido, $this->estado_pedido];
+        $params = [$this->id_cliente, $this->forma_pago_pedido, $this->fecha_pedido, $this->estado];
         return Database::executeRow($sql, $params);
     }
 

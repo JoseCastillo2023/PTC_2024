@@ -26,7 +26,7 @@ class ClienteHandler
     public function checkUser($mail, $password)
     {
         $sql = 'SELECT id_cliente, correo_cliente, clave_cliente, estado_cliente
-                FROM cliente
+                FROM tb_clientes
                 WHERE correo_cliente = ?';
         $params = array($mail);
         $data = Database::getRow($sql, $params);
@@ -53,7 +53,7 @@ class ClienteHandler
 
     public function changePassword()
     {
-        $sql = 'UPDATE cliente
+        $sql = 'UPDATE tb_clientes
                 SET clave_cliente = ?
                 WHERE id_cliente = ?';
         $params = array($this->clave, $this->id);
@@ -62,7 +62,7 @@ class ClienteHandler
 
     public function editProfile()
     {
-        $sql = 'UPDATE cliente
+        $sql = 'UPDATE tb_clientes
                 SET nombre_cliente = ?, apellido_cliente = ?, correo_cliente = ?, dui_cliente = ?, telefono_cliente = ?, nacimiento_cliente = ?, direccion_cliente = ?
                 WHERE id_cliente = ?';
         $params = array($this->nombre, $this->apellido, $this->correo, $this->dui, $this->telefono, $this->nacimiento, $this->direccion, $this->id);
@@ -71,7 +71,7 @@ class ClienteHandler
 
     public function changeStatus()
     {
-        $sql = 'UPDATE cliente
+        $sql = 'UPDATE tb_clientes
                 SET estado_cliente = ?
                 WHERE id_cliente = ?';
         $params = array($this->estado, $this->id);
@@ -85,7 +85,7 @@ class ClienteHandler
     {
         $value = '%' . Validator::getSearchValue() . '%';
         $sql = 'SELECT id_cliente, nombre_cliente, apellido_cliente, correo_cliente, dui_cliente, telefono_cliente, nacimiento_cliente, direccion_cliente
-                FROM cliente
+                FROM tb_clientes
                 WHERE apellido_cliente LIKE ? OR nombre_cliente LIKE ? OR correo_cliente LIKE ?
                 ORDER BY apellido_cliente';
         $params = array($value, $value, $value);
@@ -94,7 +94,7 @@ class ClienteHandler
 
     public function createRow()
     {
-        $sql = 'INSERT INTO cliente(nombre_cliente, apellido_cliente, correo_cliente, dui_cliente, telefono_cliente, nacimiento_cliente, direccion_cliente, clave_cliente)
+        $sql = 'INSERT INTO tb_clientes(nombre_cliente, apellido_cliente, correo_cliente, dui_cliente, telefono_cliente, nacimiento_cliente, direccion_cliente, clave_cliente)
                 VALUES(?, ?, ?, ?, ?, ?, ?, ?)';
         $params = array($this->nombre, $this->apellido, $this->correo, $this->dui, $this->telefono, $this->nacimiento, $this->direccion, $this->clave);
         return Database::executeRow($sql, $params);
@@ -103,7 +103,7 @@ class ClienteHandler
     public function readAll()
     {
         $sql = 'SELECT id_cliente, nombre_cliente, apellido_cliente, correo_cliente, dui_cliente, estado_cliente
-                FROM cliente
+                FROM tb_clientes
                 ORDER BY apellido_cliente';
         return Database::getRows($sql);
     }
@@ -111,7 +111,7 @@ class ClienteHandler
     public function readOne()
     {
         $sql = 'SELECT id_cliente, nombre_cliente, apellido_cliente, correo_cliente, dui_cliente, telefono_cliente, nacimiento_cliente, direccion_cliente, estado_cliente
-                FROM cliente
+                FROM tb_clientes
                 WHERE id_cliente = ?';
         $params = array($this->id);
         return Database::getRow($sql, $params);
@@ -119,16 +119,16 @@ class ClienteHandler
 
     public function updateRow()
     {
-        $sql = 'UPDATE cliente
-                SET nombre_cliente = ?, apellido_cliente = ?, dui_cliente = ?, estado_cliente = ?, telefono_cliente = ?, nacimiento_cliente = ?, direccion_cliente = ?
+        $sql = 'UPDATE tb_clientes
+                SET nombre_cliente = ?, apellido_cliente = ?, correo_cliente = ?, estado_cliente = ?, telefono_cliente = ?, nacimiento_cliente = ?, direccion_cliente = ?
                 WHERE id_cliente = ?';
-        $params = array($this->nombre, $this->apellido, $this->dui, $this->estado, $this->telefono, $this->nacimiento, $this->direccion, $this->id);
+        $params = array($this->nombre, $this->apellido, $this->correo, $this->estado, $this->telefono, $this->nacimiento, $this->direccion, $this->id);
         return Database::executeRow($sql, $params);
     }
 
     public function deleteRow()
     {
-        $sql = 'DELETE FROM cliente
+        $sql = 'DELETE FROM tb_clientes
                 WHERE id_cliente = ?';
         $params = array($this->id);
         return Database::executeRow($sql, $params);
@@ -137,7 +137,7 @@ class ClienteHandler
     public function checkDuplicate($value)
     {
         $sql = 'SELECT id_cliente
-                FROM cliente
+                FROM tb_clientes
                 WHERE dui_cliente = ? OR correo_cliente = ?';
         $params = array($value, $value);
         return Database::getRow($sql, $params);

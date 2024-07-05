@@ -114,18 +114,6 @@ class DetallePedidoHandler
         return Database::executeRow($sql, $params);
     }
 
-    public function readProductosCategoria()
-    {
-        $sql = 'SELECT p.id_producto, p.nombre_producto, p.descripcion_producto, p.precio_producto, 
-                       p.existencias_producto, p.imagen_producto, c.nombre_categoria
-                FROM tb_productos p
-                INNER JOIN tb_categorias c ON p.id_categoria = c.id_categoria
-                WHERE p.id_categoria = ? AND p.estado_producto = 1
-                ORDER BY p.nombre_producto';
-        $params = array($this->id_categoria);
-        return Database::getRows($sql, $params);
-    }
-
     /*
     *   Métodos para generar gráficos.
     */
@@ -146,20 +134,6 @@ class DetallePedidoHandler
                 INNER JOIN tb_categorias c ON p.id_categoria = c.id_categoria
                 GROUP BY c.nombre_categoria ORDER BY porcentaje DESC';
         return Database::getRows($sql);
-    }
-
-    /*
-    *   Métodos para generar reportes.
-    */
-    public function productosCategoria()
-    {
-        $sql = 'SELECT p.nombre_producto, p.precio_producto, p.estado_producto
-                FROM tb_productos p
-                INNER JOIN tb_categorias c ON p.id_categoria = c.id_categoria
-                WHERE p.id_categoria = ?
-                ORDER BY p.nombre_producto';
-        $params = array($this->id_categoria);
-        return Database::getRows($sql, $params);
     }
 }
 ?>
