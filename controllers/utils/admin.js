@@ -28,6 +28,8 @@ const loadTemplate = async () => {
         // Se comprueba si existe un alias definido para el usuario, de lo contrario se muestra un mensaje con la excepción.
         if (DATA.status) {
             // Se agrega el encabezado de la página web antes del contenido principal.
+
+            // Menu funcionalidad.
             MAIN.insertAdjacentHTML('beforebegin', `
             <header>
     <nav class="navbar">
@@ -69,6 +71,7 @@ const loadTemplate = async () => {
 </header>
             `);
 
+            // Pie de página funcionalidad.
             // Se agrega el pie de la página web después del contenido principal.
             MAIN.insertAdjacentHTML('afterend', `
                 <footer>
@@ -90,6 +93,8 @@ const loadTemplate = async () => {
             sweetAlert(3, DATA.error, false, 'index.html');
         }
     } else {
+
+        // HEADER DEL Primer Uso y Login.
         // Se comprueba si la página web es la principal, de lo contrario se direcciona a iniciar sesión.
         if (location.pathname.endsWith('index.html')) {
             // Se agrega el encabezado de la página web antes del contenido principal.
@@ -104,6 +109,8 @@ const loadTemplate = async () => {
                     </nav>
                 </header>
             `);
+
+            // FOOTER DEL Primer Uso y Login.
             // Se agrega el pie de la página web después del contenido principal.
             MAIN.insertAdjacentHTML('afterend', `
                 <footer>
