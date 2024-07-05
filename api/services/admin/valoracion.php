@@ -29,25 +29,6 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'No hay coincidencias';
                 }
                 break;
-            case 'createRow':
-                $_POST = Validator::validateForm($_POST);
-                if (
-                    !$comentario->setNombre($_POST['nombreModelo']) or
-                    //!$comentario->setDescripcion($_POST['descripcionModelo']) or
-                    !$comentario->setCategoria($_POST['marcaModelo']) or
-                    !$comentario->setEstado(isset($_POST['estadoModelo']) ? "A" : "I") or
-                    !$comentario->setImagen($_FILES['imagenModelo'])
-                ) {
-                    $result['error'] = $comentario->getDataError();
-                } elseif ($comentario->createRow()) {
-                    $result['status'] = 1;
-                    $result['message'] = 'Comentario creado correctamente';
-                    // Se asigna el estado del archivo después de insertar.
-                    $result['fileStatus'] = Validator::saveFile($_FILES['imagencomentario'], $comentario::RUTA_IMAGEN);
-                } else {
-                    $result['error'] = 'Ocurrió un problema al crear el comentario';
-                }
-                break;
             case 'readAll':
                 if ($result['dataset'] = $comentario->readAll()) {
                     $result['status'] = 1;
@@ -77,21 +58,6 @@ if (isset($_GET['action'])) {
                     $result['message'] = 'Registro modificado correctamente';
                 } else {
                     $result['error'] = 'Ocurrió un problema al modificar el comentario';
-                }
-                break;
-            case 'deleteRow':
-                if (
-                    !$comentario->setId($_POST['idcomentario']) or
-                    !$comentario->setFilename()
-                ) {
-                    $result['error'] = $comentario->getDataError();
-                } elseif ($comentario->deleteRow()) {
-                    $result['status'] = 1;
-                    $result['message'] = 'Comentario eliminado correctamente';
-                    // Se asigna el estado del archivo después de eliminar.
-                    $result['fileStatus'] = Validator::deleteFile($comentario::RUTA_IMAGEN, $comentario->getFilename());
-                } else {
-                    $result['error'] = 'Ocurrió un problema al eliminar el comentario';
                 }
                 break;
             default:
