@@ -8,7 +8,7 @@ USE PanaderiaHPTC;
 
 -- Tablas
 CREATE TABLE tb_clientes (
-    id_cliente INT PRIMARY KEY AUTO_INCREMENT,
+    id_cliente INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     nombre_cliente VARCHAR(50) NOT NULL,
     apellido_cliente VARCHAR(50) NOT NULL,
     dui_cliente VARCHAR(10) NOT NULL,
@@ -37,7 +37,6 @@ CREATE TABLE tb_productos (
     imagen_producto VARCHAR(250) NOT NULL,
     id_categoria INT NOT NULL,
     estado_producto TINYINT(1) NOT NULL,
-    id_administrador INT NOT NULL,
     fecha_registro TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -46,7 +45,7 @@ CREATE TABLE tb_administradores (
     nombre_administrador VARCHAR(50) NOT NULL,
     apellido_administrador VARCHAR(50) NOT NULL,
     correo_administrador VARCHAR(100) NOT NULL,
-    alias_administrador VARCHAR(25) UNIQUE NOT NULL,
+    alias_administrador VARCHAR(30) UNIQUE NOT NULL,
     clave_administrador VARCHAR(100) NOT NULL
 );
 
@@ -64,14 +63,14 @@ CREATE TABLE tb_ordenes (
     id_cliente INT NOT NULL,
     forma_pago_pedido ENUM('Efectivo','Transferencia') DEFAULT 'Efectivo' NOT NULL,
     fecha_pedido TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    estado_pedido ENUM('Pendiente','Finalizado','Anulado') NOT NULL
+    estado_pedido ENUM('Pendiente','Finalizado','Anulado') NOT NULL DEFAULT 'Pendiente'
 );
 
 CREATE TABLE tb_detalles_ordenes (
     id_detalle INT PRIMARY KEY AUTO_INCREMENT,
     id_orden INT NOT NULL,
     id_producto INT NOT NULL,
-    cantidad_producto INT CHECK(cantidad_producto > 0)
+    cantidad_producto INT CHECK(cantidad_producto > 0) NOT NULL
 );
 
 -- Llaves foráneas
