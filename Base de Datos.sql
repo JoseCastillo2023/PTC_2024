@@ -17,7 +17,7 @@ CREATE TABLE tb_clientes (
     direccion_cliente VARCHAR(250) NOT NULL,
     nacimiento_cliente DATE NOT NULL,
     clave_cliente VARCHAR(100) NOT NULL,
-	estado_cliente BOOLEAN DEFAULT TRUE NOT NULL,
+	estado_cliente BOOLEAN DEFAULT TRUE NOT NULL, 
     fecha_registro TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -67,16 +67,20 @@ CREATE TABLE tb_ordenes (
 );
 
 CREATE TABLE tb_detalles_ordenes (
-    id_detalle INT PRIMARY KEY AUTO_INCREMENT,
+    id_detalle INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     id_orden INT NOT NULL,
     id_producto INT NOT NULL,
-    cantidad_producto INT CHECK(cantidad_producto > 0) NOT NULL
+    cantidad_producto INT NOT NULL CHECK (cantidad_producto > 0)
 );
+
 
 -- Llaves foráneas
 
 ALTER TABLE tb_detalles_ordenes
 ADD CONSTRAINT fk_detalle_orden FOREIGN KEY (id_orden) REFERENCES tb_ordenes(id_orden);
+
+ALTER TABLE tb_detalles_ordenes
+ADD CONSTRAINT fk_detalle_producto FOREIGN KEY (id_producto) REFERENCES tb_productos(id_producto);
 
 ALTER TABLE tb_productos
 ADD CONSTRAINT fk_producto_categoria FOREIGN KEY (id_categoria) REFERENCES tb_categorias(id_categoria);
@@ -140,4 +144,4 @@ VALUES
 (2, 4, 'Buena calidad, pero el envío fue un poco lento.'),
 (3, 3, 'El libro es interesante, pero esperaba más del final.'),
 (4, 5, 'Las sábanas son muy suaves y confortables.'),
-(5, 4, 'El balón tiene buen agarre y resistencia, recomendado para jugar en césped.');
+(5, 4, 'El balón tiene buen agarre y resistencia, recomendado para jugar en césped.');	
