@@ -154,8 +154,10 @@ JOIN tb_ordenes o ON c.id_cliente = o.id_cliente;
 CREATE VIEW v_productos_valoraciones AS
 SELECT p.id_producto, p.nombre_producto, p.descripcion_producto, p.precio_producto, AVG(v.calificacion_producto) AS promedio_calificacion
 FROM tb_productos p
-LEFT JOIN tb_valoraciones v ON p.id_producto = v.id_producto
+LEFT JOIN tb_detalles_ordenes d ON p.id_producto = d.id_producto
+LEFT JOIN tb_valoraciones v ON d.id_detalle = v.id_detalle
 GROUP BY p.id_producto;
+
 
 DELIMITER $$
 
@@ -225,13 +227,13 @@ VALUES
 ('Hogar', 'Artículos para el hogar y decoración', 'hogar.jpg'),
 ('Deportes', 'Equipos y accesorios deportivos', 'deportes.jpg');
 
-INSERT INTO tb_productos (nombre_producto, descripcion_producto, precio_producto, existencias_producto, imagen_producto, id_categoria, estado_producto, id_administrador)
+INSERT INTO tb_productos (nombre_producto, descripcion_producto, precio_producto, existencias_producto, imagen_producto, id_categoria, estado_producto)
 VALUES
-('Smartphone', 'Teléfono inteligente de última generación', 799.99, 100, 'smartphone.jpg', 1, 1, 1),
-('Camiseta', 'Camiseta de algodón unisex', 29.99, 200, 'camiseta.jpg', 2, 1, 1),
-('El Hobbit', 'Novela de fantasía escrita por J.R.R. Tolkien', 15.50, 150, 'hobbit.jpg', 3, 1, 1),
-('Juego de Sábanas', 'Sábanas de algodón para cama king size', 49.99, 50, 'sabanas.jpg', 4, 1, 1),
-('Balón de Fútbol', 'Balón oficial de fútbol tamaño 5', 19.99, 100, 'balon.jpg', 5, 1, 1);
+('Smartphone', 'Teléfono inteligente de última generación', 799.99, 100, 'smartphone.jpg', 1, 1),
+('Camiseta', 'Camiseta de algodón unisex', 29.99, 200, 'camiseta.jpg', 2, 1),
+('El Hobbit', 'Novela de fantasía escrita por J.R.R. Tolkien', 15.50, 150, 'hobbit.jpg', 3, 1),
+('Juego de Sábanas', 'Sábanas de algodón para cama king size', 49.99, 50, 'sabanas.jpg', 4, 1),
+('Balón de Fútbol', 'Balón oficial de fútbol tamaño 5', 19.99, 100, 'balon.jpg', 5, 1);
 
 INSERT INTO tb_ordenes (id_cliente, forma_pago_pedido, estado_pedido)
 VALUES
