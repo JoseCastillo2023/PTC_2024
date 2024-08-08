@@ -166,47 +166,6 @@ class PedidoHandler
             }
         }
     }
-
-    public function createDetailM()
-    {
-        $clientId = $this->cliente;
-        $idProducto = $this->id_producto;
-        $cantidadProducto = $this->cantidad;
-
-        $idOrden = $this->getOrderM($clientId);
-        $mensaje = null;
-
-        if ($idOrden) {
-            $sql = 'SELECT * FROM tb_detalles_ordenes
-                WHERE id_orden = ? AND id_producto = ?';
-            $params = array($idOrden, $idProducto);
-            $result = Database::getRow($sql, $params);
-
-            if ($result) {
-                $cantidad = $cantidadProducto + $result['cantidad_producto'];
-                if ($cantidad < 4) {
-                    $sql = 'UPDATE tb_detalles_ordenes 
-                        SET cantidad_producto = ? WHERE id_detalle = ?';
-                    $params = array($cantidad, $result['id_detalle']);
-                    if (Database::executeRow($sql, $params)) {
-                        $mensaje = array('status' => 1, 'idOrden' => $idOrden);
-                    }
-                } else {
-                    $mensaje = array('status' => 2);
-                }
-            } else {
-                $sql = 'INSERT INTO tb_detalles_ordenes(id_producto, cantidad_producto, id_orden)
-                    VALUES (?, ?, ?)';
-                $params = array($idProducto, $cantidadProducto, $idOrden);
-                if (Database::executeRow($sql, $params)) {
-                    $mensaje = array('status' => 1, 'idOrden' => $idOrden);
-                }
-            }
-        }
-
-        return $mensaje;
-    }
-
     // Método para finalizar un pedido por parte del cliente.
     public function finishOrder()
     {

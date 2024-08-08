@@ -37,6 +37,22 @@ if (isset($_GET['action'])) {
     } else {
         // Se compara la acción a realizar cuando el cliente no ha iniciado sesión.
         switch ($_GET['action']) {
+            case 'getUser':
+                if (isset($_SESSION['correoCliente'])) {
+                    $clienteData = $cliente->readOneCorreo($_SESSION['correoCliente']);
+                    if ($clienteData) {
+                        $result['status'] = 1;
+                        $result['username'] = $_SESSION['correoCliente'];
+                        $result['name'] = $clienteData['nombre_cliente'] . ' ' . $clienteData['apellido_cliente'];
+                    } else {
+                        $result['error'] = 'No se encontró un cliente con este correo electrónico';
+                        $result['name'] = 'No se pudo obtener el usuario';
+                    }
+                } else {
+                    $result['error'] = 'Correo de usuario indefinido';
+                    $result['name'] = 'No se pudo obtener el usuario';
+                }
+                break;
             case 'signUp':
                 $_POST = Validator::validateForm($_POST);
                 // Se establece la clave secreta para el reCAPTCHA de acuerdo con la cuenta de Google.
@@ -59,9 +75,31 @@ if (isset($_GET['action'])) {
                 if (!$captcha['success']) {
                     $result['recaptcha'] = 1;
                     $result['error'] = 'No eres humano';
-                } elseif(!isset($_POST['condicion'])) {
+                } elseif (!isset($_POST['condicion'])) {
                     $result['error'] = 'Debe marcar la aceptación de términos y condiciones';
                 } elseif (
+                    !$cliente->setNombre($_POST['nombreCliente']) or
+                    !$cliente->setApellido($_POST['apellidoCliente']) or
+                    !$cliente->setCorreo($_POST['correoCliente']) or
+                    !$cliente->setDireccion($_POST['direccionCliente']) or
+                    !$cliente->setDUI($_POST['duiCliente']) or
+                    !$cliente->setNacimiento($_POST['nacimientoCliente']) or
+                    !$cliente->setTelefono($_POST['telefonoCliente']) or
+                    !$cliente->setClave($_POST['claveCliente'])
+                ) {
+                    $result['error'] = $cliente->getDataError();
+                } elseif ($_POST['claveCliente'] != $_POST['confirmarClave']) {
+                    $result['error'] = 'Contraseñas diferentes';
+                } elseif ($cliente->createRow()) {
+                    $result['status'] = 1;
+                    $result['message'] = 'Cuenta registrada correctamente';
+                } else {
+                    $result['error'] = 'Ocurrió un problema al registrar la cuenta';
+                }
+                break;
+            case 'signUpMovil':
+                $_POST = Validator::validateForm($_POST);
+                if (
                     !$cliente->setNombre($_POST['nombreCliente']) or
                     !$cliente->setApellido($_POST['apellidoCliente']) or
                     !$cliente->setCorreo($_POST['correoCliente']) or
