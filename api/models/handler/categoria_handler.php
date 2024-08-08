@@ -41,7 +41,7 @@ class CategoriaHandler
 
     public function readAll()
     {
-        $sql = 'SELECT id_categoria, nombre_categoria, imagen_categoria, descripcion_categoria
+        $sql = 'SELECT id_categoria, nombre_categoria, descripcion_categoria, imagen
                 FROM tb_categorias
                 ORDER BY nombre_categoria';
         return Database::getRows($sql);

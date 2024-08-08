@@ -17,12 +17,20 @@ if (isset($_GET['action'])) {
         switch ($_GET['action']) {
             case 'getUser':
                 if (isset($_SESSION['correoCliente'])) {
-                    $result['status'] = 1;
-                    $result['username'] = $_SESSION['correoCliente'];
+                    $clienteData = $cliente->readOneCorreo($_SESSION['correoCliente']);
+                    if ($clienteData) {
+                        $result['status'] = 1;
+                        $result['username'] = $_SESSION['correoCliente'];
+                        $result['name'] = $clienteData['nombre_cliente'] . ' ' . $clienteData['apellido_cliente'];
+                    } else {
+                        $result['error'] = 'No se encontró un cliente con este correo electrónico';
+                        $result['name'] = 'No se pudo obtener el usuario';
+                    }
                 } else {
                     $result['error'] = 'Correo de usuario indefinido';
+                    $result['name'] = 'No se pudo obtener el usuario';
                 }
-                break;
+                break;   
             case 'logOut':
                 if (session_destroy()) {
                     $result['status'] = 1;
@@ -39,18 +47,10 @@ if (isset($_GET['action'])) {
         switch ($_GET['action']) {
             case 'getUser':
                 if (isset($_SESSION['correoCliente'])) {
-                    $clienteData = $cliente->readOneCorreo($_SESSION['correoCliente']);
-                    if ($clienteData) {
-                        $result['status'] = 1;
-                        $result['username'] = $_SESSION['correoCliente'];
-                        $result['name'] = $clienteData['nombre_cliente'] . ' ' . $clienteData['apellido_cliente'];
-                    } else {
-                        $result['error'] = 'No se encontró un cliente con este correo electrónico';
-                        $result['name'] = 'No se pudo obtener el usuario';
-                    }
+                    $result['status'] = 1;
+                    $result['username'] = $_SESSION['correoCliente'];
                 } else {
                     $result['error'] = 'Correo de usuario indefinido';
-                    $result['name'] = 'No se pudo obtener el usuario';
                 }
                 break;
             case 'signUp':

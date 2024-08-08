@@ -1,8 +1,8 @@
 <?php
 // Se incluye la clase para validar los datos de entrada.
-require_once('../../helpers/validator.php');
+require_once ('../../helpers/validator.php');
 // Se incluye la clase padre.
-require_once('../../models/handler/categoria_handler.php');
+require_once ('../../models/handler/categoria_handler.php');
 /*
  *  Clase para manejar el encapsulamiento de los datos de la tabla CATEGORIA.
  */
@@ -78,7 +78,7 @@ class CategoriaData extends CategoriaHandler
     public function setFilename()
     {
         if ($data = $this->readFilename()) {
-            $this->filename = $data['imagen_categoria'];
+            $this->filename = $data['imagen'];
             return true;
         } else {
             $this->data_error = 'Categoría inexistente';
