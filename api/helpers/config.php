@@ -6,6 +6,6 @@ date_default_timezone_set('America/El_Salvador');
 // Constantes para establecer las credenciales de conexión con el servidor de bases de datos.
 define('SERVER', 'localhost');
 define('DATABASE', 'PanaderiaHPTC');
-define('USERNAME', 'root');
-define('PASSWORD', '');
+define('USERNAME', 'usuario_ptc');
+define('PASSWORD', 'Ptc_2024_password');
 ?>
