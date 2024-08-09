@@ -1,72 +1,45 @@
 <?php
 // Se incluye la clase para trabajar con la base de datos.
-require_once('../../helpers/database.php');
+require_once ('../../helpers/database.php');
+
 /*
-*	Clase para manejar el comportamiento de los datos de las tablas ORDENES y DETALLES_ORDENES.
-*/
+ *   Clase para manejar el comportamiento de los datos de las tablas PEDIDO y DETALLE_PEDIDO.
+ */
 class PedidoHandler
 {
     /*
-    *   Declaración de atributos para el manejo de datos.
-    */
-    protected $search = null;
-    protected $id = null;
-    protected $nombre = null;
-    protected $descripcion = null;
-    protected $precio = null;
-    protected $existencias = null;
-    protected $imagen = null;
-    protected $categoria = null;
-    protected $estado = null;
-
-    protected $id_orden = null;
-    protected $id_producto = null;
+     *   Declaración de atributos para el manejo de datos.
+     */
+    private $idPedido;
+    protected $id_tarjeta = null;
+    protected $id_pedido = null;
     protected $id_detalle = null;
     protected $cliente = null;
     protected $producto = null;
     protected $cantidad = null;
+    protected $estado = null;
 
     /*
-    *   Métodos para realizar las operaciones SCRUD (search, create, read, update, and delete).
-    */
-    public function searchByCliente()
-    {
-        $sql = 'SELECT id_orden, CONCAT(nombre_cliente, " ", apellido_cliente) as cliente,
-        id_cliente, correo_cliente,DATE_FORMAT(fecha_pedido, "%h:%i %p - %e %b %Y") AS fecha, estado_pedido,forma_pago_pedido
-        FROM tb_ordenes INNER JOIN tb_clientes USING(id_cliente)
-        WHERE estado_pedido = ? AND id_cliente = ?';
+     *   ESTADOS DEL PEDIDO
+     *   Pendiente (valor por defecto en la base de datos). Pedido en proceso y se puede modificar el detalle.
+     *   Finalizado. Pedido terminado por el cliente y ya no es posible modificar el detalle.
+     *   Entregado. Pedido enviado al cliente.
+     *   Anulado. Pedido cancelado por el cliente después de ser finalizado.
+     */
 
-        $params = [$this->estado, $_SESSION['idCliente']];
-        switch ($this->search) {
-            case '3meses':
-                $interval = 90; // Aproximadamente 3 meses
-                break;
-            case '1mes':
-                $interval = 30; // Aproximadamente 1 mes
-                break;
-            case '7dias':
-                $interval = 7; // 7 días
-                break;
-            default:
-                $interval = null; // 'Todo' u otro valor no requiere filtro adicional
-        }
-        if ($interval) {
-            $sql .= ' AND fecha_pedido >= DATE_SUB(CURDATE(), INTERVAL ? DAY)';
-            $params[] = $interval;
-        }
-        $sql .= ' ORDER BY fecha_pedido DESC';
-        return Database::getRows($sql, $params);
-    }
-    
+    /*
+     *   Métodos para realizar las operaciones SCRUD (search, create, read, update, and delete).
+     */
+    // Método para verificar si existe un pedido en proceso con el fin de iniciar o continuar una compra.
     public function getOrder()
     {
         $this->estado = 'Pendiente';
-        $sql = 'SELECT id_orden FROM tb_ordenes
-         WHERE estado_pedido = ? AND id_cliente = ?';
-
+        $sql = 'SELECT id_pedido
+                FROM tb_pedidos
+                WHERE estado_pedido = ? AND id_cliente = ?';
         $params = array($this->estado, $_SESSION['idCliente']);
         if ($data = Database::getRow($sql, $params)) {
-            $_SESSION['idOrden'] = $data['id_orden'];
+            $_SESSION['idPedido'] = $data['id_pedido'];
             return true;
         } else {
             return false;
@@ -79,11 +52,11 @@ class PedidoHandler
         if ($this->getOrder()) {
             return true;
         } else {
-            $sql = 'INSERT INTO tb_ordenes(id_cliente,forma_pago_pedido,fecha_pedido,estado_pedido)
-                    VALUES(?,?,now(),"Pendiente")';
-            $params = array($_SESSION['idCliente'], "Efectivo");
-            // Se obtiene el ultimo valor insertado de la llave primaria en la tabla orden.
-            if ($_SESSION['idOrden'] = Database::getLastRow($sql, $params)) {
+            $sql = 'INSERT INTO tb_pedidos(direccion_pedido, id_cliente)
+                    VALUES((SELECT direccion_cliente FROM tb_clientes WHERE id_cliente = ?), ?)';
+            $params = array($_SESSION['idCliente'], $_SESSION['idCliente']);
+            // Se obtiene el último valor insertado de la llave primaria en la tabla pedido.
+            if ($_SESSION['idPedido'] = Database::getLastRow($sql, $params)) {
                 return true;
             } else {
                 return false;
@@ -94,206 +67,223 @@ class PedidoHandler
     // Método para agregar un producto al carrito de compras.
     public function createDetail()
     {
-        $sql = 'SELECT * FROM tb_detalles_ordenes
-        WHERE id_orden=? AND id_producto=?;';
-        $params = array($_SESSION['idOrden'], $this->id_producto);
-        $result = Database::getRow($sql, $params);
-        $mensaje = null;
 
-        if ($result) {
-            $this->cantidad = $this->cantidad + $result['cantidad_producto'];
-            if ($this->cantidad < 4) {
-                $sql = 'UPDATE tb_detalles_ordenes 
-                SET cantidad_producto= ? WHERE id_detalle=?';
-                $params = array($this->cantidad, $result['id_detalle']);
-                if (Database::executeRow($sql, $params)) {
-                    $mensaje = 1;
-                }
-            } else {
-                $mensaje = 2;
+        try {
+            // Verificar si la cantidad solicitada es menor o igual a las existencias disponibles
+            $sqlCheckStock = 'SELECT existencias_producto FROM tb_productos WHERE id_producto = ?';
+            $paramsCheckStock = array($this->producto);
+            $result = Database::getRow($sqlCheckStock, $paramsCheckStock);
+    
+            if (!$result) {
+                throw new Exception("Producto no encontrado.");
             }
-        } else {
-            $sql = 'INSERT INTO tb_detalles_ordenes(id_producto, cantidad_producto, id_orden)
-                VALUES(?, ?, ?)';
-            $params = array($this->id_producto, $this->cantidad, $_SESSION['idOrden']);
-            if (Database::executeRow($sql, $params)) {
-                $mensaje = 1;
+    
+            $existenciasDisponibles = $result['existencias_producto'];
+    
+            if ($this->cantidad > $existenciasDisponibles) {
+                throw new Exception("La cantidad solicitada excede las existencias disponibles.");
             }
+    
+            // Actualizar las existencias del producto
+            $sqlUpdateStock = 'UPDATE tb_productos SET existencias_producto = existencias_producto - ? WHERE id_producto = ?';
+            $paramsUpdateStock = array($this->cantidad, $this->producto);
+            Database::executeRow($sqlUpdateStock, $paramsUpdateStock);
+    
+            // Insertar el detalle del pedido
+            $sqlInsertDetail = 'INSERT INTO tb_detalles_pedidos (id_producto, precio_producto, cantidad_producto, id_pedido)
+                                VALUES (?, (SELECT precio_producto FROM tb_productos WHERE id_producto = ?), ?, ?)';
+            $paramsInsertDetail = array($this->producto, $this->producto, $this->cantidad, $_SESSION['idPedido']);
+            Database::executeRow($sqlInsertDetail, $paramsInsertDetail);
+
+            
+            return true;
+        } catch (Exception $e) {
+            // Revertir la transacción en caso de error
+            throw $e;
         }
-        return $mensaje;
     }
+    
 
     // Método para obtener los productos que se encuentran en el carrito de compras.
     public function readDetail()
     {
-        $sql = 'SELECT id_detalle, id_producto, nombre_producto, descripcion_producto, precio_producto, cantidad_producto
-                FROM tb_detalles_ordenes
+        $sql = 'SELECT id_detalle, nombre_producto, tb_detalles_pedidos.precio_producto, tb_detalles_pedidos.cantidad_producto, tb_productos.imagen_producto
+                FROM tb_detalles_pedidos
+                INNER JOIN tb_pedidos USING(id_pedido)
                 INNER JOIN tb_productos USING(id_producto)
-                WHERE id_orden = ?';
-        $params = array($_SESSION['idOrden']);
+                WHERE id_pedido = ?';
+        $params = array($_SESSION['idPedido']);
         return Database::getRows($sql, $params);
     }
 
-    public function getOrderM()
-    {
-        $this->estado = 'Pendiente';
-        $sql = 'SELECT id_orden FROM tb_ordenes
-            WHERE estado_pedido = ? AND id_cliente = ?';
-
-        $params = array($this->estado, $this->cliente);
-        $data = Database::getRow($sql, $params);
-
-        if ($data) {
-            return $data['id_orden'];
-        } else {
-            return null;
-        }
-    }
-
-    public function startOrderM()
-    {
-        if ($this->getOrderM()) {
-            return true;
-        } else {
-            $sql = 'INSERT INTO tb_ordenes(id_cliente, forma_pago_pedido, fecha_pedido, estado_pedido)
-                VALUES (?, ?, now(), "Pendiente")';
-            $params = array($this->cliente, "Efectivo");
-
-            if ($idOrden = Database::getLastRow($sql, $params)) {
-                return $idOrden;
-            } else {
-                return null;
-            }
-        }
-    }
     // Método para finalizar un pedido por parte del cliente.
     public function finishOrder()
     {
-        $this->estado = 'Finalizado';
-        $sql = 'UPDATE tb_ordenes
-                SET estado_pedido = ?
-                WHERE id_orden = ?';
-        $params = array($this->estado, $_SESSION['idOrden']);
-        return Database::executeRow($sql, $params);
+        $this->estado = 'En camino';
+        $sql = 'UPDATE tb_pedidos
+            SET estado_pedido = ?
+            WHERE id_pedido = ?';
+        $params = array($this->estado, $_SESSION['idPedido']);
+    
+        // Actualizar el estado del pedido a 'Entregado'
+        if (Database::executeRow($sql, $params)) {
+            return true;
+        } else {
+            return false;
+        }
     }
+    
 
     // Método para actualizar la cantidad de un producto agregado al carrito de compras.
     public function updateDetail()
     {
-        $sql = 'UPDATE tb_detalles_ordenes
-                SET cantidad_producto = ?
-                WHERE id_detalle = ? AND id_orden = ?';
-        $params = array($this->cantidad, $this->id_detalle, $_SESSION['idOrden']);
-        return Database::executeRow($sql, $params);
+    
+        try {
+            // Obtener la cantidad anterior del producto en el carrito
+            $sqlGetPreviousQuantity = 'SELECT cantidad_producto, id_producto FROM tb_detalles_pedidos WHERE id_detalle = ? AND id_pedido = ?';
+            $paramsGetPreviousQuantity = array($this->id_detalle, $_SESSION['idPedido']);
+            $result = Database::getRow($sqlGetPreviousQuantity, $paramsGetPreviousQuantity);
+    
+            if (!$result) {
+                throw new Exception("Detalle del pedido no encontrado.");
+            }
+    
+            $cantidadAnterior = $result['cantidad_producto'];
+            $idProducto = $result['id_producto'];
+    
+            // Calcular la diferencia en la cantidad
+            $diferenciaCantidad = $this->cantidad - $cantidadAnterior;
+    
+            // Actualizar las existencias del producto
+            if ($diferenciaCantidad > 0) {
+                // Si la cantidad ha aumentado, disminuir las existencias
+                $sqlUpdateStockDecrease = 'UPDATE tb_productos SET existencias_producto = existencias_producto - ? WHERE id_producto = ?';
+                $paramsUpdateStockDecrease = array($diferenciaCantidad, $idProducto);
+                Database::executeRow($sqlUpdateStockDecrease, $paramsUpdateStockDecrease);
+            } elseif ($diferenciaCantidad < 0) {
+                // Si la cantidad ha disminuido, aumentar las existencias
+                $sqlUpdateStockIncrease = 'UPDATE tb_productos SET existencias_producto = existencias_producto + ? WHERE id_producto = ?';
+                $paramsUpdateStockIncrease = array(abs($diferenciaCantidad), $idProducto);
+                Database::executeRow($sqlUpdateStockIncrease, $paramsUpdateStockIncrease);
+            }
+    
+            // Actualizar el detalle del pedido con la nueva cantidad
+            $sqlUpdateDetail = 'UPDATE tb_detalles_pedidos SET cantidad_producto = ? WHERE id_detalle = ? AND id_pedido = ?';
+            $paramsUpdateDetail = array($this->cantidad, $this->id_detalle, $_SESSION['idPedido']);
+            Database::executeRow($sqlUpdateDetail, $paramsUpdateDetail);
+    
+            return true;
+        } catch (Exception $e) {
+
+            throw $e;
+        }
     }
+    
+
+// Método para obtener las existencias del producto
+    public function getProductStock($idDetalle)
+    {
+        $sql = 'SELECT p.existencias_producto
+                FROM tb_detalles_pedidos dp
+                JOIN tb_productos p ON dp.id_producto = p.id_producto
+                WHERE dp.id_detalle = ?';
+        $params = array($idDetalle);
+        $result = Database::getRow($sql, $params);
+        return $result ? $result['existencias_producto'] : false;
+    }
+
+    public function checkProductExistencias($productoId)
+{
+    $sql = 'SELECT existencias_producto FROM tb_productos WHERE id_producto = ?';
+    $params = array($productoId);
+    $result = Database::getRow($sql, $params);
+    
+    if ($result) {
+        return $result['existencias_producto'];
+    } else {
+        return 0; // Producto no encontrado o sin existencias
+    }
+}
+
+
 
     // Método para eliminar un producto que se encuentra en el carrito de compras.
     public function deleteDetail()
     {
-        $sql = 'DELETE FROM tb_detalles_ordenes
-                WHERE id_detalle = ? AND id_orden = ?';
-        $params = array($this->id_detalle, $_SESSION['idOrden']);
+        try {
+            // Obtener la cantidad del producto en el detalle del pedido
+            $sqlGetQuantity = 'SELECT cantidad_producto, id_producto FROM tb_detalles_pedidos WHERE id_detalle = ? AND id_pedido = ?';
+            $paramsGetQuantity = array($this->id_detalle, $_SESSION['idPedido']);
+            $result = Database::getRow($sqlGetQuantity, $paramsGetQuantity);
+    
+            if (!$result) {
+                throw new Exception("Detalle del pedido no encontrado.");
+            }
+    
+            $cantidadProducto = $result['cantidad_producto'];
+            $idProducto = $result['id_producto'];
+    
+            // Actualizar las existencias del producto
+            $sqlUpdateStock = 'UPDATE tb_productos SET existencias_producto = existencias_producto + ? WHERE id_producto = ?';
+            $paramsUpdateStock = array($cantidadProducto, $idProducto);
+            Database::executeRow($sqlUpdateStock, $paramsUpdateStock);
+    
+            // Eliminar el detalle del pedido
+            $sqlDeleteDetail = 'DELETE FROM tb_detalles_pedidos WHERE id_detalle = ? AND id_pedido = ?';
+            $paramsDeleteDetail = array($this->id_detalle, $_SESSION['idPedido']);
+            Database::executeRow($sqlDeleteDetail, $paramsDeleteDetail);
+    
+            return true;
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+    
+    public function deleteOrder()
+    {
+        $sql = 'DELETE FROM tb_pedidos
+            WHERE estado_pedido = ?';
+        $params = array('Pendiente');
         return Database::executeRow($sql, $params);
     }
 
-    public function searchRows()
+    // Método para crear una tarjeta
+    // Método para obtener los números de tarjeta basados en el id_cliente
+    public function getCardNumbers($id_cliente)
     {
-        $this->search = $this->search === '' ? '%%' : '%' . $this->search . '%';
+        $sql = 'SELECT id_tarjeta, numero_tarjeta FROM tb_tarjetas WHERE id_cliente = ?';
+        $params = array($id_cliente);
+        return Database::getRows($sql, $params); // Obtiene todos los números de tarjeta del cliente
+    }
 
-        $sql = 'SELECT o.id_orden, c.id_cliente, CONCAT(c.nombre_cliente, " ", c.apellido_cliente) AS cliente,
-        o.fecha_pedido, o.estado_pedido, o.forma_pago_pedido, o.fecha_entregado, 
-        GROUP_CONCAT(CONCAT(p.nombre_producto, " - ", d.cantidad_producto) SEPARATOR ", ") AS productos
-        FROM tb_ordenes o
-        INNER JOIN tb_detalles_ordenes d ON o.id_orden = d.id_orden
-        INNER JOIN tb_productos p ON d.id_producto = p.id_producto
-        INNER JOIN tb_clientes c ON o.id_cliente = c.id_cliente
-        WHERE c.nombre_cliente LIKE ? OR c.apellido_cliente LIKE ? OR p.nombre_producto LIKE ? OR o.estado_pedido LIKE ?
-        GROUP BY o.id_orden, c.id_cliente, c.nombre_cliente, c.apellido_cliente, o.fecha_pedido, o.estado_pedido, o.forma_pago_pedido, o.fecha_entregado';
-        
-        $params = [$this->search, $this->search, $this->search, $this->search];
+    // Método para crear una nueva tarjeta de pago
+    public function createTarget($tipo_tarjeta, $tipo_uso, $numero_tarjeta, $nombre_tarjeta, $fecha_expiracion, $codigo_verificacion, $id_cliente)
+    {
+        $sql = 'INSERT INTO tb_tarjetas(tipo_tarjeta, tipo_uso, numero_tarjeta, nombre_tarjeta, fecha_expiracion, codigo_verificacion, id_cliente) 
+                VALUES(?, ?, ?, ?, ?, ?, ?)';
+        $params = array($tipo_tarjeta, $tipo_uso, $numero_tarjeta, $nombre_tarjeta, $fecha_expiracion, $codigo_verificacion, $id_cliente);
+        return Database::executeRow($sql, $params);
+    }
+
+    public function readByClientAndStatus($id_cliente, $estado_pedido)
+    {
+        $sql = "SELECT p.id_pedido, p.direccion_pedido, p.fecha_registro, c.nombre_cliente, c.apellido_cliente, c.telefono_cliente, c.direccion_cliente, c.dui_cliente, c.correo_cliente
+                FROM tb_pedidos p
+                INNER JOIN tb_clientes c ON p.id_cliente = c.id_cliente
+                WHERE p.estado_pedido = ? AND p.id_cliente = ?";
+        $params = array($estado_pedido, $id_cliente);
+
         return Database::getRows($sql, $params);
     }
 
-    public function createRow()
+    // Método para obtener los detalles de un pedido
+    public function readByPedido()
     {
-        $sql = 'INSERT INTO tb_ordenes(id_cliente, forma_pago_pedido, fecha_pedido, estado_pedido)
-                VALUES(?, ?, ?, ?)';
-        $params = [$this->id_cliente, $this->forma_pago_pedido, $this->fecha_pedido, $this->estado];
-        return Database::executeRow($sql, $params);
-    }
-
-    public function readRow()
-    {
-        $sql = 'SELECT o.id_orden, o.id_cliente, CONCAT(c.nombre_cliente, " ", c.apellido_cliente) AS cliente,
-        o.fecha_pedido, o.estado_pedido, o.forma_pago_pedido, o.fecha_entregado,
-        GROUP_CONCAT(CONCAT(p.nombre_producto, " - ", d.cantidad_producto) SEPARATOR ", ") AS productos
-        FROM tb_ordenes o
-        INNER JOIN tb_detalles_ordenes d ON o.id_orden = d.id_orden
-        INNER JOIN tb_productos p ON d.id_producto = p.id_producto
-        INNER JOIN tb_clientes c ON o.id_cliente = c.id_cliente
-        WHERE o.id_orden = ?
-        GROUP BY o.id_orden, o.id_cliente, c.nombre_cliente, c.apellido_cliente, o.fecha_pedido, o.estado_pedido, o.forma_pago_pedido, o.fecha_entregado';
-
-        $params = [$this->id];
-        return Database::getRow($sql, $params);
-    }
-
-    public function updateRow()
-    {
-        $sql = 'UPDATE tb_ordenes
-                SET estado_pedido = ?, forma_pago_pedido = ?, fecha_entregado = ?
-                WHERE id_orden = ?';
-        $params = [$this->estado_pedido, $this->forma_pago_pedido, $this->fecha_entregado, $this->id];
-        return Database::executeRow($sql, $params);
-    }
-
-    public function deleteRow()
-    {
-        $sql = 'DELETE FROM tb_ordenes
-                WHERE id_orden = ?';
-        $params = [$this->id];
-        return Database::executeRow($sql, $params);
-    }
-
-    /*
-    *   Métodos para manejar las relaciones de muchos a muchos con la tabla CATEGORÍAS.
-    */
-
-    // Método para leer todas las categorías de un producto en particular.
-    public function readCategories()
-    {
-        $sql = 'SELECT id_categoria, nombre_categoria
-                FROM categorias
-                INNER JOIN categorias_productos USING(id_categoria)
-                WHERE id_producto = ?';
-        $params = array($this->id);
-        return Database::getRows($sql, $params);
-    }
-
-    // Método para agregar una categoría a un producto.
-    public function addCategory()
-    {
-        $sql = 'INSERT INTO categorias_productos(id_categoria, id_producto)
-                VALUES(?, ?)';
-        $params = array($this->categoria, $this->id);
-        return Database::executeRow($sql, $params);
-    }
-
-    // Método para eliminar una categoría de un producto.
-    public function deleteCategory()
-    {
-        $sql = 'DELETE FROM categorias_productos
-                WHERE id_categoria = ? AND id_producto = ?';
-        $params = array($this->categoria, $this->id);
-        return Database::executeRow($sql, $params);
-    }
-
-    // Método para leer todas las categorías disponibles.
-    public function readAllCategories()
-    {
-        $sql = 'SELECT id_categoria, nombre_categoria
-                FROM categorias';
-        $params = array(null);
+        $sql = 'SELECT dp.*, p.nombre_producto 
+            FROM tb_detalles_pedidos dp 
+            JOIN tb_productos p ON dp.id_producto = p.id_producto 
+            WHERE dp.id_pedido = ?';
+        $params = array($this->id_pedido);
         return Database::getRows($sql, $params);
     }
 }

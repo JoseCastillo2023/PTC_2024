@@ -1,45 +1,28 @@
 <?php
 // Se incluye la clase para validar los datos de entrada.
-require_once('../../helpers/validator.php');
+require_once ('../../helpers/validator.php');
 // Se incluye la clase padre.
-require_once('../../models/handler/pedidos_handler.php');
+require_once ('../../models/handler/pedido_handler.php');
 /*
- *	Clase para manejar el encapsulamiento de los datos de la tabla PRODUCTO.
+ *	Clase para manejar el encapsulamiento de los datos de las tablas PEDIDO y DETALLE_PEDIDO.
  */
 class PedidoData extends PedidoHandler
 {
-    /*
-     *  Atributos adicionales.
-     */
+    // Atributo genérico para manejo de errores.
     private $data_error = null;
-    private $filename = null;
 
     /*
      *   Métodos para validar y establecer los datos.
      */
-    public function setSearch($value)
-    {
-        $this->search= $value;
-        return true;
-    }
-    
-    public function setId($value)
+
+    // Método para establecer el pedido
+    public function setIdPedido($value)
     {
         if (Validator::validateNaturalNumber($value)) {
-            $this->id = $value;
+            $this->id_pedido = $value;
             return true;
         } else {
-            $this->data_error = 'El identificador es incorrecto';
-            return false;
-        }
-    }
-    public function setIdProducto($value)
-    {
-        if (Validator::validateNaturalNumber($value)) {
-            $this->id_producto = $value;
-            return true;
-        } else {
-            $this->data_error = 'El identificador es incorrecto';
+            $this->data_error = 'El identificador del pedido es incorrecto';
             return false;
         }
     }
@@ -55,45 +38,6 @@ class PedidoData extends PedidoHandler
         }
     }
 
-
-    public function setNombre($value, $min = 2, $max = 50)
-    {
-        if (!Validator::validateAlphanumeric($value)) {
-            $this->data_error = 'El nombre debe ser un valor alfanumérico';
-            return false;
-        } elseif (Validator::validateLength($value, $min, $max)) {
-            $this->nombre = $value;
-            return true;
-        } else {
-            $this->data_error = 'El nombre debe tener una longitud entre ' . $min . ' y ' . $max;
-            return false;
-        }
-    }
-
-    public function setDescripcion($value, $min = 2, $max = 250)
-    {
-        if (!Validator::validateString($value)) {
-            $this->data_error = 'La descripción contiene caracteres prohibidos';
-            return false;
-        } elseif (Validator::validateLength($value, $min, $max)) {
-            $this->descripcion = $value;
-            return true;
-        } else {
-            $this->data_error = 'La descripción debe tener una longitud entre ' . $min . ' y ' . $max;
-            return false;
-        }
-    }
-
-    public function setPrecio($value)
-    {
-        if (Validator::validateMoney($value)) {
-            $this->precio = $value;
-            return true;
-        } else {
-            $this->data_error = 'El precio debe ser un valor numérico';
-            return false;
-        }
-    }
     public function setCliente($value)
     {
         if (Validator::validateNaturalNumber($value)) {
@@ -104,6 +48,18 @@ class PedidoData extends PedidoHandler
             return false;
         }
     }
+
+    public function setProducto($value)
+    {
+        if (Validator::validateNaturalNumber($value)) {
+            $this->producto = $value;
+            return true;
+        } else {
+            $this->data_error = 'El identificador del producto es incorrecto';
+            return false;
+        }
+    }
+
     public function setCantidad($value)
     {
         if (Validator::validateNaturalNumber($value)) {
@@ -115,76 +71,9 @@ class PedidoData extends PedidoHandler
         }
     }
 
-    public function setExistencias($value)
-    {
-        if (Validator::validateNaturalNumber($value)) {
-            $this->existencias = $value;
-            return true;
-        } else {
-            $this->data_error = 'El valor de las existencias debe ser numérico entero';
-            return false;
-        }
-    }
-
-    public function setImagen($file, $filename = null)
-    {
-        if (Validator::validateImageFile($file, 500, 500)) {
-            $this->imagen = Validator::getFileName();
-            return true;
-        } elseif (Validator::getFileError()) {
-            return false;
-        } elseif ($filename) {
-            $this->imagen = $filename;
-            return true;
-        } else {
-            $this->imagen = 'default.png';
-            return true;
-        }
-    }
-
-    public function setCategoria($value)
-    {
-        if (Validator::validateNaturalNumber($value)) {
-            $this->categoria = $value;
-            return true;
-        } else {
-            $this->data_error = 'El identificador es incorrecto';
-            return false;
-        }
-    }
-
-    public function setEstado($value)
-    {
-        if (!Validator::validateAlphanumeric($value)) {
-            $this->data_error = 'El nombre debe ser un valor alfanumérico';
-            return false;
-        } else {
-            $this->estado = $value;
-            return true;
-        }
-    }
-
-    public function setFilename()
-    {
-        if ($data = $this->readFilename()) {
-            $this->filename = $data['imagen_producto'];
-            return true;
-        } else {
-            $this->data_error = 'Producto inexistente';
-            return false;
-        }
-    }
-
-    /*
-     *  Métodos para obtener los atributos adicionales.
-     */
+    // Método para obtener el error de los datos.
     public function getDataError()
     {
         return $this->data_error;
-    }
-
-    public function getFilename()
-    {
-        return $this->filename;
     }
 }

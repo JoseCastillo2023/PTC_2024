@@ -30,7 +30,7 @@ class OrderHandler
     // Método para verificar si existe un pedido en proceso con el fin de iniciar o continuar una compra.
     public function getOrder()
     {
-        $this->estado = 'Encamino';
+        $this->estado = 'En camino';
         $sql = 'SELECT id_pedido
                 FROM tb_pedidos
                 WHERE estado_pedido = ? AND id_cliente = ?';
@@ -65,7 +65,7 @@ class OrderHandler
     public function createDetail()
     {
         // Primero, insertar el detalle del pedido con una subconsulta para obtener el precio del producto.
-        $sql = 'INSERT INTO tb_detalle_pedidos(id_producto, precio_producto, cantidad_producto, id_pedido)
+        $sql = 'INSERT INTO tb_detalles_pedidos(id_producto, precio_producto, cantidad_producto, id_pedido)
             VALUES(?, (SELECT precio_producto FROM tb_productos WHERE id_producto = ?), ?, ?)';
         $params = array($this->producto, $this->producto, $this->cantidad, $_SESSION['idPedido']);
 
@@ -82,8 +82,8 @@ class OrderHandler
     // Método para obtener los productos que se encuentran en el carrito de compras.
     public function readDetail()
 {
-    $sql = 'SELECT id_detalle, nombre_producto, tb_detalle_pedidos.precio_producto, tb_detalle_pedidos.cantidad_producto, tb_productos.imagen_producto, tb_pedidos.fecha_registro, tb_pedidos.direccion_pedido
-            FROM tb_detalle_pedidos
+    $sql = 'SELECT id_detalle, nombre_producto, tb_detalles_pedidos.precio_producto, tb_detalles_pedidos.cantidad_producto, tb_productos.imagen_producto, tb_pedidos.fecha_registro, tb_pedidos.direccion_pedido
+            FROM tb_detalles_pedidos
             INNER JOIN tb_pedidos USING(id_pedido)
             INNER JOIN tb_productos USING(id_producto)
             WHERE estado_pedido = "EnCamino"';
@@ -112,7 +112,7 @@ class OrderHandler
     // Método para actualizar la cantidad de un producto agregado al carrito de compras.
     public function updateDetail()
     {
-        $sql = 'UPDATE tb_detalle_pedidos
+        $sql = 'UPDATE tb_detalles_pedidos
                 SET cantidad_producto = ?
                 WHERE id_detalle = ? AND id_pedido = ?';
         $params = array($this->cantidad, $this->id_detalle, $_SESSION['idPedido']);
@@ -122,7 +122,7 @@ class OrderHandler
     // Método para eliminar un producto que se encuentra en el carrito de compras.
     public function deleteDetail()
     {
-        $sql = 'DELETE FROM tb_detalle_pedidos
+        $sql = 'DELETE FROM tb_detalles_pedidos
                 WHERE id_detalle = ? AND id_pedido = ?';
         $params = array($this->id_detalle, $_SESSION['idPedido']);
         return Database::executeRow($sql, $params);
