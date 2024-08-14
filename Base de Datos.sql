@@ -88,3 +88,14 @@ CREATE TABLE tb_valoraciones (
     estado_comentario BOOLEAN DEFAULT TRUE NOT NULL,
     FOREIGN KEY (id_detalle) REFERENCES tb_detalles_pedidos(id_detalle)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+SELECT * FROM tb_categorias;
+
+INSERT INTO tb_categorias (nombre_categoria, descripcion_categoria, imagen_categoria) VALUES ('Pasteles', 'Postres grandes en forma circular', 'Pastel.jfif');
+INSERT INTO tb_categorias (nombre_categoria, descripcion_categoria, imagen_categoria) VALUES ('Galletas', 'Galletas con cacao', 'Galletas.png');
+
+INSERT INTO tb_productos (nombre_producto, descripcion_producto, precio_producto, existencias_producto, imagen_producto, id_categoria, estado_producto) VALUES ('Pastel de chocolate', 'Pastel de chocolate con frutas', 10.50, 100, 'Pastel_chocolate.jpg', 1, 1);
+INSERT INTO tb_productos (nombre_producto, descripcion_producto, precio_producto, existencias_producto, imagen_producto, id_categoria, estado_producto) VALUES ('Pastel de vainilla', 'Pastel de vainilla con frutas', 9.50, 100, 'Pastel_vainilla.jpg', 1, 1);
+INSERT INTO tb_productos (nombre_producto, descripcion_producto, precio_producto, existencias_producto, imagen_producto, id_categoria, estado_producto) VALUES ('Galletas simples', 'Galletas simples con azucar', 2.50, 100, 'Galletas_masa.jfif', 2, 1);
+INSERT INTO tb_productos (nombre_producto, descripcion_producto, precio_producto, existencias_producto, imagen_producto, id_categoria, estado_producto) VALUES ('Galletas de chispas de chocolate', 'Galletas de chispas', 1.50, 100, 'Galletas_chispas.jpg', 2, 1);
