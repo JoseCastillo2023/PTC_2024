@@ -86,7 +86,7 @@ class OrderHandler
             FROM tb_detalles_pedidos
             INNER JOIN tb_pedidos USING(id_pedido)
             INNER JOIN tb_productos USING(id_producto)
-            WHERE estado_pedido = "EnCamino"';
+            WHERE estado_pedido = "En camino"';
     return Database::getRows($sql);
 }
 
