@@ -6,6 +6,7 @@ require_once ('../../helpers/database.php');
  */
 class GraficoHandler
 {
+    
 
     public function cantidadClientePorFecha()
     {
@@ -49,10 +50,25 @@ class GraficoHandler
     {
         $sql = 'SELECT DATE(p.fecha_registro) AS fecha, COUNT(dp.id_producto) AS ventas
             FROM tb_pedidos p
-            JOIN tb_detalle_pedidos dp ON p.id_pedido = dp.id_pedido
+            JOIN tb_detalles_pedidos dp ON p.id_pedido = dp.id_pedido
             WHERE p.estado_pedido = "Entregado"
             GROUP BY DATE(p.fecha_registro)
             ORDER BY fecha ASC;';
+        return Database::getRows($sql);
+    }
+
+    public function readEstadoEmpleado()
+    {
+        $sql = 'SELECT 
+                    CASE 
+                        WHEN estado_cliente = 0 THEN "Inactivo"
+                        WHEN estado_cliente = 1 THEN "Activo"
+                    END AS estado,
+                    COUNT(*) AS cantidad
+                FROM 
+                    tb_clientes
+                GROUP BY 
+                    estado_cliente;';
         return Database::getRows($sql);
     }
 

@@ -61,7 +61,7 @@ const graficoBarrasCategorias = async () => {
             data: {
                 labels: categorias,
                 datasets: [{
-                    label: 'Grafica con las 3 categorias con mas productos',
+                    label: 'Cantidad de productos',
                     data: cantidades,
                     backgroundColor: palette.backgroundColors,
                     borderColor: palette.borderColors,
@@ -85,7 +85,7 @@ const graficoBarrasCategorias = async () => {
                 },
                 title: {
                     display: true,
-                    text: 'Cantidad de productos por categoría'
+                    text: 'Top 3 las categorias con mas productos'
                 }
             }
         });
@@ -186,6 +186,7 @@ const graficoCrecimientoClientes = async () => {
             },
             options: {
                 responsive: true,
+                
                 maintainAspectRatio: false,
                 plugins: {
                     legend: {
@@ -317,7 +318,27 @@ const graficoVentas = async () => {
     }
 };
 
-
+const graficoDona = async () => {
+    // Petición para obtener los datos del gráfico.
+    const DATA = await fetchData(GRAFICO_API, 'readEstadoEmpleado');
+    // Se comprueba si la respuesta es satisfactoria, de lo contrario se remueve la etiqueta canvas.
+    if (DATA.status) {
+        // Se declaran los arreglos para guardar los datos a graficar.
+        let cantidad = [];
+        let estado = [];
+        // Se recorre el conjunto de registros fila por fila a través del objeto row.
+        DATA.dataset.forEach(row => {
+            // Se agregan los datos a los arreglos.
+            cantidad.push(row.cantidad);
+            estado.push(row.estado);
+        });
+        // Llamada a la función para generar y mostrar un gráfico de pastel. Se encuentra en el archivo components.js
+        donaGraph('chart6', estado, cantidad, 'Estado de empleados', 'Actividad de empleados');
+    } else {
+        document.getElementById('chart6').remove();
+        console.log(DATA.error);
+    }
+}
 
 
 
@@ -353,8 +374,8 @@ function generatePieColors(baseColor, count) {
 // Función para convertir un color hexadecimal a formato RGB.
 function hexToRgb(hex) {
     const bigint = parseInt(hex.substring(1), 16);
-    const r = (bigint >> 100) & 255;
-    const g = (bigint >> 100) & 255;
+    const r = (bigint >> 139) & 255;
+    const g = (bigint >> 69) & 255;
     const b = bigint & 255;
     return { r, g, b };
 }
@@ -442,8 +463,8 @@ function generatePalette(baseColor, count) {
 // Función para convertir un color hexadecimal a formato RGB.
 function hexToRgb(hex) {
     const bigint = parseInt(hex.substring(1), 16);
-    const r = (bigint >> 100) & 255;
-    const g = (bigint >> 100) & 255;
+    const r = (bigint >> 139) & 255;
+    const g = (bigint >> 69) & 255;
     const b = bigint & 255;
     return { r, g, b };
 }
