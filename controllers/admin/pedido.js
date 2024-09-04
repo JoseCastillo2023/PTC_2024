@@ -24,7 +24,7 @@ const SAVE_FORM = document.getElementById('saveForm'),
     FECHA_PEDIDO = document.getElementById('fechaPedido'),
     FORMA_PAGO = document.getElementById('formaPago'),
     ESTADO_PEDIDO = document.getElementById('estadoPedido');
-    let ESTADO_BUSQUEDA = "Pendiente",
+    let ESTADO_BUSQUEDA = "Finalizado",
     timeout_id;
 
 // Método del evento para cuando el documento ha cargado.
@@ -86,7 +86,7 @@ const fillTable = async (estado=null) => {
                 <tr>
                     <td>${row.cliente}</td>
                     <td>${row.forma_pago_pedido}</td>
-                    <td>${row.fecha_registro}</td>
+                    <td>${row.fecha}</td>
                     <td>${row.estado_pedido}</i></td>
                     <td>
                         <button type="button" class="btn btn-success" onclick="openUpdate(${row.id_pedido})">
@@ -203,11 +203,11 @@ const fillSubTable = async () => {
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             SUBTABLE_BODY.innerHTML += `
                 <tr>
-                <td>${row.descripcion_modelo}</td>
-                <td>${row.descripcion_marca}</td>
-                <td>${row.descripcion_talla}</td>
-                <td>$ ${row.precio_modelo_talla}</td>
-                <td>${row.cantidad_detalle_pedido}</td>
+                <td>${row.cliente}</td>
+                <td>${row.nombre_producto}</td>
+                <td>${row.cantidad_producto}</td>
+                <td>$ ${row.fecha}</td>
+                <td>${row.estado_pedido}</td>
                 </tr>
             `;
         });

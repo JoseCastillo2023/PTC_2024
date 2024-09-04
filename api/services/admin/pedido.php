@@ -1,6 +1,6 @@
 <?php
 // Se incluye la clase del modelo.
-require_once('../../models/data/pedido_data.php');
+require_once('../../models/data/order_data.php');
 
 // Se comprueba si existe una acción a realizar, de lo contrario se finaliza el script con un mensaje de error.
 if (isset($_GET['action'])) {
@@ -67,7 +67,7 @@ if (isset($_GET['action'])) {
                     }
                     break;
             case 'readOne':
-                if (!$pedido->setId($_POST['idPedido'])) {
+                if (!$pedido->setIdPedido($_POST['idPedido'])) {
                     $result['error'] = $pedido->getDataError();
                 } elseif ($result['dataset'] = $pedido->readOne()) {
                     $result['status'] = 1;
