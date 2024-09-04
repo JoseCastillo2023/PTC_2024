@@ -28,8 +28,8 @@ class ValoracionHandler
                        p.nombre_producto, v.calificacion_producto, v.comentario_producto, v.estado_comentario,
                        DATE_FORMAT(v.fecha_valoracion, "%d-%m-%Y - %h:%i %p") AS fecha_valoracion
                 FROM tb_valoraciones v
-                INNER JOIN tb_detallesOrdenes d ON v.id_detalle = d.id_detalle
-                INNER JOIN tb_ordenes o ON d.id_orden = o.id_orden
+                INNER JOIN tb_detalles_pedidos d ON v.id_detalle = d.id_detalle
+                INNER JOIN tb_pedidos o ON d.id_pedido = o.id_pedido
                 INNER JOIN tb_clientes c ON o.id_cliente = c.id_cliente
                 INNER JOIN tb_productos p ON d.id_producto = p.id_producto
                 WHERE CONCAT(c.nombre_cliente, " ", c.apellido_cliente) LIKE ? 
@@ -54,8 +54,8 @@ class ValoracionHandler
                        p.nombre_producto, v.calificacion_producto, v.comentario_producto, v.estado_comentario,
                        DATE_FORMAT(v.fecha_valoracion, "%d-%m-%Y - %h:%i %p") AS fecha_valoracion
                 FROM tb_valoraciones v
-                INNER JOIN tb_detallesOrdenes d ON v.id_detalle = d.id_detalle
-                INNER JOIN tb_ordenes o ON d.id_orden = o.id_orden
+                INNER JOIN tb_detalles_pedidos d ON v.id_detalle = d.id_detalle
+                INNER JOIN tb_pedidos o ON d.id_pedido = o.id_pedido
                 INNER JOIN tb_clientes c ON o.id_cliente = c.id_cliente
                 INNER JOIN tb_productos p ON d.id_producto = p.id_producto
                 ORDER BY v.fecha_valoracion DESC, v.estado_comentario DESC';
@@ -69,8 +69,8 @@ class ValoracionHandler
                        p.nombre_producto, v.calificacion_producto, v.comentario_producto, v.estado_comentario,
                        DATE_FORMAT(v.fecha_valoracion, "%d-%m-%Y - %h:%i %p") AS fecha_valoracion
                 FROM tb_valoraciones v
-                INNER JOIN tb_detallesOrdenes d ON v.id_detalle = d.id_detalle
-                INNER JOIN tb_ordenes o ON d.id_orden = o.id_orden
+                INNER JOIN tb_detalles_pedidos d ON v.id_detalle = d.id_detalle
+                INNER JOIN tb_pedidos o ON d.id_pedido = o.id_pedido
                 INNER JOIN tb_clientes c ON o.id_cliente = c.id_cliente
                 INNER JOIN tb_productos p ON d.id_producto = p.id_producto
                 WHERE v.estado_comentario = true
@@ -86,8 +86,8 @@ class ValoracionHandler
                        p.nombre_producto, v.calificacion_producto, v.comentario_producto, v.estado_comentario,
                        DATE_FORMAT(v.fecha_valoracion, "%d-%m-%Y - %h:%i %p") AS fecha_valoracion
                 FROM tb_valoraciones v
-                INNER JOIN tb_detallesOrdenes d ON v.id_detalle = d.id_detalle
-                INNER JOIN tb_ordenes o ON d.id_orden = o.id_orden
+                INNER JOIN tb_detalles_pedidos d ON v.id_detalle = d.id_detalle
+                INNER JOIN tb_pedidos o ON d.id_pedido = o.id_pedido
                 INNER JOIN tb_clientes c ON o.id_cliente = c.id_cliente
                 INNER JOIN tb_productos p ON d.id_producto = p.id_producto
                 WHERE v.id_detalle = ?';
@@ -101,8 +101,8 @@ class ValoracionHandler
                        p.nombre_producto, v.calificacion_producto, v.comentario_producto, v.estado_comentario,
                        DATE_FORMAT(v.fecha_valoracion, "%d-%m-%Y - %h:%i %p") AS fecha_valoracion
                 FROM tb_valoraciones v
-                INNER JOIN tb_detallesOrdenes d ON v.id_detalle = d.id_detalle
-                INNER JOIN tb_ordenes o ON d.id_orden = o.id_orden
+                INNER JOIN tb_detalles_pedidos d ON v.id_detalle = d.id_detalle
+                INNER JOIN tb_pedidos o ON d.id_pedido = o.id_pedido
                 INNER JOIN tb_clientes c ON o.id_cliente = c.id_cliente
                 INNER JOIN tb_productos p ON d.id_producto = p.id_producto
                 WHERE v.id_valoracion = ?';
@@ -116,8 +116,8 @@ class ValoracionHandler
                        p.nombre_producto, v.calificacion_producto, v.comentario_producto, v.estado_comentario,
                        DATE_FORMAT(v.fecha_valoracion, "%d-%m-%Y - %h:%i %p") AS fecha_valoracion
                 FROM tb_valoraciones v
-                INNER JOIN tb_detallesOrdenes d ON v.id_detalle = d.id_detalle
-                INNER JOIN tb_ordenes o ON d.id_orden = o.id_orden
+                INNER JOIN tb_detalles_pedidos d ON v.id_detalle = d.id_detalle
+                INNER JOIN tb_pedidos o ON d.id_pedido = o.id_pedido
                 INNER JOIN tb_clientes c ON o.id_cliente = c.id_cliente
                 INNER JOIN tb_productos p ON d.id_producto = p.id_producto
                 WHERE v.id_valoracion = ?
