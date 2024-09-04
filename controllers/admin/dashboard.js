@@ -61,7 +61,7 @@ const graficoBarrasCategorias = async () => {
             data: {
                 labels: categorias,
                 datasets: [{
-                    label: 'Cantidad de productos',
+                    label: 'Grafica con las 3 categorias con mas productos',
                     data: cantidades,
                     backgroundColor: palette.backgroundColors,
                     borderColor: palette.borderColors,
