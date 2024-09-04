@@ -19,7 +19,6 @@ Fernando Antonio Molina Paniagua (Secretario)
 1- Uso de require para incluir archivos necesarios, como las imagenes en
 las pantallas.
 
-
 2- Verificación de la existencia de parámetros $_GET antes de procesarlos 
 adentro de las clases data y servicies.
 
