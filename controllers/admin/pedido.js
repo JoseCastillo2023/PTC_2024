@@ -92,9 +92,6 @@ const fillTable = async (estado=null) => {
                         <button type="button" class="btn btn-success" onclick="openUpdate(${row.id_pedido})">
                             <i class="bi bi-info-circle"></i>
                         </button>
-                        <button type="button" class="btn btn-warning" onclick="openReport(${row.id_pedido})">
-                            <i class="bi bi-file-earmark-text"></i>
-                        </button>
                     </td>
                 </tr>
             `;
@@ -124,6 +121,7 @@ const openCreate = () => {
     // Se prepara el formulario.
     SAVE_FORM.reset();
     //EXISTENCIAS_PEDIDO.disabled = false;
+    fillSelect(MARCA_API, 'readAll', 'marcaModelo');
 }
 
 
@@ -262,10 +260,10 @@ const opensubUpdate = async (id) => {
         SAVE_TREFORM.reset();
         // Se inicializan los campos con los datos.
         const ROW = DATA.dataset;
-        ID_MODELOTALLA.value = ROW.nombre_producto;
-        console.log(ROW.stock + ' ' + ROW.cantidad_producto);
-        STOCK_MODELOTALLA.value = ROW.fecha;
-        PRECIO_MODELOTALLA.value = ROW.estado_pedido;
+        ID_MODELOTALLA.value = ROW.id_modelo_talla;
+        console.log(ROW.stock + ' ' + ROW.precio_modelo_talla);
+        STOCK_MODELOTALLA.value = ROW.stock_modelo_talla;
+        PRECIO_MODELOTALLA.value = ROW.precio_modelo_talla;
 
     } else {
         sweetAlert(2, DATA.error, false);
@@ -302,7 +300,7 @@ const opensubDelete = async (id) => {
 */
 const openReport = () => {
     // Se declara una constante tipo objeto con la ruta específica del reporte en el servidor.
-    const PATH = new URL(`${SERVER_URL}reports/admin/pedido_cliente.php`);
+    const PATH = new URL(`${SERVER_URL}reports/admin/PEDIDOs.php`);
     // Se abre el reporte en una nueva pestaña.
     window.open(PATH.href);
 }

@@ -53,7 +53,7 @@ if (isset($_GET['action'])) {
                 break;
 
             case 'readEstadoEmpleado':
-                if ($result['dataset'] = $empleado->readEstadoEmpleado()) {
+                if ($result['dataset'] = $grafico->readEstadoEmpleado()) {
                     $result['status'] = 1;
                 } else {
                     $result['error'] = 'No existen datos registrados';
