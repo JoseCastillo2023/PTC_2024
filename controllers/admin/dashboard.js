@@ -180,7 +180,7 @@ const graficoCrecimientoClientes = async () => {
                 datasets: [{
                     label: 'Crecimiento de Clientes',
                     data: cantidades,
-                    backgroundColor: '#1a4373',
+                    backgroundColor: '#663300',
                     fill: false
                 }]
             },
@@ -281,7 +281,7 @@ const graficoVentas = async () => {
                 datasets: [{
                     label: 'Cantidad de Ventas',
                     data: cantidades,
-                    backgroundColor: '#1a4373',
+                    backgroundColor: '#663300',
                     fill: false
                 }]
             },

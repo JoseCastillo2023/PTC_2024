@@ -13,7 +13,8 @@ class GraficoHandler
         $sql = 'SELECT DATE(fecha_registro) AS fecha, COUNT(id_cliente) AS cantidad
         FROM tb_clientes
         GROUP BY DATE(fecha_registro)
-        ORDER BY fecha ASC;
+        ORDER BY fecha ASC
+        LIMIT 5;
         ';
         return Database::getRows($sql);
     }
@@ -51,9 +52,10 @@ class GraficoHandler
         $sql = 'SELECT DATE(p.fecha_registro) AS fecha, COUNT(dp.id_producto) AS ventas
             FROM tb_pedidos p
             JOIN tb_detalles_pedidos dp ON p.id_pedido = dp.id_pedido
-            WHERE p.estado_pedido = "Entregado"
+            WHERE p.estado_pedido = "Finalizado"
             GROUP BY DATE(p.fecha_registro)
-            ORDER BY fecha ASC;';
+            ORDER BY fecha ASC
+            LIMIT 5;';
         return Database::getRows($sql);
     }
 
