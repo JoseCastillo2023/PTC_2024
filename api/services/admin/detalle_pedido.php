@@ -19,7 +19,7 @@ if (isset($_GET['action'])) {
             case 'searchRows':
                 if (
                     !$producto->setSearch($_POST['valor']) or
-                    !$producto->setIdOrden($_POST['idPedido']) 
+                    !$producto->setIdPedido($_POST['idPedido']) 
                 ) {
                     $result['error'] = $producto->getDataError();
                 } 
@@ -31,7 +31,7 @@ if (isset($_GET['action'])) {
                 }
                 break;
             case 'readAll':
-                if (!$producto->setIdOrden($_POST['idPedido'])) {
+                if (!$producto->setIdPedido($_POST['idPedido'])) {
                     $result['error'] = $producto->getDataError();
                 } elseif ($result['dataset'] = $producto->readAll()) {
                     $result['status'] = 1;

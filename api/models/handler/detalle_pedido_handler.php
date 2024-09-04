@@ -12,7 +12,7 @@ class DetallePedidoHandler
     */
     protected $id = null;
     protected $search = null;
-    protected $id_orden = null;
+    protected $id_pedido = null;
     protected $id_producto = null;
     protected $cantidad_producto = null;
 
@@ -23,16 +23,16 @@ class DetallePedidoHandler
     {
         $this->search = $this->search === '' ? '%%' : '%' . $this->search . '%';
 
-        $sql = 'SELECT d.id_detalle, o.id_orden, CONCAT(c.nombre_cliente, " ", c.apellido_cliente) AS cliente,
+        $sql = 'SELECT d.id_detalle, o.id_pedido, CONCAT(c.nombre_cliente, " ", c.apellido_cliente) AS cliente,
                        p.nombre_producto, d.cantidad_producto, o.fecha_pedido, o.estado_pedido
-                FROM tb_detalles_ordenes d
-                INNER JOIN tb_ordenes o ON d.id_orden = o.id_orden
+                FROM tb_detalles_pedidos d
+                INNER JOIN tb_pedidos o ON d.id_pedido = o.id_pedido
                 INNER JOIN tb_productos p ON d.id_producto = p.id_producto
                 INNER JOIN tb_clientes c ON o.id_cliente = c.id_cliente
-                WHERE o.id_orden = ? AND (p.nombre_producto LIKE ? OR o.estado_pedido LIKE ?)
+                WHERE o.id_pedido = ? AND (p.nombre_producto LIKE ? OR o.estado_pedido LIKE ?)
                 ORDER BY p.nombre_producto';
 
-        $params = array($this->id_orden, $this->search, $this->search);
+        $params = array($this->id_pedido, $this->search, $this->search);
         return Database::getRows($sql, $params);
     }
 
@@ -47,7 +47,7 @@ class DetallePedidoHandler
                 WHERE o.id_orden = ?
                 ORDER BY p.nombre_producto';
 
-        $params = array($this->id_orden);
+        $params = array($this->id_pedido);
         return Database::getRows($sql, $params);
     }
 
@@ -70,7 +70,7 @@ class DetallePedidoHandler
     {
         $sql = 'INSERT INTO tb_detalles_ordenes(id_orden, id_producto, cantidad_producto)
                 VALUES(?, ?, ?)';
-        $params = array($this->id_orden, $this->id_producto, $this->cantidad_producto);
+        $params = array($this->id_pedido, $this->id_producto, $this->cantidad_producto);
         return Database::executeRow($sql, $params);
     }
 
@@ -82,7 +82,7 @@ class DetallePedidoHandler
                 WHERE d.id_orden = ?
                 ORDER BY p.nombre_producto';
         
-        $params = array($this->id_orden);
+        $params = array($this->id_pedido);
         return Database::getRows($sql, $params);
     }
 

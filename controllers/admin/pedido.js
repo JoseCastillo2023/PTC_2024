@@ -86,10 +86,10 @@ const fillTable = async (estado=null) => {
                 <tr>
                     <td>${row.cliente}</td>
                     <td>${row.forma_pago_pedido}</td>
-                    <td>${row.fecha_pedido}</td>
+                    <td>${row.fecha_registro}</td>
                     <td>${row.estado_pedido}</i></td>
                     <td>
-                        <button type="button" class="btn btn-success" onclick="openUpdate(${row.id_orden})">
+                        <button type="button" class="btn btn-success" onclick="openUpdate(${row.id_pedido})">
                             <i class="bi bi-info-circle"></i>
                         </button>
                     </td>

@@ -9,7 +9,9 @@ class OrderHandler
     /*
      *   Declaración de atributos para el manejo de datos.
      */
+    protected $search = null;
     protected $id_pedido = null;
+    protected $id_cliente = null;
     protected $id_detalle = null;
     protected $cliente = null;
     protected $producto = null;
@@ -60,6 +62,25 @@ class OrderHandler
             }
         }
     }
+    
+    // Método para buscar un informacion del pedido.
+    public function searchRows()
+    {
+        $this->search = $this->search === '' ? '%%' : '%' . $this->search . '%';
+        $this->id_cliente = isset($_SESSION['idCliente']) ? 'AND c.id_cliente=' . $_SESSION['idCliente'] : ' ';
+        
+        $sql = 'SELECT p.id_pedido, CONCAT(c.nombre_cliente, " ", c.apellido_cliente) as cliente,
+                p.forma_pago_pedido, DATE_FORMAT(p.fecha_registro, "%d-%m-%Y") AS fecha, p.estado_pedido
+                FROM tb_pedidos p
+                INNER JOIN tb_clientes c USING(id_cliente)
+                WHERE estado_pedido=? AND CONCAT(c.nombre_cliente, c.apellido_cliente) LIKE ? ' . $this->id_cliente . '  
+                ORDER BY p.fecha_registro ASC, p.estado_pedido ASC';
+        
+        $params = array($this->estado, $this->search);
+        return Database::getRows($sql, $params);
+        
+    }
+
 
     // Método para agregar un producto al carrito de compras.
     public function createDetail()

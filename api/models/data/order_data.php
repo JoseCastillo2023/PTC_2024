@@ -25,6 +25,23 @@ class OrderData extends OrderHandler
         }
     }
 
+    public function setSearch($value)
+    {
+        $this->search= $value;
+        return true;
+    }
+
+    public function setEstado($value)
+    {
+        if (!Validator::validateAlphanumeric($value)) {
+            $this->data_error = 'El nombre debe ser un valor alfanumérico';
+            return false;
+        } else {
+            $this->estado = $value;
+            return true;
+        }
+    }
+
     public function setIdDetalle($value)
     {
         if (Validator::validateNaturalNumber($value)) {
