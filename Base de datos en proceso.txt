@@ -37,9 +37,9 @@ CREATE TABLE tb_categorias (
 -- Tabla Productos.
 CREATE TABLE tb_productos (
     id_producto INT PRIMARY KEY AUTO_INCREMENT,
-    nombre_producto VARCHAR(50) NOT NULL,
+    nombre_producto VARCHAR(50) NOT NULL UNIQUE,
     descripcion_producto VARCHAR(250) NOT NULL,
-    precio_producto DECIMAL(10,2) NOT NULL CHECK (precio_producto >= 0),
+    precio_producto DECIMAL(10,2) NOT NULL CHECK (precio_producto > 0),
     existencias_producto INT UNSIGNED NOT NULL CHECK (existencias_producto >= 0),
     imagen_producto VARCHAR(250) NOT NULL,
     id_categoria INT NOT NULL,
@@ -136,12 +136,16 @@ END$$
 
 DELIMITER ;
 
+-- Metodo para cuando un producto tenga existencias 0 un cambie de estado.
+
+
 
 -- Ingreso de datos para las tablas.
 
 -- Datos de la tabla de Categorias.
 INSERT INTO tb_categorias (nombre_categoria, descripcion_categoria, imagen_categoria) VALUES ('Pasteles', 'Postres grandes en forma circular', 'Pastel.jfif');
 INSERT INTO tb_categorias (nombre_categoria, descripcion_categoria, imagen_categoria) VALUES ('Galletas', 'Galletas con cacao', 'Galletas.png');
+INSERT INTO tb_categorias (nombre_categoria, descripcion_categoria, imagen_categoria) VALUES ('Bolleria', 'Todo tipo de comida relaciona con los panes', 'Bolleria.jpg');
 
 -- Datos de la tabla de Productos.
 INSERT INTO tb_productos (nombre_producto, descripcion_producto, precio_producto, existencias_producto, imagen_producto, id_categoria, estado_producto) 
@@ -152,6 +156,10 @@ INSERT INTO tb_productos (nombre_producto, descripcion_producto, precio_producto
 VALUES ('Galletas simples', 'Galletas simples con azucar', 2.50, 100, 'Galletas_masa.jfif', 2, 1);
 INSERT INTO tb_productos (nombre_producto, descripcion_producto, precio_producto, existencias_producto, imagen_producto, id_categoria, estado_producto) 
 VALUES ('Galletas de chispas de chocolate', 'Galletas de chispas', 1.50, 100, 'Galletas_chispas.jpg', 2, 1);
+INSERT INTO tb_productos (nombre_producto, descripcion_producto, precio_producto, existencias_producto, imagen_producto, id_categoria, estado_producto) 
+VALUES ('Dona de fresa', 'Dona de fresa rellena de crema', 1.00, 0, 'Dona_fresa.jpg', 3, 1);
+INSERT INTO tb_productos (nombre_producto, descripcion_producto, precio_producto, existencias_producto, imagen_producto, id_categoria, estado_producto) 
+VALUES ('Dona de chocolate', 'Dona de chocolate rellena de crema', 1.00, 100, 'Dona_chocolate.jpg', 3, 1);
 
 -- Datos de la tabla de Clientes.
 INSERT INTO tb_clientes (nombre_cliente, apellido_cliente, dui_cliente, correo_cliente, telefono_cliente, direccion_cliente, nacimiento_cliente, clave_cliente, codigo_recuperacion, fecha_expiracion_codigo)
