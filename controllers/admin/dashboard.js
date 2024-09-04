@@ -38,11 +38,13 @@ document.addEventListener('DOMContentLoaded', () => {
 const graficoBarrasCategorias = async () => {
     // Petición para obtener los datos del gráfico.
     const DATA = await fetchData(GRAFICO_API, 'cantidadProductosCategoria');
+    
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se remueve la etiqueta canvas.
     if (DATA.status) {
         // Se declaran los arreglos para guardar los datos a graficar.
         let categorias = [];
         let cantidades = [];
+        
         // Se recorre el conjunto de registros fila por fila a través del objeto row.
         DATA.dataset.forEach(row => {
             // Se agregan los datos a los arreglos.
@@ -92,6 +94,7 @@ const graficoBarrasCategorias = async () => {
         console.log(DATA.error);
     }
 }
+
 
 const graficoPastelCategorias = async () => {
     // Petición para obtener los datos del gráfico.
