@@ -63,6 +63,7 @@ CREATE TABLE tb_pedidos (
   id_cliente INT NOT NULL,
   direccion_pedido VARCHAR(250) NOT NULL,
   estado_pedido ENUM('Pendiente','En camino','Finalizado') NOT NULL CHECK (estado_pedido IN ('Pendiente', 'En camino', 'Finalizado')),
+  forma_pago_pedido ENUM ('Efectivo','Transferencia') DEFAULT 'Efectivo',
   fecha_registro DATE NOT NULL DEFAULT CURRENT_TIMESTAMP()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -215,6 +216,13 @@ VALUES
 (3, 3, 7.50, 3),
 (4, 4, 6.00, 4),
 (4, 3, 4.50, 5);
+
+SELECT p.id_pedido, CONCAT(c.nombre_cliente, " ", c.apellido_cliente) as cliente,
+p.forma_pago_pedido, DATE_FORMAT(p.fecha_registro, "%d-%m-%Y") AS fecha, p.estado_pedido
+                FROM tb_pedidos p
+                INNER JOIN tb_clientes c USING(id_cliente)
+                WHERE estado_pedido=1 AND CONCAT(c.nombre_cliente, c.apellido_cliente) LIKE 1
+                ORDER BY p.fecha_registro ASC, p.estado_pedido ASC;
 
 -- Insertar datos en la tabla tb_valoraciones
 INSERT INTO tb_valoraciones (id_detalle, calificacion_producto, comentario_producto)
