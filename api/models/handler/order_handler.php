@@ -121,6 +121,17 @@ class OrderHandler
     return Database::getRows($sql);
     }
 
+    public function readOneFactura()
+    {
+    $sql = 'SELECT id_detalle, CONCAT(c.nombre_cliente, " ", c.apellido_cliente) as cliente, tb_productos.nombre_producto, tb_detalles_pedidos.precio_producto, tb_detalles_pedidos.cantidad_producto, tb_productos.imagen_producto, tb_pedidos.fecha_registro, tb_pedidos.direccion_pedido
+            FROM tb_detalles_pedidos
+            INNER JOIN tb_pedidos USING(id_pedido)
+            INNER JOIN tb_productos USING(id_producto)
+            INNER JOIN tb_clientes USING(id_cliente)
+            WHERE estado_pedido = ?';
+    return Database::getRows($sql);
+    }
+
     // Método para finalizar un pedido por parte del cliente.
     public function finishOrder()
     {
