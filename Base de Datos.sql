@@ -81,7 +81,7 @@ CREATE TABLE tb_detalles_pedidos (
 CREATE TABLE tb_valoraciones (
     id_valoracion INT PRIMARY KEY AUTO_INCREMENT,
     id_producto INT NOT NULL,
-	id_cliente INT NOT NULL,
+	  id_cliente INT NOT NULL,
     calificacion_producto INT CHECK (calificacion_producto BETWEEN 1 AND 5),
     comentario_producto VARCHAR(250),
     fecha_valoracion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
