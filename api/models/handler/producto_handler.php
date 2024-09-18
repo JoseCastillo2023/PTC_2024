@@ -133,4 +133,74 @@ class ProductoHandler
         $params = array($this->categoria);
         return Database::getRows($sql, $params);
     }
+
+    public function readComments()
+    {
+        $sql = 'SELECT c.id_valoracion, c.id_producto, c.id_cliente, 
+                       c.calificacion_producto, c.comentario_producto, 
+                       c.fecha_valoracion, c.estado_comentario,
+                       cl.nombre_cliente, cl.apellido_cliente
+                FROM tb_valoraciones AS c
+                INNER JOIN tb_productos AS p ON c.id_producto = p.id_producto
+                INNER JOIN tb_clientes AS cl ON c.id_cliente = cl.id_cliente
+                WHERE c.id_producto = ?';
+
+        $params = array($this->id);
+        return Database::getRows($sql, $params);
+    }
+
+    public function addComments($idProducto, $calificacionProducto, $comentarioProducto)
+    {
+        // Obtén el ID del cliente de la sesión
+        session_start();
+        if (!isset($_SESSION['idCliente'])) {
+            return ['status' => 0, 'error' => 'No hay sesión de cliente iniciada.'];
+        }
+
+        $idCliente = $_SESSION['idCliente'];
+
+        // Consulta SQL para insertar un nuevo comentario
+        $sql = 'INSERT INTO tb_valoraciones (id_producto, id_cliente, calificacion_producto, comentario_producto, fecha_valoracion, estado_comentario)
+            VALUES (?, ?, ?, ?, NOW(), ?)';
+
+        // Parámeteros para la consulta
+        $params = array($idProducto, $idCliente, $calificacionProducto, $comentarioProducto, 1); // El estado del comentario puede ser '1' para activo, ajusta según tus necesidades.
+
+        // Ejecuta la consulta y retorna el resultado
+        return Database::executeRow($sql, $params);
+    }
+
+    public function averageRating()
+    {
+        // SQL para obtener el promedio de calificaciones del producto.
+        $sql = 'SELECT AVG(CAST(c.calificacion_producto AS UNSIGNED)) AS calificacion_promedio
+                FROM tb_valoraciones AS c
+                WHERE c.id_producto = ?';
+
+        $params = array($this->id);
+        $result = Database::getRow($sql, $params);
+
+        if ($result) {
+            // Obtener el promedio calculado.
+            $promedio = $result['calificacion_promedio'];
+            // Redondear el promedio al entero más cercano.
+            $promedioRedondeado = round($promedio);
+
+            // Actualizar el campo de calificación promedio del producto.
+            $this->updateAverageRating($promedioRedondeado);
+
+            return $promedioRedondeado;
+        } else {
+            return null; // No hay comentarios para el producto.
+        }
+    }
+
+    private function updateAverageRating($calificacionPromedio)
+    {
+        $sql = 'UPDATE tb_valoraciones
+                SET calificacion_promedio = ?
+                WHERE id_producto = ?';
+        $params = array($calificacionPromedio, $this->id);
+        return Database::executeRow($sql, $params);
+    }
 }

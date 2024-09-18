@@ -80,7 +80,8 @@ CREATE TABLE tb_detalles_pedidos (
 -- Tabla Valoraciones.
 CREATE TABLE tb_valoraciones (
     id_valoracion INT PRIMARY KEY AUTO_INCREMENT,
-    id_detalle INT NOT NULL,
+    id_producto INT NOT NULL,
+	id_cliente INT NOT NULL,
     calificacion_producto INT CHECK (calificacion_producto BETWEEN 1 AND 5),
     comentario_producto VARCHAR(250),
     fecha_valoracion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -114,11 +115,16 @@ ADD CONSTRAINT fk_pedido_detalle
 FOREIGN KEY (id_pedido) 
 REFERENCES tb_pedidos(id_pedido);
 
--- Llave foránea en la tabla tb_valoraciones que referencia a tb_detalles_pedidos.
+-- Llave foránea en la tabla tb_valoraciones que referencia a tb_productos y tb_clientes.
 ALTER TABLE tb_valoraciones
-ADD CONSTRAINT fk_detalle_valoracion 
-FOREIGN KEY (id_detalle) 
-REFERENCES tb_detalles_pedidos(id_detalle);
+ADD CONSTRAINT fk_producto_valoracion 
+FOREIGN KEY (id_producto) 
+REFERENCES tb_productos(id_producto);
+
+ALTER TABLE tb_valoraciones
+ADD CONSTRAINT fk_cliente_valoracion 
+FOREIGN KEY (id_producto) 
+REFERENCES tb_clientes(id_cliente);
 
 
 -- Triggers
@@ -225,13 +231,13 @@ p.forma_pago_pedido, DATE_FORMAT(p.fecha_registro, "%d-%m-%Y") AS fecha, p.estad
                 ORDER BY p.fecha_registro ASC, p.estado_pedido ASC;
 
 -- Insertar datos en la tabla tb_valoraciones
-INSERT INTO tb_valoraciones (id_detalle, calificacion_producto, comentario_producto)
+INSERT INTO tb_valoraciones (id_producto, id_cliente, calificacion_producto, comentario_producto)
 VALUES 
-(1, 5, 'Excelente pastel de chocolate muy cremoso.'),
-(2, 4, 'El pastel de vanilla esta muy ricooo.'),
-(3, 5, 'Las galletas son las mejores con su sabor.'),
-(4, 3, 'Las galletas de chocolate esta bien.'),
-(5, 5, 'Las mejores galletas que he probado.');
+(1, 1, 5, 'Excelente pastel de chocolate muy cremoso.'),
+(2, 1, 4, 'El pastel de vanilla esta muy ricooo.'),
+(3, 1, 5, 'Las galletas son las mejores con su sabor.'),
+(4, 1, 3, 'Las galletas de chocolate esta bien.'),
+(5, 1, 5, 'Las mejores galletas que he probado.');
 
 SELECT * FROM tb_categorias;
 SELECT * FROM tb_productos;

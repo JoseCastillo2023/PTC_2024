@@ -28,6 +28,53 @@ if (isset($_GET['action'])) {
                 $result['error'] = 'Producto inexistente';
             }
             break;
+        case 'readComments':
+            // Se encarga de leer los comentarios de un producto específico
+            if (!$producto->setId($_POST['idProducto'])) {
+                $result['error'] = $producto->getDataError();
+            } elseif ($result['dataset'] = $producto->readComments()) {
+                $result['status'] = 1;
+            } else {
+                $result['error'] = 'No se encontraron comentarios para este producto';
+            }
+            break;
+        case 'addComment':
+            // Verifica si todos los datos necesarios están presentes
+            if (!isset($_POST['idProducto'], $_POST['calificacion'], $_POST['comentario_producto'])) {
+                $result['error'] = 'Faltan datos para agregar el comentario';
+            } else {
+                // Llama al método addComments para agregar el comentario
+                $response = $producto->addComments($_POST['idProducto'], $_POST['calificacion'], $_POST['comentario_producto']);
+
+                if (isset($_SESSION['idCliente'])) {
+                    $result['session'] = 1;
+                    // Calcula el promedio de calificaciones después de agregar el comentario
+                    $promedio = $producto->averageRating();
+                    $result['message'] = 'Comentario agregado exitosamente';
+                    if ($promedio !== null) {
+                        $result['status'] = 1;
+                        $result['message'] = 'Comentario agregado exitosamente';
+                        $result['averageRating'] = $promedio; // Opcional: incluir el promedio en la respuesta
+                    } else {
+                        $result['error'] = 'Comentario agregado pero no se pudo calcular el promedio';
+                    }
+                } else {
+                    // Si la respuesta del método addComments indica un error, se muestra el mensaje de error
+                    $result['error'] = 'Debes iniciar sesion para añadir comentarios';
+                }
+            }
+            break;
+        case 'averageRating':
+            // Se encarga de leer la calificación promedio de un producto específico
+            if (!$producto->setId($_POST['idProducto'])) {
+                $result['error'] = $producto->getDataError();
+            } elseif (($promedio = $producto->averageRating()) !== false) {
+                $result['status'] = 1;
+                $result['dataset'] = array('promedio' => $promedio);
+            } else {
+                $result['error'] = 'No se pudo calcular el promedio';
+            }
+            break;
         default:
             $result['error'] = 'Acción no disponible';
     }
