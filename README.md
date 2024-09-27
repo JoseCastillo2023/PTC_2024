@@ -44,10 +44,3 @@ el uso los comentarios facilita el entendimiento del trabajo.
 
 7- Control de versiones con git y github para realizar cambios al momento para
 gestionar los cambios que se apliquen sobre los elementos del codigo.
-
-
-.scrollable-content1 {
-    height: 530px; /* Altura fija del contenedor */
-    overflow-y: auto; /* Habilita el desplazamiento vertical */
-}
-                <div class="scrollable-content1">
