@@ -32,7 +32,7 @@ const loadTemplate = async () => {
                 <header>
                     <nav class="navbar fixed-top navbar-expand-lg bg-body-tertiary">
                         <div class="container">
-                            <a class="navbar-brand" href="index.html"><img src="../../resources/img/logo_pan.png" height="50" alt="Panaderia"></a>
+                            <a class="navbar-brand" href="index.html"><img src="../../resources/img/logo_pan.png" height="50" width="50" alt="Panaderia"></a>
                             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="navbar-toggler-icon"></span>
                             </button>
@@ -56,7 +56,7 @@ const loadTemplate = async () => {
             <header>
                 <nav class="navbar fixed-top navbar-expand-lg bg-body-tertiary">
                     <div class="container">
-                        <a class="navbar-brand" href="index.html"><img src="../../resources/img/logo.png" height="50" alt="Panaderia"></a>
+                            <a class="navbar-brand" href="index.html"><img src="../../resources/img/logo_pan.png" height="50" width="50" alt="Panaderia"></a>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
                         </button>
@@ -79,11 +79,11 @@ const loadTemplate = async () => {
                 <div class="container">
                     <div>
                         <h6>Panaderia Hernández</h6>
-                        <p><i class="bi bi-c-square"></i> 2018-2024 Todos los derechos reservados</p>
+                        <p><i class="bi bi-c-square"></i> 2024 Todos los derechos reservados</p>
                     </div>
                     <div>
                         <h6>Contáctanos</h6>
-                        <p><i class="bi bi-envelope"></i> dacasoft@outlook.com</p>
+                        <p><i class="bi bi-envelope"></i> panaderiahern_sv@gmail.com</p>
                     </div>
                 </div>
             </nav>
