@@ -24,14 +24,12 @@ class ValoracionHandler
     {
         $this->search = $this->search === '' ? '%%' : '%' . $this->search . '%';
 
-        $sql = 'SELECT v.id_valoracion, v.id_detalle, CONCAT(c.nombre_cliente, " ", c.apellido_cliente) as cliente, 
-                       p.nombre_producto, v.calificacion_producto, v.comentario_producto, v.estado_comentario,
-                       DATE_FORMAT(v.fecha_valoracion, "%d-%m-%Y - %h:%i %p") AS fecha_valoracion
+        $sql = 'SELECT v.id_valoracion, v.id_producto, CONCAT(c.nombre_cliente, " ", c.apellido_cliente) AS cliente, 
+                p.nombre_producto, v.calificacion_producto, v.comentario_producto, v.estado_comentario,
+                DATE_FORMAT(v.fecha_valoracion, "%d-%m-%Y - %h:%i %p") AS fecha_valoracion
                 FROM tb_valoraciones v
-                INNER JOIN tb_detalles_pedidos d ON v.id_detalle = d.id_detalle
-                INNER JOIN tb_pedidos o ON d.id_pedido = o.id_pedido
-                INNER JOIN tb_clientes c ON o.id_cliente = c.id_cliente
-                INNER JOIN tb_productos p ON d.id_producto = p.id_producto
+                INNER JOIN tb_clientes c ON v.id_cliente = c.id_cliente
+                INNER JOIN tb_productos p ON v.id_producto = p.id_producto
                 WHERE CONCAT(c.nombre_cliente, " ", c.apellido_cliente) LIKE ? 
                 OR p.nombre_producto LIKE ?
                 ORDER BY v.fecha_valoracion DESC, v.estado_comentario DESC';
@@ -112,14 +110,12 @@ class ValoracionHandler
 
     public function readOne()
     {
-        $sql = 'SELECT v.id_valoracion, v.id_detalle, CONCAT(c.nombre_cliente, " ", c.apellido_cliente) as cliente, 
-                       p.nombre_producto, v.calificacion_producto, v.comentario_producto, v.estado_comentario,
-                       DATE_FORMAT(v.fecha_valoracion, "%d-%m-%Y - %h:%i %p") AS fecha_valoracion
+        $sql = 'SELECT v.id_valoracion, v.id_producto, CONCAT(c.nombre_cliente, " ", c.apellido_cliente) AS cliente, 
+                p.nombre_producto, v.calificacion_producto, v.comentario_producto, v.estado_comentario,
+                DATE_FORMAT(v.fecha_valoracion, "%d-%m-%Y - %h:%i %p") AS fecha_valoracion
                 FROM tb_valoraciones v
-                INNER JOIN tb_detalles_pedidos d ON v.id_detalle = d.id_detalle
-                INNER JOIN tb_pedidos o ON d.id_pedido = o.id_pedido
-                INNER JOIN tb_clientes c ON o.id_cliente = c.id_cliente
-                INNER JOIN tb_productos p ON d.id_producto = p.id_producto
+                INNER JOIN tb_clientes c ON v.id_cliente = c.id_cliente
+                INNER JOIN tb_productos p ON v.id_producto = p.id_producto
                 WHERE v.id_valoracion = ?
                 ORDER BY v.fecha_valoracion DESC, v.estado_comentario DESC';
         $params = array($this->id);
