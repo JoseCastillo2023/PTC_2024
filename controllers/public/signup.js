@@ -45,7 +45,7 @@ SIGNUP_FORM.addEventListener('submit', async (event) => {
     if (DATA.status) {
         sweetAlert(1, DATA.message, true, 'login.html');
     } else if (DATA.recaptcha) {
-        sweetAlert(2, DATA.error, false, 'index.html');
+        sweetAlert(2, DATA.error, false, 'signup.html');
     } else {
         sweetAlert(2, DATA.error, false);
         // Se genera un nuevo token cuando ocurre un problema.
