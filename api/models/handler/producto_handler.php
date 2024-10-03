@@ -94,6 +94,7 @@ class ProductoHandler
                 FROM tb_productos
                 INNER JOIN tb_categorias USING(id_categoria)
                 WHERE id_categoria = ? AND estado_producto = true
+                AND existencias_producto > 0
                 ORDER BY nombre_producto';
         $params = array($this->categoria);
         return Database::getRows($sql, $params);
