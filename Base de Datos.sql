@@ -57,24 +57,23 @@ CREATE TABLE tb_administradores (
     clave_administrador VARCHAR(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Tabla Pedidos.
+CREATE TABLE tb_detalles_pedidos (
+  id_detalle INT(10) AUTO_INCREMENT PRIMARY KEY NOT NULL,
+  id_producto INT(10) NOT NULL,
+  cantidad_producto SMALLINT(6) UNSIGNED NOT NULL,
+  precio_producto DECIMAL(5,2) UNSIGNED NOT NULL,
+  id_pedido INT(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 CREATE TABLE tb_pedidos (
   id_pedido INT(10) AUTO_INCREMENT PRIMARY KEY NOT NULL,
-  id_cliente INT NOT NULL,
+  id_cliente INT(10) NOT NULL,
   direccion_pedido VARCHAR(250) NOT NULL,
-  estado_pedido ENUM('Pendiente','En camino','Finalizado') NOT NULL CHECK (estado_pedido IN ('Pendiente', 'En camino', 'Finalizado')),
+  estado_pedido ENUM('Pendiente','En camino','Finalizado','Cancelado','Historial') NOT NULL,
   forma_pago_pedido ENUM ('Efectivo','Transferencia') DEFAULT 'Efectivo',
   fecha_registro DATE NOT NULL DEFAULT CURRENT_TIMESTAMP()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Tabla Detalles Pedidos.
-CREATE TABLE tb_detalles_pedidos (
-  id_detalle INT(10) AUTO_INCREMENT PRIMARY KEY NOT NULL,
-  id_producto INT(10) NOT NULL,
-  cantidad_producto SMALLINT(6) UNSIGNED NOT NULL CHECK (cantidad_producto > 0),
-  precio_producto DECIMAL(10,2) UNSIGNED NOT NULL CHECK (precio_producto >= 0),
-  id_pedido INT NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 -- Tabla Valoraciones.
@@ -245,5 +244,3 @@ SELECT * FROM tb_pedidos;
 SELECT * FROM tb_clientes;
 SELECT * FROM tb_detalles_pedidos;
 SELECT * FROM tb_valoraciones;
-
-
