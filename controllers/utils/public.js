@@ -1,34 +1,36 @@
 /*
-*   Controlador es de uso general en las páginas web del sitio público.
-*   Sirve para manejar las plantillas del encabezado y pie del documento.
-*/
+ *   Controlador es de uso general en las páginas web del sitio público.
+ *   Sirve para manejar las plantillas del encabezado y pie del documento.
+ */
 
 // Constante para completar la ruta de la API.
-const USER_API = 'services/public/cliente.php';
+const USER_API = "services/public/cliente.php";
 // Constante para establecer el elemento del contenido principal.
-const MAIN = document.querySelector('main');
-MAIN.style.paddingTop = '75px';
-MAIN.style.paddingBottom = '100px';
-MAIN.classList.add('container');
+const MAIN = document.querySelector("main");
+MAIN.style.paddingTop = "75px";
+MAIN.style.paddingBottom = "100px";
+MAIN.classList.add("container");
 // Se establece el título de la página web.
-document.querySelector('title').textContent = 'Panaderia Hernández - Tienda';
+document.querySelector("title").textContent = "Panaderia Hernández - Tienda";
 // Constante para establecer el elemento del título principal.
-const MAIN_TITLE = document.getElementById('mainTitle');
-MAIN_TITLE.classList.add('text-center', 'py-3');
+const MAIN_TITLE = document.getElementById("mainTitle");
+MAIN_TITLE.classList.add("text-center", "py-3");
 
 /*  Función asíncrona para cargar el encabezado y pie del documento.
-*   Parámetros: ninguno.
-*   Retorno: ninguno.
-*/
+ *   Parámetros: ninguno.
+ *   Retorno: ninguno.
+ */
 const loadTemplate = async () => {
-    // Petición para obtener en nombre del usuario que ha iniciado sesión.
-    const DATA = await fetchData(USER_API, 'getUser');
-    // Se comprueba si el usuario está autenticado para establecer el encabezado respectivo.
-    if (DATA.session) {
-        // Se verifica si la página web no es el inicio de sesión, de lo contrario se direcciona a la página web principal.
-        if (!location.pathname.endsWith('login.html')) {
-            // Se agrega el encabezado de la página web antes del contenido principal.
-            MAIN.insertAdjacentHTML('beforebegin', `
+  // Petición para obtener en nombre del usuario que ha iniciado sesión.
+  const DATA = await fetchData(USER_API, "getUser");
+  // Se comprueba si el usuario está autenticado para establecer el encabezado respectivo.
+  if (DATA.session) {
+    // Se verifica si la página web no es el inicio de sesión, de lo contrario se direcciona a la página web principal.
+    if (!location.pathname.endsWith("login.html")) {
+      // Se agrega el encabezado de la página web antes del contenido principal.
+      MAIN.insertAdjacentHTML(
+        "beforebegin",
+        `
                 <header>
                     <nav class="navbar fixed-top navbar-expand-lg bg-body-tertiary">
                         <div class="container">
@@ -46,13 +48,16 @@ const loadTemplate = async () => {
                         </div>
                     </nav>
                 </header>
-            `);
-        } else {
-            location.href = 'index.html';
-        }
+            `
+      );
     } else {
-        // Se agrega el encabezado de la página web antes del contenido principal.
-        MAIN.insertAdjacentHTML('beforebegin', `
+      location.href = "index.html";
+    }
+  } else {
+    // Se agrega el encabezado de la página web antes del contenido principal.
+    MAIN.insertAdjacentHTML(
+      "beforebegin",
+      `
             <header>
                 <nav class="navbar fixed-top navbar-expand-lg bg-body-tertiary">
                     <div class="container">
@@ -70,10 +75,13 @@ const loadTemplate = async () => {
                     </div>
                 </nav>
             </header>
-        `);
-    }
-    // Se agrega el pie de la página web después del contenido principal.
-    MAIN.insertAdjacentHTML('afterend', `
+        `
+    );
+  }
+  // Se agrega el pie de la página web después del contenido principal.
+  MAIN.insertAdjacentHTML(
+    "afterend",
+    `
         <footer>
             <nav class="navbar fixed-bottom bg-body-tertiary">
                 <div class="container">
@@ -82,11 +90,16 @@ const loadTemplate = async () => {
                         <p><i class="bi bi-c-square"></i> 2024 Todos los derechos reservados</p>
                     </div>
                     <div>
+                        <a class="text-decoration-none text-dark" href="manuales.html"><h6>Acerca de Nosotros</h6></a>
+                        <a class="text-decoration-none text-dark" href="manuales.html"><p><i class="bi bi-symmetry-horizontal"></i> Manuales informativos</p></a>
+                    </div>
+                    <div>
                         <h6>Contáctanos</h6>
                         <p><i class="bi bi-envelope"></i> panaderiahern_sv@gmail.com</p>
                     </div>
                 </div>
             </nav>
         </footer>
-    `);
-}
+    `
+  );
+};

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<!-- Declaración del idioma para el documento -->
+<html lang="es">
+
+<head>
+	<!-- Título del documento -->
+	<title></title>
+	<!-- Metadatos de la página web -->
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<!-- IMPORTACIÓN DE RECURSOS EXTERNOS -->
+	<!-- Llamada al icono de la página web -->
+	<link type="image/png" rel="icon" href="../../resources/img/icon.png" />
+	<!-- Llamada a las hojas de estilos del framework e iconos -->
+	<link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap.min.css" />
+	<link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap-icons.min.css" />
+	<link type="text/css" rel="stylesheet" href="../../resources/css/manuales.css" />
+</head>
+
+<body>
+	<!-- Contenido principal del documento -->
+	<main>
+		<!-- Título del contenido principal -->
+		<h1 id="mainTitle"></h1>
+		<div class="col-auto text-center">
+			<h2 class="py-3">Manual de Usuario</h2>
+			<iframe src="../../resources/archives/Manual_Usuario.pdf" frameborder="0"></iframe>
+			<div class="py-3"></div>
+			<h2 class="py-3">Manual Técnico</h2>
+			<iframe src="../../resources/archives/Manual_Tecnico.pdf" frameborder="0"></iframe>
+			<div class="py-3"></div>
+		</div>
+	</main>
+	<script src="js/smooth-scroll.js"></script>
+	<script> var scroll = new SmoothScroll('a[href*="#"]');</script>
+
+	<div style="
+        text-align: right;
+        position: fixed;
+        z-index: 9999999;
+        bottom: 0;
+        width: auto;
+        right: 1%;
+        cursor: pointer;
+        line-height: 0;
+        display: block !important;
+      ">
+	</div>
+	<script type="text/javascript" src="../../resources/js/manuales.js"></script>
+	<!-- IMPORTACIÓN DE ARCHIVOS JAVASCRIPT -->
+	<!-- Llamada al framework y librería de mensajes -->
+	<script type="text/javascript" src="../../resources/js/bootstrap.bundle.min.js"></script>
+	<script type="text/javascript" src="../../resources/js/sweetalert.min.js"></script>
+	<!-- Llamada al controlador general de la aplicación -->
+	<script type="text/javascript" src="../../controllers/utils/components.js"></script>
+	<!-- Llamada al controlador del sitio público -->
+	<script type="text/javascript" src="../../controllers/utils/public.js"></script>
+	<!-- Llamada al controlador de la página web -->
+	<script type="text/javascript" src="../../controllers/public/manuales.js"></script>
+</body>
+
+</html>
