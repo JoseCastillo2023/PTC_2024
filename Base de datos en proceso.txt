@@ -1,61 +1,62 @@
--- Eliminación base de datos.
 DROP DATABASE IF EXISTS PanaderiaHPTC;
-
--- Creación base de datos. 
 CREATE DATABASE PanaderiaHPTC;
-
 USE PanaderiaHPTC;
 
+CREATE TABLE tb_administradores (
+ id_admin INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+ nombre VARCHAR(50) NOT NULL,
+ apellido VARCHAR(50) NOT NULL,
+ correo_administrador VARCHAR(100) NOT NULL,
+ alias_administrador VARCHAR(25) NOT NULL,
+ clave_administrador VARCHAR(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Creación de las tablas.
-
--- Tabla Clientes.
 CREATE TABLE tb_clientes (
   id_cliente INT(10) AUTO_INCREMENT PRIMARY KEY NOT NULL,
   nombre_cliente VARCHAR(50) NOT NULL,
   apellido_cliente VARCHAR(50) NOT NULL,
-  dui_cliente VARCHAR(10) NOT NULL UNIQUE,
-  correo_cliente VARCHAR(100) NOT NULL UNIQUE,
-  telefono_cliente VARCHAR(9) NOT NULL UNIQUE,
+  dui_cliente VARCHAR(10) NOT NULL,
+  correo_cliente VARCHAR(100) NOT NULL,
+  telefono_cliente VARCHAR(9) NOT NULL,
   direccion_cliente VARCHAR(250) NOT NULL,
   nacimiento_cliente DATE NOT NULL,
   clave_cliente VARCHAR(100) NOT NULL,
   estado_cliente TINYINT(1) NOT NULL DEFAULT 1,
   fecha_registro DATE NOT NULL DEFAULT CURRENT_TIMESTAMP(),
   codigo_recuperacion VARCHAR(6) NOT NULL,
-  fecha_expiracion_codigo DATETIME NOT NULL
+  fecha_expiracion_codigo DATETIME NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Tabla Categorías.
 CREATE TABLE tb_categorias (
-    id_categoria INT PRIMARY KEY AUTO_INCREMENT,
-    nombre_categoria VARCHAR(25) NOT NULL UNIQUE,
-    descripcion_categoria VARCHAR(150) NOT NULL,
-    imagen_categoria VARCHAR(250) NOT NULL
+  id_categoria INT(10) AUTO_INCREMENT PRIMARY KEY NOT NULL,
+  nombre VARCHAR(50) NOT NULL,
+  descripcion VARCHAR(250) DEFAULT NULL,
+  imagen VARCHAR(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Tabla Productos.
-CREATE TABLE tb_productos (
-    id_producto INT PRIMARY KEY AUTO_INCREMENT,
-    nombre_producto VARCHAR(50) NOT NULL UNIQUE,
-    descripcion_producto VARCHAR(250) NOT NULL,
-    precio_producto DECIMAL(10,2) NOT NULL CHECK (precio_producto > 0),
-    existencias_producto INT UNSIGNED NOT NULL CHECK (existencias_producto >= 0),
-    imagen_producto VARCHAR(250) NOT NULL,
-    id_categoria INT NOT NULL,
-    estado_producto TINYINT(1) NOT NULL,
-    fecha_registro TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+CREATE TABLE tb_productos(
+  id_producto INT(10) AUTO_INCREMENT PRIMARY KEY NOT NULL,
+  nombre_producto VARCHAR(50) NOT NULL,
+  descripcion_producto VARCHAR(250) NOT NULL,
+  precio_producto DECIMAL(5,2) NOT NULL,
+  existencias_producto INT(10) UNSIGNED NOT NULL,
+  imagen_producto VARCHAR(25) NOT NULL,
+  id_categoria INT(10) NOT NULL,
+  estado_producto TINYINT(1) NOT NULL,
+  id_administrador INT(10) NOT NULL,
+  calificacion_promedio ENUM ('1', '2', '3', '4', '5') NOT NULL,
+  fecha_registro DATE NOT NULL DEFAULT CURRENT_TIMESTAMP()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Tabla Administradores.
-CREATE TABLE tb_administradores (
-    id_administrador INT PRIMARY KEY AUTO_INCREMENT,
-    nombre_administrador VARCHAR(50) NOT NULL,
-    apellido_administrador VARCHAR(50) NOT NULL,
-    correo_administrador VARCHAR(100) NOT NULL UNIQUE,
-    alias_administrador VARCHAR(30) UNIQUE NOT NULL,
-    clave_administrador VARCHAR(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+CREATE TABLE tb_comentarios (
+  id_comentario INT(10) AUTO_INCREMENT PRIMARY KEY NOT NULL,
+  id_producto INT(10) NOT NULL,
+  id_cliente INT(10) NOT NULL,
+  calificacion_producto ENUM ('1', '2', '3', '4', '5') NOT NULL,
+  comentario_producto VARCHAR(255) NOT NULL,
+  fecha_valoracion DATE NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+  estado_comentario  TINYINT(1) NOT NULL
+);
 
 CREATE TABLE tb_detalles_pedidos (
   id_detalle INT(10) AUTO_INCREMENT PRIMARY KEY NOT NULL,
@@ -69,24 +70,10 @@ CREATE TABLE tb_pedidos (
   id_pedido INT(10) AUTO_INCREMENT PRIMARY KEY NOT NULL,
   id_cliente INT(10) NOT NULL,
   direccion_pedido VARCHAR(250) NOT NULL,
-  estado_pedido ENUM('Pendiente','En camino','Entregado','Cancelado','Historial') NOT NULL,
   forma_pago_pedido ENUM ('Efectivo','Transferencia') DEFAULT 'Efectivo',
+  estado_pedido ENUM('Pendiente','EnCamino','Finalizado','Cancelado','Historial') NOT NULL,
   fecha_registro DATE NOT NULL DEFAULT CURRENT_TIMESTAMP()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-
-
--- Tabla Valoraciones.
-CREATE TABLE tb_valoraciones (
-    id_valoracion INT PRIMARY KEY AUTO_INCREMENT,
-    id_producto INT NOT NULL,
-	  id_cliente INT NOT NULL,
-    calificacion_producto INT CHECK (calificacion_producto BETWEEN 1 AND 5),
-    comentario_producto VARCHAR(250),
-    fecha_valoracion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    estado_comentario BOOLEAN DEFAULT TRUE NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
 
 -- Llaves Foraneas.
 
@@ -115,43 +102,21 @@ FOREIGN KEY (id_pedido)
 REFERENCES tb_pedidos(id_pedido);
 
 -- Llave foránea en la tabla tb_valoraciones que referencia a tb_productos y tb_clientes.
-ALTER TABLE tb_valoraciones
+ALTER TABLE tb_comentarios
 ADD CONSTRAINT fk_producto_valoracion 
 FOREIGN KEY (id_producto) 
 REFERENCES tb_productos(id_producto);
 
-ALTER TABLE tb_valoraciones
+ALTER TABLE tb_comentarios
 ADD CONSTRAINT fk_cliente_valoracion 
 FOREIGN KEY (id_producto) 
 REFERENCES tb_clientes(id_cliente);
-
-
--- Triggers
-
--- Metodo para cuando un cliente agregue un producto en el carrito disminuye el inventario.
-DELIMITER $$
-
-CREATE TRIGGER trg_disminuir_existencias
-AFTER INSERT ON tb_detalles_pedidos
-FOR EACH ROW
-BEGIN
-    UPDATE tb_productos 
-    SET existencias_producto = existencias_producto - NEW.cantidad_producto
-    WHERE id_producto = NEW.id_producto;
-END$$
-
-DELIMITER ;
-
--- Metodo para cuando un producto tenga existencias 0 un cambie de estado.
-
-
-
 -- Ingreso de datos para las tablas.
 
 -- Datos de la tabla de Categorias.
-INSERT INTO tb_categorias (nombre_categoria, descripcion_categoria, imagen_categoria) VALUES ('Pasteles', 'Postres grandes en forma circular', 'Pastel.jfif');
-INSERT INTO tb_categorias (nombre_categoria, descripcion_categoria, imagen_categoria) VALUES ('Galletas', 'Galletas con cacao', 'Galletas.png');
-INSERT INTO tb_categorias (nombre_categoria, descripcion_categoria, imagen_categoria) VALUES ('Bolleria', 'Todo tipo de comida relaciona con los panes', 'Bolleria.jpg');
+INSERT INTO tb_categorias (nombre, descripcion, imagen) VALUES ('Pasteles', 'Postres grandes en forma circular', 'Pastel.jfif');
+INSERT INTO tb_categorias (nombre, descripcion, imagen) VALUES ('Galletas', 'Galletas con cacao', 'Galletas.png');
+INSERT INTO tb_categorias (nombre, descripcion, imagen) VALUES ('Bolleria', 'Todo tipo de comida relaciona con los panes', 'Bolleria.jpg');
 
 -- Datos de la tabla de Productos.
 INSERT INTO tb_productos (nombre_producto, descripcion_producto, precio_producto, existencias_producto, imagen_producto, id_categoria, estado_producto) 
@@ -206,7 +171,7 @@ INSERT INTO tb_pedidos (id_cliente, direccion_pedido, estado_pedido, fecha_regis
 VALUES (2, 'San Salvador, Delgado', 'Finalizado', '2024-4-10');
 
 INSERT INTO tb_pedidos (id_cliente, direccion_pedido, estado_pedido, fecha_registro)
-VALUES (3, 'San Salvador, Nejapa', 'En camino', '2024-4-13');
+VALUES (3, 'San Salvador, Nejapa', 'EnCamino', '2024-4-13');
 
 INSERT INTO tb_pedidos (id_cliente, direccion_pedido, estado_pedido, fecha_registro)
 VALUES (4, 'San Salvador, San Salvador', 'Pendiente', '2024-4-19');
@@ -222,42 +187,35 @@ VALUES
 (4, 4, 6.00, 4),
 (4, 3, 4.50, 5);
 
-SELECT p.id_pedido, CONCAT(c.nombre_cliente, " ", c.apellido_cliente) as cliente,
-p.forma_pago_pedido, DATE_FORMAT(p.fecha_registro, "%d-%m-%Y") AS fecha, p.estado_pedido
-                FROM tb_pedidos p
-                INNER JOIN tb_clientes c USING(id_cliente)
-                WHERE estado_pedido=1 AND CONCAT(c.nombre_cliente, c.apellido_cliente) LIKE 1
-                ORDER BY p.fecha_registro ASC, p.estado_pedido ASC;
 
 -- Insertar datos en la tabla tb_valoraciones
-INSERT INTO tb_valoraciones (id_producto, id_cliente, calificacion_producto, comentario_producto)
+INSERT INTO tb_comentarios (id_producto, id_cliente, calificacion_producto, comentario_producto)
 VALUES 
 (1, 1, 5, 'Excelente pastel de chocolate muy cremoso.'),
 (2, 1, 4, 'El pastel de vanilla esta muy ricooo.'),
 (3, 1, 5, 'Las galletas son las mejores con su sabor.'),
 (4, 1, 3, 'Las galletas de chocolate esta bien.'),
 (5, 1, 5, 'Las mejores galletas que he probado.');
+SELECT * FROM tb_administradores;
+
+SELECT * FROM tb_clientes;
+
 
 SELECT * FROM tb_categorias;
+
+
 SELECT * FROM tb_productos;
-SELECT * FROM tb_pedidos;
-SELECT * FROM tb_clientes;
+
 SELECT * FROM tb_detalles_pedidos;
-SELECT * FROM tb_valoraciones;
 
-SELECT v.id_valoracion, v.id_producto, CONCAT(c.nombre_cliente, " ", c.apellido_cliente) AS cliente, 
-       p.nombre_producto, v.calificacion_producto, v.comentario_producto, v.estado_comentario,
-       DATE_FORMAT(v.fecha_valoracion, "%d-%m-%Y - %h:%i %p") AS fecha_valoracion
-FROM tb_valoraciones v
-INNER JOIN tb_clientes c ON v.id_cliente = c.id_cliente
-INNER JOIN tb_productos p ON v.id_producto = p.id_producto
-WHERE CONCAT(c.nombre_cliente, " ", c.apellido_cliente) LIKE '%Jose%' 
-   OR p.nombre_producto LIKE '%Jose%'
-ORDER BY v.fecha_valoracion DESC, v.estado_comentario DESC;
+SELECT * FROM tb_pedidos;
+
+SELECT * FROM tb_detalles_pedidos;
+
+SELECT * FROM tb_pedidos;
+
+SELECT * FROM tb_comentarios;
 
 
-SELECT id_detalle, nombre_producto, tb_detalles_pedidos.precio_producto, tb_detalles_pedidos.cantidad_producto, tb_productos.imagen_producto
-                FROM tb_detalles_pedidos
-                INNER JOIN tb_pedidos USING(id_pedido)
-                INNER JOIN tb_productos USING(id_producto)
-                WHERE id_pedido = ?
+SELECT * FROM tb_detalles_pedidos;
+SELECT * FROM tb_pedidos;
