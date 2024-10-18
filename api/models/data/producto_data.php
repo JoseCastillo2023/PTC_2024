@@ -1,8 +1,8 @@
 <?php
 // Se incluye la clase para validar los datos de entrada.
-require_once('../../helpers/validator.php');
+require_once ('../../helpers/validator.php');
 // Se incluye la clase padre.
-require_once('../../models/handler/producto_handler.php');
+require_once ('../../models/handler/producto_handler.php');
 /*
  *	Clase para manejar el encapsulamiento de los datos de la tabla PRODUCTO.
  */
@@ -62,7 +62,7 @@ class ProductoData extends ProductoHandler
             $this->precio = $value;
             return true;
         } else {
-            $this->data_error = 'El precio debe ser un número positivo';
+            $this->data_error = 'El precio debe ser un valor numérico';
             return false;
         }
     }
@@ -73,7 +73,7 @@ class ProductoData extends ProductoHandler
             $this->existencias = $value;
             return true;
         } else {
-            $this->data_error = 'Las existencias debe ser un número entero positivo';
+            $this->data_error = 'El valor de las existencias debe ser numérico entero';
             return false;
         }
     }
@@ -129,7 +129,7 @@ class ProductoData extends ProductoHandler
     }
 
     /*
-     *  Métodos para obtener el valor de los atributos adicionales.
+     *  Métodos para obtener los atributos adicionales.
      */
     public function getDataError()
     {

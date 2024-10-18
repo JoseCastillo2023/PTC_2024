@@ -1,8 +1,8 @@
 <?php
 // Se incluye la clase para validar los datos de entrada.
-require_once('../../helpers/validator.php');
+require_once ('../../helpers/validator.php');
 // Se incluye la clase padre.
-require_once('../../models/handler/administrador_handler.php');
+require_once ('../../models/handler/administrador_handler.php');
 /*
  *  Clase para manejar el encapsulamiento de los datos de la tabla USUARIO.
  */
@@ -14,8 +14,6 @@ class AdministradorData extends AdministradorHandler
     /*
      *  Métodos para validar y asignar valores de los atributos.
      */
-
-    // Validacion del ID.
     public function setId($value)
     {
         if (Validator::validateNaturalNumber($value)) {
@@ -27,7 +25,6 @@ class AdministradorData extends AdministradorHandler
         }
     }
 
-    // Validacion del Nombre.
     public function setNombre($value, $min = 2, $max = 50)
     {
         if (!Validator::validateAlphabetic($value)) {
@@ -42,7 +39,6 @@ class AdministradorData extends AdministradorHandler
         }
     }
 
-    // Validacion del Apellido.
     public function setApellido($value, $min = 2, $max = 50)
     {
         if (!Validator::validateAlphabetic($value)) {
@@ -57,7 +53,6 @@ class AdministradorData extends AdministradorHandler
         }
     }
 
-    // Validacion del Correo.
     public function setCorreo($value, $min = 8, $max = 100)
     {
         if (!Validator::validateEmail($value)) {
@@ -72,7 +67,6 @@ class AdministradorData extends AdministradorHandler
         }
     }
 
-    // Validacion del Alias.
     public function setAlias($value, $min = 6, $max = 25)
     {
         if (!Validator::validateAlphanumeric($value)) {
@@ -87,7 +81,6 @@ class AdministradorData extends AdministradorHandler
         }
     }
 
-    // Validacion del Clave.
     public function setClave($value)
     {
         if (Validator::validatePassword($value)) {

@@ -86,7 +86,7 @@ const fillTable = async (form = null) => {
                     <td><img src="${SERVER_URL}images/productos/${row.imagen_producto}" height="50"></td>
                     <td>${row.nombre_producto}</td>
                     <td>${row.precio_producto}</td>
-                    <td>${row.nombre_categoria}</td>
+                    <td>${row.nombre}</td>
                     <td><i class="${icon}"></i></td>
                     <td>
                         <button type="button" class="btn btn-info" onclick="openUpdate(${row.id_producto})">

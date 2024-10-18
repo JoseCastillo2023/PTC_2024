@@ -9,9 +9,7 @@ class OrderHandler
     /*
      *   Declaración de atributos para el manejo de datos.
      */
-    protected $search = null;
     protected $id_pedido = null;
-    protected $id_cliente = null;
     protected $id_detalle = null;
     protected $cliente = null;
     protected $producto = null;
@@ -32,7 +30,7 @@ class OrderHandler
     // Método para verificar si existe un pedido en proceso con el fin de iniciar o continuar una compra.
     public function getOrder()
     {
-        $this->estado = 'En camino';
+        $this->estado = 'Encamino';
         $sql = 'SELECT id_pedido
                 FROM tb_pedidos
                 WHERE estado_pedido = ? AND id_cliente = ?';
@@ -62,25 +60,6 @@ class OrderHandler
             }
         }
     }
-    
-    // Método para buscar un informacion del pedido.
-    public function searchRows()
-    {
-        $this->search = $this->search === '' ? '%%' : '%' . $this->search . '%';
-        $this->id_cliente = isset($_SESSION['idCliente']) ? 'AND c.id_cliente=' . $_SESSION['idCliente'] : ' ';
-        
-        $sql = 'SELECT p.id_pedido, CONCAT(c.nombre_cliente, " ", c.apellido_cliente) as cliente,
-                p.forma_pago_pedido, DATE_FORMAT(p.fecha_registro, "%d-%m-%Y") AS fecha, p.estado_pedido
-                FROM tb_pedidos p
-                INNER JOIN tb_clientes c USING(id_cliente)
-                WHERE estado_pedido=? AND CONCAT(c.nombre_cliente, c.apellido_cliente) LIKE ? ' . $this->id_cliente . '  
-                ORDER BY p.fecha_registro ASC, p.estado_pedido ASC';
-        
-        $params = array($this->estado, $this->search);
-        return Database::getRows($sql, $params);
-        
-    }
-
 
     // Método para agregar un producto al carrito de compras.
     public function createDetail()
@@ -102,35 +81,22 @@ class OrderHandler
 
     // Método para obtener los productos que se encuentran en el carrito de compras.
     public function readDetail()
-    {
-    $sql = 'SELECT id_detalle, nombre_producto, tb_detalles_pedidos.precio_producto, tb_detalles_pedidos.cantidad_producto, tb_productos.imagen_producto, tb_pedidos.fecha_registro, tb_pedidos.direccion_pedido
+{
+    $this->estado = 'Encamino';
+    $sql = 'SELECT id_detalle, nombre_producto, tb_detalles_pedidos.precio_producto, 
+                   tb_detalles_pedidos.cantidad_producto, tb_productos.imagen_producto, 
+                   tb_pedidos.fecha_registro, tb_pedidos.direccion_pedido
             FROM tb_detalles_pedidos
             INNER JOIN tb_pedidos USING(id_pedido)
             INNER JOIN tb_productos USING(id_producto)
-            WHERE estado_pedido = "En camino"';
-    return Database::getRows($sql);
-    }
-
-    public function readOne()
-    {
-    $sql = 'SELECT id_detalle, nombre_producto, tb_detalles_pedidos.precio_producto, tb_detalles_pedidos.cantidad_producto, tb_productos.imagen_producto, tb_pedidos.fecha_registro, tb_pedidos.direccion_pedido
-            FROM tb_detalles_pedidos
-            INNER JOIN tb_pedidos USING(id_pedido)
-            INNER JOIN tb_productos USING(id_producto)
-            WHERE estado_pedido = ?';
-    return Database::getRows($sql);
-    }
-
-    public function readOneFactura()
-    {
-    $sql = 'SELECT id_detalle, CONCAT(c.nombre_cliente, " ", c.apellido_cliente) as cliente, tb_productos.nombre_producto, tb_detalles_pedidos.precio_producto, tb_detalles_pedidos.cantidad_producto, tb_productos.imagen_producto, tb_pedidos.fecha_registro, tb_pedidos.direccion_pedido
-            FROM tb_detalles_pedidos
-            INNER JOIN tb_pedidos USING(id_pedido)
-            INNER JOIN tb_productos USING(id_producto)
-            INNER JOIN tb_clientes USING(id_cliente)
-            WHERE estado_pedido = ?';
-    return Database::getRows($sql);
-    }
+            WHERE id_pedido IN (
+                SELECT id_pedido 
+                FROM tb_pedidos 
+                WHERE estado_pedido = ? AND id_cliente = ?
+            )';
+    $params = array($this->estado, $_SESSION['idCliente']);
+    return Database::getRows($sql, $params);
+}
 
     // Método para finalizar un pedido por parte del cliente.
     public function finishOrder()

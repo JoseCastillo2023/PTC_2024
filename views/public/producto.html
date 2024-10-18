@@ -7,6 +7,7 @@
     <title></title>
     <!-- Metadatos de la página web -->
     <meta charset="utf-8">
+    <meta name="author" content="Dennis Gonzalez">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- IMPORTACIÓN DE RECURSOS EXTERNOS -->
     <!-- Llamada al icono de la página web -->
@@ -21,6 +22,23 @@
     <main>
         <!-- Título del contenido principal -->
         <h4 id="mainTitle"></h4>
+
+        <form class="col-sm-12 col-md-6 py-5" id="searchForm">
+            <div class="row">
+                <div class="col-6">
+                    <input type="search" class="form-control" name="search" placeholder="Buscar" required>
+                </div>
+                <div class="col-6">
+                    <button type="submit" class="btn btn-dark">
+                        <i class="bi bi-search"></i>
+                    </button>
+                    <button type="reset" class="btn btn-dark" onclick="fillTable()">
+                        <i class="bi bi-x-square-fill"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+
         <!-- Contenedor para mostrar los productos disponibles de la categoría seleccionada -->
         <div class="row" id="productos"></div>
     </main>
@@ -33,7 +51,7 @@
     <!-- Llamada al controlador del sitio público -->
     <script type="text/javascript" src="../../controllers/utils/public.js"></script>
     <!-- Llamada al controlador de la página web -->
-    <script type="text/javascript" src="../../controllers/public/products.js"></script>
+    <script type="text/javascript" src="../../controllers/public/producto.js"></script>
 </body>
 
 </html>

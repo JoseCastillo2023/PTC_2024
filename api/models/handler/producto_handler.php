@@ -1,14 +1,14 @@
 <?php
 // Se incluye la clase para trabajar con la base de datos.
-require_once('../../helpers/database.php');
+require_once ('../../helpers/database.php');
 /*
-*	Clase para manejar el comportamiento de los datos de la tabla PRODUCTO.
-*/
+ *	Clase para manejar el comportamiento de los datos de la tabla PRODUCTO.
+ */
 class ProductoHandler
 {
     /*
-    *   Declaración de atributos para el manejo de datos.
-    */
+     *   Declaración de atributos para el manejo de datos.
+     */
     protected $id = null;
     protected $nombre = null;
     protected $descripcion = null;
@@ -22,12 +22,12 @@ class ProductoHandler
     const RUTA_IMAGEN = '../../images/productos/';
 
     /*
-    *   Métodos para realizar las operaciones SCRUD (search, create, read, update, and delete).
-    */
+     *   Métodos para realizar las operaciones SCRUD (search, create, read, update, and delete).
+     */
     public function searchRows()
     {
         $value = '%' . Validator::getSearchValue() . '%';
-        $sql = 'SELECT id_producto, imagen_producto, nombre_producto, descripcion_producto, precio_producto, nombre_categoria, estado_producto
+        $sql = 'SELECT id_producto, imagen_producto, nombre_producto, descripcion_producto, precio_producto, nombre, estado_producto
                 FROM tb_productos
                 INNER JOIN tb_categorias USING(id_categoria)
                 WHERE nombre_producto LIKE ? OR descripcion_producto LIKE ?
@@ -38,7 +38,7 @@ class ProductoHandler
 
     public function createRow()
     {
-        $sql = 'INSERT INTO tb_productos (nombre_producto, descripcion_producto, precio_producto, existencias_producto, imagen_producto, estado_producto, id_categoria, id_administrador)
+        $sql = 'INSERT INTO tb_productos(nombre_producto, descripcion_producto, precio_producto, existencias_producto, imagen_producto, estado_producto, id_categoria, id_administrador)
                 VALUES(?, ?, ?, ?, ?, ?, ?, ?)';
         $params = array($this->nombre, $this->descripcion, $this->precio, $this->existencias, $this->imagen, $this->estado, $this->categoria, $_SESSION['idAdministrador']);
         return Database::executeRow($sql, $params);
@@ -46,7 +46,7 @@ class ProductoHandler
 
     public function readAll()
     {
-        $sql = 'SELECT id_producto, imagen_producto, nombre_producto, descripcion_producto, precio_producto, nombre_categoria, estado_producto
+        $sql = 'SELECT id_producto, imagen_producto, nombre_producto, descripcion_producto, precio_producto, nombre, estado_producto
                 FROM tb_productos
                 INNER JOIN tb_categorias USING(id_categoria)
                 ORDER BY nombre_producto';
@@ -94,36 +94,11 @@ class ProductoHandler
                 FROM tb_productos
                 INNER JOIN tb_categorias USING(id_categoria)
                 WHERE id_categoria = ? AND estado_producto = true
-                AND existencias_producto > 0
                 ORDER BY nombre_producto';
         $params = array($this->categoria);
         return Database::getRows($sql, $params);
     }
 
-    /*
-    *   Métodos para generar gráficos.
-    */
-    public function cantidadProductosCategoria()
-    {
-        $sql = 'SELECT nombre_categoria, COUNT(id_producto) cantidad
-                FROM tb_productos
-                INNER JOIN tb_categorias USING(id_categoria)
-                GROUP BY nombre_categoria ORDER BY cantidad DESC LIMIT 5';
-        return Database::getRows($sql);
-    }
-
-    public function porcentajeProductosCategoria()
-    {
-        $sql = 'SELECT nombre_categoria, ROUND((COUNT(id_producto) * 100.0 / (SELECT COUNT(id_producto) FROM producto)), 2) porcentaje
-                FROM tb_productos
-                INNER JOIN tb_categorias USING(id_categoria)
-                GROUP BY nombre_categoria ORDER BY porcentaje DESC';
-        return Database::getRows($sql);
-    }
-
-    /*
-    *   Métodos para generar reportes.
-    */
     public function productosCategoria()
     {
         $sql = 'SELECT nombre_producto, precio_producto, estado_producto
@@ -137,11 +112,11 @@ class ProductoHandler
 
     public function readComments()
     {
-        $sql = 'SELECT c.id_valoracion, c.id_producto, c.id_cliente, 
+        $sql = 'SELECT c.id_comentario, c.id_producto, c.id_cliente, 
                        c.calificacion_producto, c.comentario_producto, 
                        c.fecha_valoracion, c.estado_comentario,
                        cl.nombre_cliente, cl.apellido_cliente
-                FROM tb_valoraciones AS c
+                FROM tb_comentarios AS c
                 INNER JOIN tb_productos AS p ON c.id_producto = p.id_producto
                 INNER JOIN tb_clientes AS cl ON c.id_cliente = cl.id_cliente
                 WHERE c.id_producto = ?';
@@ -161,7 +136,7 @@ class ProductoHandler
         $idCliente = $_SESSION['idCliente'];
 
         // Consulta SQL para insertar un nuevo comentario
-        $sql = 'INSERT INTO tb_valoraciones (id_producto, id_cliente, calificacion_producto, comentario_producto, fecha_valoracion, estado_comentario)
+        $sql = 'INSERT INTO tb_comentarios (id_producto, id_cliente, calificacion_producto, comentario_producto, fecha_valoracion, estado_comentario)
             VALUES (?, ?, ?, ?, NOW(), ?)';
 
         // Parámeteros para la consulta
@@ -175,7 +150,7 @@ class ProductoHandler
     {
         // SQL para obtener el promedio de calificaciones del producto.
         $sql = 'SELECT AVG(CAST(c.calificacion_producto AS UNSIGNED)) AS calificacion_promedio
-                FROM tb_valoraciones AS c
+                FROM tb_comentarios AS c
                 WHERE c.id_producto = ?';
 
         $params = array($this->id);
@@ -198,10 +173,11 @@ class ProductoHandler
 
     private function updateAverageRating($calificacionPromedio)
     {
-        $sql = 'UPDATE tb_valoraciones
+        $sql = 'UPDATE tb_productos
                 SET calificacion_promedio = ?
                 WHERE id_producto = ?';
         $params = array($calificacionPromedio, $this->id);
         return Database::executeRow($sql, $params);
     }
+
 }

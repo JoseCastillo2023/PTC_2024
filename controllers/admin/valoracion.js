@@ -88,7 +88,7 @@ const fillTable = async () => {
                     <td>${row.calificacion_producto}</td>
                     <td><i class="${icon}"></i></td>
                     <td>
-                        <button type="button" class="btn btn-success" onclick="openUpdate(${row.id_valoracion})">
+                        <button type="button" class="btn btn-success" onclick="openUpdate(${row.id_comentario})">
                         <i class="bi bi-info-circle"></i>
                         </button>
                     </td>
@@ -143,7 +143,7 @@ const openUpdate = async (id) => {
         MODELO_COMENTARIO.disabled = true;
         // Se inicializan los campos con los datos.
         const ROW = DATA.dataset;
-        ID_COMENTARIO.value = ROW.id_valoracion;
+        ID_COMENTARIO.value = ROW.id_comentario;
         CLIENTE_COMENTARIO.value = ROW.cliente;
         CONTENIDO_COMENTARIO.value = ROW.comentario_producto;
         PUNTUACION_COMENTARIO.value = ROW.calificacion_producto;

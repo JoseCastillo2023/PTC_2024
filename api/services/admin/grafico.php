@@ -26,7 +26,7 @@ if (isset($_GET['action'])) {
                 if ($result['dataset'] = $grafico->cantidadProductosCategoria()) {
                     $result['status'] = 1;
                 } else {
-                    $result['error'] = 'No hay datos disponibles';
+                     $result['error'] = 'No hay datos disponibles';
                 }
                 break;
             case 'porcentajeProductosCategoria':
@@ -43,7 +43,7 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'No hay datos disponibles';
                 }
                 break;
-
+           
             case 'cantidadClientePorFecha':
                 if ($result['dataset'] = $grafico->cantidadClientePorFecha()) {
                     $result['status'] = 1;
@@ -51,18 +51,10 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'No hay datos disponibles';
                 }
                 break;
-
-            case 'readEstadoEmpleado':
-                if ($result['dataset'] = $grafico->readEstadoEmpleado()) {
-                    $result['status'] = 1;
-                } else {
-                    $result['error'] = 'No existen datos registrados';
-                }
-                break;
             default:
                 $result['error'] = 'Acción no disponible dentro de la sesión';
         }
-    }
+    } 
     // Se obtiene la excepción del servidor de base de datos por si ocurrió un problema.
     $result['exception'] = Database::getException();
     // Se indica el tipo de contenido a mostrar y su respectivo conjunto de caracteres.

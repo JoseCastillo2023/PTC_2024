@@ -30,22 +30,23 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Correo de usuario indefinido';
                     $result['name'] = 'No se pudo obtener el usuario';
                 }
-                break;
+                break; 
             case 'readProfile':
-                if ($result['dataset'] = $cliente->readProfile()) {
-                    $result['status'] = 1;
-                } else {
-                    $result['error'] = 'Ocurrió un problema al leer el perfil';
-                }
-                break;
-            case 'readProfileMovil':
+                    if ($result['dataset'] = $cliente->readProfile()) {
+                        $result['status'] = 1;
+                    } else {
+                        $result['error'] = 'Ocurrió un problema al leer el perfil';
+                    }
+            break;
+            case 'readProfilemovil':
                 if (isset($_SESSION['correoCliente'])) {
                     $result['status'] = 1;
                     $result['username'] = $_SESSION['correoCliente'];
                     $result['name'] = $cliente->readOneCorreo($_SESSION['correoCliente']);
-                } else {
+                   }
+                   else {
                     $result['error'] = 'Correo de usuario indefinido';
-                    $result['name'] = 'No se pudo obtener el usuario';
+                    $result['name'] ='No se pudo obtener el usuario';
                 }
                 break;
             case 'logOut':
@@ -57,39 +58,39 @@ if (isset($_GET['action'])) {
                 }
                 break;
             case 'editProfile':
-                $_POST = Validator::validateForm($_POST);
-                if (
-                    !$cliente->setNombre($_POST['nombreCliente']) or
-                    !$cliente->setApellido($_POST['apellidoCliente']) or
-                    !$cliente->setCorreoEdit($_POST['correoCliente']) or
-                    !$cliente->setTelefono($_POST['telefonoCliente']) or
-                    !$cliente->setDUIEdit($_POST['duiCliente']) or
-                    !$cliente->setDireccion($_POST['direccionCliente']) or
-                    !$cliente->setNacimiento($_POST['nacimientoCliente'])
-                ) {
-                    $result['error'] = $cliente->getDataError();
-                } elseif ($cliente->editProfile()) {
-                    $result['status'] = 1;
-                    $result['message'] = 'Perfil modificado correctamente';
-                    $_SESSION['correoCliente'] = $_POST['correoCliente'];
-                } else {
-                    $result['error'] = 'Ocurrió un problema al modificar el perfil';
-                }
+                    $_POST = Validator::validateForm($_POST);
+                    if (
+                        !$cliente->setNombre($_POST['nombreCliente']) or
+                        !$cliente->setApellido($_POST['apellidoCliente']) or
+                        !$cliente->setCorreoEdit($_POST['correoCliente']) or
+                        !$cliente->setTelefono($_POST['telefonoCliente']) or
+                        !$cliente->setDUIEdit($_POST['duiCliente']) or
+                        !$cliente->setDireccion($_POST['direccionCliente']) or
+                        !$cliente->setNacimiento($_POST['nacimientoCliente'])
+                    ) {
+                        $result['error'] = $cliente->getDataError();
+                    } elseif ($cliente->editProfile()) {
+                        $result['status'] = 1;
+                        $result['message'] = 'Perfil modificado correctamente';
+                        $_SESSION['correoCliente'] = $_POST['correoCliente'];
+                    } else {
+                        $result['error'] = 'Ocurrió un problema al modificar el perfil';
+                    }
                 break;
             case 'changePassword':
-                $_POST = Validator::validateForm($_POST);
-                if (!$cliente->checkPassword($_POST['claveActual'])) {
-                    $result['error'] = 'Contraseña actual incorrecta';
-                } elseif ($_POST['claveNueva'] != $_POST['claveNueva']) {
-                    $result['error'] = 'Confirmación de contraseña diferente';
-                } elseif (!$cliente->setClave($_POST['claveNueva'])) {
-                    $result['error'] = $cliente->getDataError();
-                } elseif ($cliente->changePassword()) {
-                    $result['status'] = 1;
-                    $result['message'] = 'Contraseña cambiada correctamente';
-                } else {
-                    $result['error'] = 'Ocurrió un problema al cambiar la contraseña';
-                }
+                    $_POST = Validator::validateForm($_POST);
+                    if (!$cliente->checkPassword($_POST['claveActual'])) {
+                        $result['error'] = 'Contraseña actual incorrecta';
+                    } elseif ($_POST['claveNueva'] != $_POST['claveNueva']) {
+                        $result['error'] = 'Confirmación de contraseña diferente';
+                    } elseif (!$cliente->setClave($_POST['claveNueva'])) {
+                        $result['error'] = $cliente->getDataError();
+                    } elseif ($cliente->changePassword()) {
+                        $result['status'] = 1;
+                        $result['message'] = 'Contraseña cambiada correctamente';
+                    } else {
+                        $result['error'] = 'Ocurrió un problema al cambiar la contraseña';
+                    }
                 break;
             default:
                 $result['error'] = 'Acción no disponible dentro de la sesión';
@@ -119,7 +120,7 @@ if (isset($_GET['action'])) {
                 if (!$captcha['success']) {
                     $result['recaptcha'] = 1;
                     $result['error'] = 'No eres humano';
-                } elseif (!isset($_POST['condicion'])) {
+                } elseif(!isset($_POST['condicion'])) {
                     $result['error'] = 'Debe marcar la aceptación de términos y condiciones';
                 } elseif (
                     !$cliente->setNombre($_POST['nombreCliente']) or
@@ -141,36 +142,36 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Ocurrió un problema al registrar la cuenta';
                 }
                 break;
-            case 'getUser':
-                if (isset($_SESSION['nombreCliente'])) {
-                    $result['status'] = 1;
-                    $result['username'] = $_SESSION['nombreCliente'];
-                } else {
-                    $result['error'] = 'Alias de cliente indefinido';
-                }
-                break;
-            case 'signUpMovil':
-                $_POST = Validator::validateForm($_POST);
+                case 'getUser':
+                    if (isset($_SESSION['nombreCliente'])) {
+                        $result['status'] = 1;
+                        $result['username'] = $_SESSION['nombreCliente'];
+                    } else {
+                        $result['error'] = 'Alias de cliente indefinido';
+                    }
+                    break;
+                case 'signUpMovil':
+                    $_POST = Validator::validateForm($_POST);
                 if (
-                    !$cliente->setNombre($_POST['nombreCliente']) or
-                    !$cliente->setApellido($_POST['apellidoCliente']) or
-                    !$cliente->setCorreo($_POST['correoCliente']) or
-                    !$cliente->setDireccion($_POST['direccionCliente']) or
-                    !$cliente->setDUI($_POST['duiCliente']) or
-                    !$cliente->setNacimiento($_POST['nacimientoCliente']) or
-                    !$cliente->setTelefono($_POST['telefonoCliente']) or
-                    !$cliente->setClave($_POST['claveCliente'])
-                ) {
-                    $result['error'] = $cliente->getDataError();
-                } elseif ($_POST['claveCliente'] != $_POST['confirmarClave']) {
-                    $result['error'] = 'Contraseñas diferentes';
-                } elseif ($cliente->createRow()) {
-                    $result['status'] = 1;
-                    $result['message'] = 'Cuenta registrada correctamente';
-                } else {
-                    $result['error'] = 'Ocurrió un problema al registrar la cuenta';
-                }
-                break;
+                        !$cliente->setNombre($_POST['nombreCliente']) or
+                        !$cliente->setApellido($_POST['apellidoCliente']) or
+                        !$cliente->setCorreo($_POST['correoCliente']) or
+                        !$cliente->setDireccion($_POST['direccionCliente']) or
+                        !$cliente->setDUI($_POST['duiCliente']) or
+                        !$cliente->setNacimiento($_POST['nacimientoCliente']) or
+                        !$cliente->setTelefono($_POST['telefonoCliente']) or
+                        !$cliente->setClave($_POST['claveCliente'])
+                    ) {
+                        $result['error'] = $cliente->getDataError();
+                    } elseif ($_POST['claveCliente'] != $_POST['confirmarClave']) {
+                        $result['error'] = 'Contraseñas diferentes';
+                    } elseif ($cliente->createRow()) {
+                        $result['status'] = 1;
+                        $result['message'] = 'Cuenta registrada correctamente';
+                    } else {
+                        $result['error'] = 'Ocurrió un problema al registrar la cuenta';
+                    }
+                    break;
             case 'logIn':
                 $_POST = Validator::validateForm($_POST);
                 if (!$cliente->checkUser($_POST['correo'], $_POST['clave'])) {
@@ -182,27 +183,27 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'La cuenta ha sido desactivada';
                 }
                 break;
-            case 'readOneCorreo':
-                // Obtener el correo electrónico desde la solicitud (por ejemplo, a través de GET o POST)
-                $correo = isset($_GET['correo']) ? $_GET['correo'] : (isset($_POST['correo']) ? $_POST['correo'] : null);
-                if ($correo) {
-                    // Llamar al método para obtener los detalles del cliente usando el correo electrónico proporcionado
-                    $clienteData = $cliente->readOneCorreo($correo);
-
-                    if ($clienteData) {
-                        $result['status'] = 1;
-                        $result['username'] = $correo;
-                        $result['name'] = $clienteData;
+                case 'readOneCorreo':
+                    // Obtener el correo electrónico desde la solicitud (por ejemplo, a través de GET o POST)
+                    $correo = isset($_GET['correo']) ? $_GET['correo'] : (isset($_POST['correo']) ? $_POST['correo'] : null);
+                    if ($correo) {
+                        // Llamar al método para obtener los detalles del cliente usando el correo electrónico proporcionado
+                        $clienteData = $cliente->readOneCorreo($correo);
+                
+                        if ($clienteData) {
+                            $result['status'] = 1;
+                            $result['username'] = $correo;
+                            $result['name'] = $clienteData;
+                        } else {
+                            $result['error'] = 'No se encontró un cliente con este correo electrónico';
+                            $result['name'] = 'No se pudo obtener el usuario';
+                        }
                     } else {
-                        $result['error'] = 'No se encontró un cliente con este correo electrónico';
+                        $result['error'] = 'Correo electrónico no proporcionado';
                         $result['name'] = 'No se pudo obtener el usuario';
                     }
-                } else {
-                    $result['error'] = 'Correo electrónico no proporcionado';
-                    $result['name'] = 'No se pudo obtener el usuario';
-                }
-                break;
-
+                    break;
+                
             default:
                 $result['error'] = 'Acción no disponible fuera de la sesión';
         }

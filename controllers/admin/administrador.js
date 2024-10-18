@@ -81,8 +81,8 @@ const fillTable = async (form = null) => {
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             TABLE_BODY.innerHTML += `
                 <tr>
-                    <td>${row.apellido_administrador}</td>
-                    <td>${row.nombre_administrador}</td>
+                    <td>${row.apellido}</td>
+                    <td>${row.nombre}</td>
                     <td>${row.correo_administrador}</td>
                     <td>${row.alias_administrador}</td>
                     <td>

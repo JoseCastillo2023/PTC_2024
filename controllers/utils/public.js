@@ -32,17 +32,26 @@ const loadTemplate = async () => {
         "beforebegin",
         `
                 <header>
-                    <nav class="navbar fixed-top navbar-expand-lg bg-body-tertiary">
-                        <div class="container">
-                            <a class="navbar-brand" href="index.html"><img src="../../resources/img/logo_pan.png" height="50" width="50" alt="Panaderia"></a>
-                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                                <span class="navbar-toggler-icon"></span>
+                <nav class="navbar fixed-top navbar-expand-lg" style="background-color: #B8754C;">
+                    <div class="container text-white border-white">
+                            <a class="navbar-brand text-white border-white" href="index.html"><img class="px-2" src="../../resources/img/logo_pan.png" height="50" alt="Logo">Panadería Hernández</a>
+                            <button class="navbar-toggler text-white border-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                            <i class="bi bi-list"></i>
                             </button>
-                            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                                <div class="navbar-nav ms-auto">
-                                    <a class="nav-link" href="index.html"><i class="bi bi-shop"></i> Catálogo</a>
-                                    <a class="nav-link" href="cart.html"><i class="bi bi-cart"></i> Carrito</a>
-                                    <a class="nav-link" href="#" onclick="logOut()"><i class="bi bi-box-arrow-left"></i> Cerrar sesión</a>
+                            <div class="collapse navbar-collapse text-white" id="navbarNavAltMarkup">
+                                <div class="navbar-nav ms-auto text-white">
+                                    <a class="nav-link text-white" href="index.html"><i class="bi bi-shop"></i> Catálogo</a>
+                                    <a class="nav-link text-white" href="carrito.html"><i class="bi bi-cart"></i> Carrito</a>
+                                    <a class="nav-link text-white" href="pedido.html"><i class="bi bi-truck"></i> Pedidos</a>
+                                    <a class="nav-link text-white" href="historial.html"><i class="bi bi-hourglass-split"></i> Historial</a>
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle text-white" href="#" data-bs-toggle="dropdown" aria-expanded="false">Cuenta: <b>${DATA.name}</b></a>
+                                        <ul class="dropdown-menu" style="background-color: #B8754C;">
+                                            <li><a class="nav-link text-white" href="perfil.html"><i class="bi bi-person"></i> Editar Perfil</a></li>
+                                            <li><hr class="dropdown-divider text-dark"></li>
+                                            <li> <a class="nav-link text-white" href="#" onclick="logOut()"><i class="bi bi-box-arrow-left"></i> Cerrar sesión</a></li>
+                                        </ul>
+                                    </li>
                                 </div>
                             </div>
                         </div>
@@ -59,17 +68,17 @@ const loadTemplate = async () => {
       "beforebegin",
       `
             <header>
-                <nav class="navbar fixed-top navbar-expand-lg bg-body-tertiary">
-                    <div class="container">
-                            <a class="navbar-brand" href="index.html"><img src="../../resources/img/logo_pan.png" height="50" width="50" alt="Panaderia"></a>
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
+                <nav class="navbar fixed-top navbar-expand-lg" style="background-color: #B8754C;">
+                    <div class="container text-white">
+                        <a class="navbar-brand text-white border-white" href="index.html"><img class="px-2" src="../../resources/img/logo_pan.png" height="50" alt="Logo">Panadería Hernández</a>
+                        <button class="navbar-toggler text-white border-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="bi bi-list"></i>
                         </button>
-                        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                            <div class="navbar-nav ms-auto">
-                                <a class="nav-link" href="index.html"><i class="bi bi-shop"></i> Catálogo</a>
-                                <a class="nav-link" href="signup.html"><i class="bi bi-person"></i> Crear cuenta</a>
-                                <a class="nav-link" href="login.html"><i class="bi bi-box-arrow-right"></i> Iniciar sesión</a>
+                        <div class="collapse navbar-collapse text-white" id="navbarNavAltMarkup">
+                            <div class="navbar-nav ms-auto text-white">
+                                <a class="nav-link text-white" href="index.html"><i class="bi bi-shop"></i> Catálogo</a>
+                                <a class="nav-link text-white" href="registrar.html"><i class="bi bi-person"></i> Crear cuenta</a>
+                                <a class="nav-link text-white" href="login.html"><i class="bi bi-box-arrow-right"></i> Iniciar sesión</a>
                             </div>
                         </div>
                     </div>

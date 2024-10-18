@@ -6,35 +6,32 @@ require_once ('../../helpers/database.php');
  */
 class GraficoHandler
 {
-    
 
     public function cantidadClientePorFecha()
     {
         $sql = 'SELECT DATE(fecha_registro) AS fecha, COUNT(id_cliente) AS cantidad
         FROM tb_clientes
         GROUP BY DATE(fecha_registro)
-        ORDER BY fecha ASC
-        LIMIT 5;
+        ORDER BY fecha ASC;
         ';
         return Database::getRows($sql);
     }
+
     public function cantidadProductosCategoria()
     {
-        $sql = 'SELECT nombre_categoria, COUNT(id_producto) AS cantidad
+        $sql = 'SELECT nombre, COUNT(id_producto) cantidad
                 FROM tb_productos
                 INNER JOIN tb_categorias USING(id_categoria)
-                GROUP BY nombre_categoria
-                ORDER BY cantidad DESC
-                LIMIT 3';  // Limita a las 3 categorías con más productos
+                GROUP BY nombre ORDER BY cantidad DESC LIMIT 5';
         return Database::getRows($sql);
     }
-    
+
     public function porcentajeProductosCategoria()
     {
-        $sql = 'SELECT nombre_producto, ROUND((COUNT(id_producto) * 100.0 / (SELECT COUNT(id_producto) FROM tb_productos)), 2) porcentaje
+        $sql = 'SELECT nombre, ROUND((COUNT(id_producto) * 100.0 / (SELECT COUNT(id_producto) FROM tb_productos)), 2) porcentaje
                 FROM tb_productos
                 INNER JOIN tb_categorias USING(id_categoria)
-                GROUP BY nombre_producto ORDER BY porcentaje DESC';
+                GROUP BY nombre ORDER BY porcentaje DESC';
         return Database::getRows($sql);
     }
 
@@ -52,25 +49,9 @@ class GraficoHandler
         $sql = 'SELECT DATE(p.fecha_registro) AS fecha, COUNT(dp.id_producto) AS ventas
             FROM tb_pedidos p
             JOIN tb_detalles_pedidos dp ON p.id_pedido = dp.id_pedido
-            WHERE p.estado_pedido = "Finalizado"
+            WHERE p.estado_pedido = "Entregado"
             GROUP BY DATE(p.fecha_registro)
-            ORDER BY fecha ASC
-            LIMIT 5;';
-        return Database::getRows($sql);
-    }
-
-    public function readEstadoEmpleado()
-    {
-        $sql = 'SELECT 
-                    CASE 
-                        WHEN estado_cliente = 0 THEN "Inactivo"
-                        WHEN estado_cliente = 1 THEN "Activo"
-                    END AS estado,
-                    COUNT(*) AS cantidad
-                FROM 
-                    tb_clientes
-                GROUP BY 
-                    estado_cliente;';
+            ORDER BY fecha ASC;';
         return Database::getRows($sql);
     }
 
